@@ -1,19 +1,31 @@
-
-import MainLayout from '../layout/MainLayout';
-import PageHeader from '../layout/PageHeader';
+import React from 'react';
+import DashboardHeader from '../dashboard/DashboardHeader';
+import DashboardStats from '../dashboard/DashboardStats';
+import DashboardQuickActions from '../dashboard/DashboardQuickActions';
+import DashboardRecentApplications from '../dashboard/DashboardRecentApplications';
+import DashboardSavedJobsPreview from '../dashboard/DashboardSavedJobsPreview';
+import DashboardInterviewPrepPreview from '../dashboard/DashboardInterviewPrepPreview';
+import DashboardProfileStrength from '../dashboard/DashboardProfileStrength';
 
 const Dashboard = () => {
   return (
-    <MainLayout pageTitle="Dashboard">
-      <PageHeader
-        title="Dashboard"
-        description="Track your progress, monitor applications, and manage your career journey from one place."
-      />
+    <div className="space-y-6">
+      <DashboardHeader userName="Noha" />
+      <DashboardStats />
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <p className="text-sm text-slate-600">Dashboard content will be added here.</p>
+      <div className="grid gap-6 xl:grid-cols-3">
+        <div className="space-y-6 xl:col-span-2">
+          <DashboardRecentApplications />
+          <DashboardQuickActions />
+        </div>
+
+        <div className="space-y-6">
+          <DashboardSavedJobsPreview />
+          <DashboardInterviewPrepPreview />
+          <DashboardProfileStrength />
+        </div>
       </div>
-    </MainLayout>
+    </div>
   );
 };
 
