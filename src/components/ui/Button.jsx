@@ -1,4 +1,3 @@
-
 const Button = ({
   children,
   type = 'button',
@@ -10,7 +9,7 @@ const Button = ({
   ...props
 }) => {
   const baseClasses =
-    'inline-flex items-center justify-center rounded-xl font-medium transition focus:outline-none focus:ring-2 focus:ring-indigo-500/30 disabled:cursor-not-allowed disabled:opacity-60';
+    'inline-flex items-center justify-center rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60';
 
   const variantClasses = {
     primary: 'bg-indigo-600 text-white hover:bg-indigo-700',
@@ -36,6 +35,7 @@ const Button = ({
         fullWidth ? 'w-full' : '',
         className,
       ].join(' ')}
+      aria-disabled={disabled}
       {...props}
     >
       {children}

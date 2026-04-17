@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../ui/Card';
@@ -14,7 +13,10 @@ const DashboardSavedJobsPreview = () => {
 
   if (!previewJobs.length) {
     return (
-      <Card className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg">
+      <Card
+        className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg"
+        aria-label="Saved jobs preview"
+      >
         <div className="mb-4">
           <h2 className="text-xl font-semibold text-white">Saved Jobs</h2>
         </div>
@@ -30,7 +32,10 @@ const DashboardSavedJobsPreview = () => {
   }
 
   return (
-    <Card className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg">
+    <Card
+      className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg"
+      aria-label="Saved jobs preview"
+    >
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-semibold text-white">Saved Jobs</h2>
@@ -39,28 +44,32 @@ const DashboardSavedJobsPreview = () => {
           </p>
         </div>
 
-        <Button variant="secondary" onClick={() => navigate('/saved-jobs')}>
+        <Button
+          variant="secondary"
+          onClick={() => navigate('/saved-jobs')}
+          aria-label="View all saved jobs"
+        >
           View All
         </Button>
       </div>
 
       <div className="space-y-4">
-        {previewJobs.map((job) => (
-          <div
-            key={job.id}
-            className="rounded-2xl border border-white/10 bg-slate-800/60 p-4"
-          >
-            <h3 className="text-base font-semibold text-white">
-              {job.title || 'Untitled Job'}
-            </h3>
-            <p className="mt-1 text-sm text-slate-400">
-              {job.company || 'Unknown Company'}
-            </p>
-            <p className="mt-2 text-xs text-slate-500">
-              {job.location || 'Location not specified'}
-            </p>
-          </div>
-        ))}
+        {previewJobs.map((job, index) => {
+          const title = job.title || 'Untitled Job';
+          const company = job.company || 'Unknown Company';
+          const location = job.location || 'Location not specified';
+
+          return (
+            <div
+              key={job.id || `${title}-${company}-${index}`}
+              className="rounded-2xl border border-white/10 bg-slate-800/60 p-4"
+            >
+              <h3 className="text-base font-semibold text-white">{title}</h3>
+              <p className="mt-1 text-sm text-slate-400">{company}</p>
+              <p className="mt-2 text-xs text-slate-500">{location}</p>
+            </div>
+          );
+        })}
       </div>
     </Card>
   );

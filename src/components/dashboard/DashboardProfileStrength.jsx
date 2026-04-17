@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import Card from '../ui/Card';
 import ProgressBar from '../ui/ProgressBar';
@@ -25,7 +24,10 @@ const DashboardProfileStrength = () => {
     score >= 80 ? 'Strong' : score >= 50 ? 'Good' : 'Needs Improvement';
 
   return (
-    <Card className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg">
+    <Card
+      className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg"
+      aria-label="Profile strength"
+    >
       <div className="mb-4">
         <h2 className="text-xl font-semibold text-white">Profile Strength</h2>
         <p className="mt-1 text-sm text-slate-400">
@@ -33,7 +35,11 @@ const DashboardProfileStrength = () => {
         </p>
       </div>
 
-      <div className="mb-4 flex items-center justify-between">
+      <div
+        className="mb-4 flex items-center justify-between"
+        role="status"
+        aria-label={`Profile strength is ${label} at ${score}%`}
+      >
         <span className="text-sm text-slate-300">{label}</span>
         <span className="text-sm font-semibold text-white">{score}%</span>
       </div>

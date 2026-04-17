@@ -1,37 +1,101 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
+import MainLayout from './components/layout/MainLayout';
 
-// Layout
-import MainLayout from "./components/layout/MainLayout";
+import Dashboard from './components/pages/Dashboard';
+import CVBuilderPage from './components/pages/CVBuilderPage';
+import JobSearchPage from './components/pages/JobSearchPage';
+import SavedJobsPage from './components/pages/SavedJobsPage';
+import ApplicationsPage from './components/pages/ApplicationsPage';
+import InterviewPrepPage from './components/pages/InterviewPrepPage';
+import AIAssistantPage from './components/pages/AIAssistantPage';
+import SettingsPage from './components/pages/SettingsPage';
+import NotFoundPage from './components/pages/NotFoundPage';
 
-// Pages
-import Dashboard from "./components/pages/Dashboard";
-import CVBuilderPage from "./components/pages/CVBuilderPage";
-import JobSearchPage from "./components/pages/JobSearchPage";
-import SavedJobsPage from "./components/pages/SavedJobsPage";
-import ApplicationsPage from "./components/pages/ApplicationsPage";
-import InterviewPrepPage from "./components/pages/InterviewPrepPage";
-import AIAssistantPage from "./components/pages/AIAssistantPage";
-import SettingsPage from "./components/pages/SettingsPage";
-import NotFoundPage from "./components/pages/NotFoundPage";
-
-function App() {
+const App = () => {
   return (
-    <Router>
-      <MainLayout>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/cv-builder" element={<CVBuilderPage />} />
-          <Route path="/jobs" element={<JobSearchPage />} />
-          <Route path="/saved-jobs" element={<SavedJobsPage />} />
-          <Route path="/applications" element={<ApplicationsPage />} />
-          <Route path="/interview" element={<InterviewPrepPage />} />
-          <Route path="/ai" element={<AIAssistantPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </MainLayout>
-    </Router>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <MainLayout pageTitle="Dashboard">
+            <Dashboard />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/cv-builder"
+        element={
+          <MainLayout pageTitle="CV Builder">
+            <CVBuilderPage />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/job-search"
+        element={
+          <MainLayout pageTitle="Job Search">
+            <JobSearchPage />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/saved-jobs"
+        element={
+          <MainLayout pageTitle="Saved Jobs">
+            <SavedJobsPage />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/applications"
+        element={
+          <MainLayout pageTitle="Applications">
+            <ApplicationsPage />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/interview-prep"
+        element={
+          <MainLayout pageTitle="Interview Prep">
+            <InterviewPrepPage />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/ai-assistant"
+        element={
+          <MainLayout pageTitle="AI Assistant">
+            <AIAssistantPage />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/settings"
+        element={
+          <MainLayout pageTitle="Settings">
+            <SettingsPage />
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="*"
+        element={
+          <MainLayout pageTitle="Page Not Found">
+            <NotFoundPage />
+          </MainLayout>
+        }
+      />
+    </Routes>
   );
-}
+};
 
 export default App;

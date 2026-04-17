@@ -1,5 +1,3 @@
-
-import React from 'react';
 import StatusBadge from './StatusBadge';
 
 const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
@@ -8,15 +6,20 @@ const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
   }
 
   const {
+    jobTitle,
     role,
     company,
     location,
     status,
+    appliedDate,
     appliedAt,
     notes,
     jobType,
     salary,
   } = application;
+
+  const displayTitle = jobTitle || role || 'Untitled Role';
+  const displayDate = appliedDate || appliedAt;
 
   return (
     <div
@@ -30,7 +33,7 @@ const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
             <h2 className="text-xl font-semibold text-slate-900">
-              {role || 'Untitled Role'}
+              {displayTitle}
             </h2>
             <p className="mt-1 text-sm text-slate-600">
               {company || 'Unknown Company'}
@@ -55,7 +58,9 @@ const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
               Applied Date
             </p>
             <p className="mt-2 text-sm text-slate-800">
-              {appliedAt || 'Not specified'}
+              {displayDate
+                ? new Date(displayDate).toLocaleDateString()
+                : 'Not specified'}
             </p>
           </div>
 

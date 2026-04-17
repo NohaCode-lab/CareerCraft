@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../ui/Card';
@@ -14,7 +13,10 @@ const DashboardInterviewPrepPreview = () => {
   const navigate = useNavigate();
 
   return (
-    <Card className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg">
+    <Card
+      className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg"
+      aria-label="Interview preparation tips"
+    >
       <div className="mb-6">
         <h2 className="text-xl font-semibold text-white">Interview Prep</h2>
         <p className="mt-1 text-sm text-slate-400">
@@ -23,9 +25,9 @@ const DashboardInterviewPrepPreview = () => {
       </div>
 
       <div className="space-y-3">
-        {tips.map((tip) => (
+        {tips.map((tip, index) => (
           <div
-            key={tip}
+            key={`${tip}-${index}`}
             className="rounded-2xl border border-white/10 bg-slate-800/60 p-4 text-sm text-slate-300"
           >
             {tip}
@@ -33,7 +35,11 @@ const DashboardInterviewPrepPreview = () => {
         ))}
       </div>
 
-      <Button className="mt-6 w-full" onClick={() => navigate('/interview-prep')}>
+      <Button
+        className="mt-6 w-full"
+        onClick={() => navigate('/interview-prep')}
+        aria-label="Start interview practice"
+      >
         Start Practice
       </Button>
     </Card>

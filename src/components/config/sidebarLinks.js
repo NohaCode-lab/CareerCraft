@@ -1,63 +1,61 @@
-
 import {
   LayoutDashboard,
   FileText,
   Briefcase,
-  Bookmark,
-  KanbanSquare,
+  Heart,
+  FolderKanban,
   MessageSquareText,
   Sparkles,
   Settings,
 } from 'lucide-react';
-import { ROUTES } from './routes';
 
 export const SIDEBAR_LINKS = [
   {
     id: 'dashboard',
     label: 'Dashboard',
-    path: ROUTES.DASHBOARD,
+    path: '/',
     icon: LayoutDashboard,
   },
   {
     id: 'cv-builder',
     label: 'CV Builder',
-    path: ROUTES.CV_BUILDER,
+    path: '/cv-builder',
     icon: FileText,
   },
   {
     id: 'job-search',
     label: 'Job Search',
-    path: ROUTES.JOB_SEARCH,
+    path: '/job-search',
     icon: Briefcase,
   },
   {
     id: 'saved-jobs',
     label: 'Saved Jobs',
-    path: ROUTES.SAVED_JOBS,
-    icon: Bookmark,
+    path: '/saved-jobs',
+    icon: Heart,
   },
   {
     id: 'applications',
     label: 'Applications',
-    path: ROUTES.APPLICATIONS,
-    icon: KanbanSquare,
+    path: '/applications',
+    icon: FolderKanban,
   },
   {
     id: 'interview-prep',
     label: 'Interview Prep',
-    path: ROUTES.INTERVIEW_PREP,
+    path: '/interview-prep',
     icon: MessageSquareText,
   },
   {
     id: 'ai-assistant',
     label: 'AI Assistant',
-    path: ROUTES.AI_ASSISTANT,
+    path: '/ai-assistant',
     icon: Sparkles,
   },
   {
     id: 'settings',
     label: 'Settings',
-    path: ROUTES.SETTINGS,
+    path: '/settings',
     icon: Settings,
   },
 ];

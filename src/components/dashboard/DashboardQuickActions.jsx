@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileEdit, Search, MessageSquareText, Settings } from 'lucide-react';
@@ -7,24 +6,28 @@ import Button from '../ui/Button';
 
 const actions = [
   {
+    id: 'build-cv',
     title: 'Build CV',
     description: 'Edit your CV and improve ATS readiness.',
     icon: FileEdit,
     path: '/cv-builder',
   },
   {
+    id: 'search-jobs',
     title: 'Search Jobs',
     description: 'Explore matching opportunities.',
     icon: Search,
     path: '/job-search',
   },
   {
+    id: 'interview-prep',
     title: 'Interview Prep',
     description: 'Practice common interview questions.',
     icon: MessageSquareText,
     path: '/interview-prep',
   },
   {
+    id: 'settings',
     title: 'Settings',
     description: 'Adjust preferences and language.',
     icon: Settings,
@@ -50,7 +53,7 @@ const DashboardQuickActions = () => {
 
           return (
             <div
-              key={action.title}
+              key={action.id}
               className="rounded-2xl border border-white/10 bg-slate-800/70 p-4 transition duration-300 hover:-translate-y-1 hover:border-indigo-400/40"
             >
               <div className="mb-4 inline-flex rounded-2xl bg-indigo-500/10 p-3 text-indigo-300">
@@ -68,6 +71,7 @@ const DashboardQuickActions = () => {
               <Button
                 className="mt-4 w-full"
                 onClick={() => navigate(action.path)}
+                aria-label={`Open ${action.title}`}
               >
                 Open
               </Button>

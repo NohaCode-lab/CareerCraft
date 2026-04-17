@@ -1,4 +1,3 @@
-
 import logo from '../../assets/logo.svg';
 import { SIDEBAR_LINKS } from '../../config/sidebarLinks';
 import SidebarItem from './SidebarItem';
@@ -12,6 +11,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
           isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0',
         ].join(' ')}
         onClick={onClose}
+        aria-hidden="true"
       />
 
       <aside
@@ -19,6 +19,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
           'fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-slate-200 bg-white shadow-xl transition-transform duration-300 xl:hidden',
           isOpen ? 'translate-x-0' : '-translate-x-full',
         ].join(' ')}
+        aria-hidden={!isOpen}
       >
         <div className="flex h-20 items-center justify-between border-b border-slate-200 px-6">
           <div className="flex items-center gap-3">
@@ -39,7 +40,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800"
+            className="rounded-xl p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             aria-label="Close mobile sidebar"
           >
             ✕

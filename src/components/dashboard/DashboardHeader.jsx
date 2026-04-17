@@ -12,7 +12,10 @@ const DashboardHeader = ({ userName = 'Noha' }) => {
   }
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900 p-6 shadow-xl md:p-8">
+    <section
+      className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900 p-6 shadow-xl md:p-8"
+      aria-label="Dashboard overview"
+    >
       <div className="absolute inset-0 bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 opacity-90" />
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.18),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(16,185,129,0.12),transparent_30%)]" />
@@ -33,7 +36,10 @@ const DashboardHeader = ({ userName = 'Noha' }) => {
           </p>
         </div>
 
-        <div className="self-start rounded-2xl border border-indigo-500/20 bg-indigo-500/10 px-4 py-2 text-sm font-medium text-indigo-200">
+        <div
+          className="self-start rounded-2xl border border-indigo-500/20 bg-indigo-500/10 px-4 py-2 text-sm font-medium text-indigo-200"
+          role="status"
+        >
           Career growth in progress
         </div>
       </div>

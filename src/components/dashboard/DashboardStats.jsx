@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { Briefcase, Bookmark, FileText, Trophy } from 'lucide-react';
 import StatCard from '../ui/StatCard';
@@ -18,24 +17,28 @@ const DashboardStats = () => {
 
     return [
       {
+        id: 'saved-jobs',
         title: 'Saved Jobs',
         value: savedJobs.length,
         description: 'Opportunities bookmarked for later',
         icon: Bookmark,
       },
       {
+        id: 'applications',
         title: 'Applications',
         value: applications.length,
         description: 'Roles you have already applied to',
         icon: Briefcase,
       },
       {
+        id: 'interviews',
         title: 'Interviews',
         value: interviewCount,
         description: 'Upcoming or active interview stages',
         icon: Trophy,
       },
       {
+        id: 'available-jobs',
         title: 'Available Jobs',
         value: jobs.length,
         description: 'Jobs currently in your local feed',
@@ -45,10 +48,13 @@ const DashboardStats = () => {
   }, [applications, jobs.length, savedJobs.length]);
 
   return (
-    <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <section
+      className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+      aria-label="Dashboard statistics"
+    >
       {stats.map((stat) => (
         <StatCard
-          key={stat.title}
+          key={stat.id}
           title={stat.title}
           value={stat.value}
           description={stat.description}

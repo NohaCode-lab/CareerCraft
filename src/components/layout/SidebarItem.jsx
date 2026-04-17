@@ -1,4 +1,3 @@
-
 import { NavLink } from 'react-router-dom';
 
 const SidebarItem = ({ item, onClick }) => {
@@ -10,12 +9,13 @@ const SidebarItem = ({ item, onClick }) => {
       onClick={onClick}
       className={({ isActive }) =>
         [
-          'group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200',
+          'group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2',
           isActive
             ? 'bg-indigo-50 text-indigo-700 shadow-sm'
             : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
         ].join(' ')
       }
+      aria-label={item.label}
     >
       {({ isActive }) => (
         <>

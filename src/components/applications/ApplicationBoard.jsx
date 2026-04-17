@@ -1,8 +1,6 @@
-
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import ApplicationColumn from './ApplicationColumn';
 
-// الحالات الأساسية
 const STATUSES = [
   { key: 'applied', label: 'Applied' },
   { key: 'reviewing', label: 'Reviewing' },
@@ -11,35 +9,47 @@ const STATUSES = [
   { key: 'rejected', label: 'Rejected' },
 ];
 
+const normalizeStatus = (status) => {
+  const normalizedStatus = status?.trim().toLowerCase();
+
+  const statusMap = {
+    applied: 'applied',
+    reviewing: 'reviewing',
+    review: 'reviewing',
+    interview: 'interview',
+    interviewing: 'interview',
+    offer: 'offer',
+    offered: 'offer',
+    rejected: 'rejected',
+    rejection: 'rejected',
+  };
+
+  return statusMap[normalizedStatus] || 'applied';
+};
+
 const ApplicationBoard = ({ applications = [], onCardClick }) => {
-  // تقسيم البيانات حسب الحالة
   const groupedApplications = useMemo(() => {
-    const groups = {};
+    const groups = STATUSES.reduce((accumulator, status) => {
+      accumulator[status.key] = [];
+      return accumulator;
+    }, {});
 
-    STATUSES.forEach((status) => {
-      groups[status.key] = [];
-    });
-
-    applications.forEach((app) => {
-      const statusKey = app.status?.toLowerCase() || 'applied';
-
-      if (!groups[statusKey]) {
-        groups[statusKey] = [];
-      }
-
-      groups[statusKey].push(app);
+    applications.forEach((application) => {
+      const statusKey = normalizeStatus(application.status);
+      groups[statusKey].push(application);
     });
 
     return groups;
   }, [applications]);
 
   return (
-    <div className="grid gap-4 lg:grid-cols-5">
+    <div className="grid gap-4 xl:grid-cols-5">
       {STATUSES.map((status) => (
         <ApplicationColumn
           key={status.key}
           title={status.label}
-          applications={groupedApplications[status.key] || []}
+          statusKey={status.key}
+          applications={groupedApplications[status.key]}
           onCardClick={onCardClick}
         />
       ))}

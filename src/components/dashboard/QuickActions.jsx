@@ -1,24 +1,27 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const actions = [
   {
+    id: 'build-cv',
     title: 'Build CV',
     description: 'Create and optimize your CV for ATS systems.',
     path: '/cv-builder',
   },
   {
+    id: 'search-jobs',
     title: 'Search Jobs',
     description: 'Find jobs that match your skills and goals.',
     path: '/job-search',
   },
   {
+    id: 'interview-prep',
     title: 'Interview Prep',
     description: 'Practice interview questions and improve answers.',
     path: '/interview-prep',
   },
   {
+    id: 'settings',
     title: 'Settings',
     description: 'Manage your preferences and profile settings.',
     path: '/settings',
@@ -29,7 +32,7 @@ const DashboardQuickActions = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="card-base p-6">
+    <div className="card-base p-6" aria-label="Quick actions">
       <div className="mb-6">
         <h2 className="section-title">Quick Actions</h2>
         <p className="section-subtitle mt-1">
@@ -40,7 +43,7 @@ const DashboardQuickActions = () => {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {actions.map((action) => (
           <div
-            key={action.title}
+            key={action.id}
             className="flex min-h-12 flex-col justify-between rounded-xl border border-slate-200 bg-white p-4 transition hover:shadow-md"
           >
             <div>
@@ -56,7 +59,8 @@ const DashboardQuickActions = () => {
             <button
               type="button"
               onClick={() => navigate(action.path)}
-              className="mt-4 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700"
+              className="mt-4 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              aria-label={`Open ${action.title}`}
             >
               Open
             </button>
