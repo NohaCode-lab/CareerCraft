@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import MainLayout from '../layout/MainLayout';
 import PageHeader from '../layout/PageHeader';
 
 import ApplicationBoard from '../applications/ApplicationBoard';
@@ -21,7 +20,7 @@ const ApplicationsPage = () => {
   };
 
   return (
-    <MainLayout pageTitle="Applications">
+    <div className="space-y-6">
       <PageHeader
         title="Applications"
         description="Organize your job applications, track statuses, and manage follow-ups efficiently."
@@ -41,7 +40,7 @@ const ApplicationsPage = () => {
         application={selectedApplication}
         onClose={handleCloseModal}
       />
-    </MainLayout>
+    </div>
   );
 };
 

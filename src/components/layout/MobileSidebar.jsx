@@ -1,5 +1,5 @@
-import logo from '../../assets/logo.svg';
-import { SIDEBAR_LINKS } from '../../config/sidebarLinks';
+import logo from '../../assets/favicon.svg';
+import { SIDEBAR_LINKS } from '../config/sidebarLinks';
 import SidebarItem from './SidebarItem';
 
 const MobileSidebar = ({ isOpen, onClose }) => {

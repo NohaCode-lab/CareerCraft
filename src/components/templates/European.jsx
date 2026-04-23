@@ -1,4 +1,3 @@
-
 const SectionHeading = ({ children }) => {
   return (
     <h2 className="border-b border-slate-300 pb-2 text-[11px] font-bold uppercase tracking-[0.22em] text-slate-700">
@@ -43,7 +42,8 @@ const ExperienceItem = ({ item }) => {
   const title = item.role || item.title || 'Role Title';
   const company = item.company || 'Company Name';
   const location = item.location || '';
-  const dateRange = formatDateRange(item.startDate, item.endDate);
+  const dateRange =
+    item.duration || formatDateRange(item.startDate, item.endDate);
   const description = item.description || '';
   const highlights = getSafeArray(item.highlights);
 
@@ -76,7 +76,8 @@ const EducationItem = ({ item }) => {
   const degree = item.degree || 'Degree';
   const institution = item.school || item.institution || 'Institution';
   const location = item.location || '';
-  const dateRange = formatDateRange(item.startDate, item.endDate);
+  const dateRange =
+    item.year || item.duration || formatDateRange(item.startDate, item.endDate);
   const description = item.description || '';
 
   return (
@@ -166,18 +167,38 @@ const LanguageItem = ({ item }) => {
 };
 
 const European = ({ data = {} }) => {
-  const personalInfo = data.personalInfo || {};
+  const personalInfo = {
+    fullName: data.fullName || '',
+    name: data.fullName || '',
+    jobTitle: data.title || '',
+    headline: data.title || '',
+    email: data.email || '',
+    phone: data.phone || '',
+    location: data.location || '',
+    linkedin: data.linkedin || '',
+    website: data.website || '',
+    github: data.github || '',
+    ...(data.personalInfo || {}),
+  };
+
   const summary = data.summary || '';
 
   const experience = getSafeArray(data.experience);
   const education = getSafeArray(data.education);
-  const skills = getSafeArray(data.skills);
+
+  const skills =
+    typeof data.skills === 'string'
+      ? data.skills
+          .split(',')
+          .map((skill) => skill.trim())
+          .filter(Boolean)
+      : getSafeArray(data.skills);
+
   const languages = getSafeArray(data.languages);
   const certifications = getSafeArray(data.certifications);
   const projects = getSafeArray(data.projects);
 
-  const fullName =
-    personalInfo.fullName || personalInfo.name || 'Your Name';
+  const fullName = personalInfo.fullName || personalInfo.name || 'Your Name';
   const headline =
     personalInfo.headline || personalInfo.jobTitle || 'Professional Title';
 
@@ -288,7 +309,11 @@ const European = ({ data = {} }) => {
                 <div className="mt-3 space-y-2">
                   {languages.map((item, index) => (
                     <LanguageItem
-                      key={`${typeof item === 'string' ? item : item.name || 'language'}-${index}`}
+                      key={`${
+                        typeof item === 'string'
+                          ? item
+                          : item.name || 'language'
+                      }-${index}`}
                       item={item}
                     />
                   ))}
@@ -304,7 +329,11 @@ const European = ({ data = {} }) => {
                 <div className="mt-3 space-y-3">
                   {certifications.map((item, index) => (
                     <CertificationItem
-                      key={`${typeof item === 'string' ? item : item.title || 'certification'}-${index}`}
+                      key={`${
+                        typeof item === 'string'
+                          ? item
+                          : item.title || 'certification'
+                      }-${index}`}
                       item={item}
                     />
                   ))}

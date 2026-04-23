@@ -4,7 +4,30 @@ import Card from '../ui/Card';
 import Button from '../ui/Button';
 import EmptyState from '../ui/EmptyState';
 import Badge from '../ui/Badge';
-import { useApplications } from '../../hooks/useApplications';
+import useApplications from '../../hooks/useApplications';
+import { ROUTES } from '../config/routes';
+
+const getApplicationTimestamp = (application) => {
+  return new Date(application.appliedAt || application.date || 0).getTime();
+};
+
+const formatApplicationDate = (value) => {
+  if (!value) {
+    return 'No date';
+  }
+
+  const parsedDate = new Date(value);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return 'No date';
+  }
+
+  return parsedDate.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+};
 
 const DashboardRecentApplications = () => {
   const navigate = useNavigate();
@@ -12,11 +35,7 @@ const DashboardRecentApplications = () => {
 
   const recentApplications = useMemo(() => {
     return [...applications]
-      .sort(
-        (a, b) =>
-          new Date(b.appliedAt || b.date || 0) -
-          new Date(a.appliedAt || a.date || 0)
-      )
+      .sort((a, b) => getApplicationTimestamp(b) - getApplicationTimestamp(a))
       .slice(0, 5);
   }, [applications]);
 
@@ -36,7 +55,7 @@ const DashboardRecentApplications = () => {
           title="No applications yet"
           description="Start tracking your job applications to see them here."
           actionLabel="Go to Applications"
-          onAction={() => navigate('/applications')}
+          onAction={() => navigate(ROUTES.APPLICATIONS)}
         />
       </Card>
     );
@@ -59,7 +78,7 @@ const DashboardRecentApplications = () => {
 
         <Button
           variant="secondary"
-          onClick={() => navigate('/applications')}
+          onClick={() => navigate(ROUTES.APPLICATIONS)}
           aria-label="View all applications"
         >
           View All
@@ -71,7 +90,9 @@ const DashboardRecentApplications = () => {
           const title = application.role || application.title || 'Untitled Role';
           const company = application.company || 'Unknown Company';
           const status = application.status || 'Pending';
-          const appliedDate = application.appliedAt || application.date || 'No date';
+          const appliedDate = formatApplicationDate(
+            application.appliedAt || application.date
+          );
 
           return (
             <div

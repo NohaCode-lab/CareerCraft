@@ -11,11 +11,13 @@ import AIAssistantPage from './components/pages/AIAssistantPage';
 import SettingsPage from './components/pages/SettingsPage';
 import NotFoundPage from './components/pages/NotFoundPage';
 
+import { ROUTES } from './components/config/routes';
+
 const App = () => {
   return (
     <Routes>
       <Route
-        path="/"
+        path={ROUTES.DASHBOARD}
         element={
           <MainLayout pageTitle="Dashboard">
             <Dashboard />
@@ -24,7 +26,7 @@ const App = () => {
       />
 
       <Route
-        path="/cv-builder"
+        path={ROUTES.CV_BUILDER}
         element={
           <MainLayout pageTitle="CV Builder">
             <CVBuilderPage />
@@ -33,7 +35,7 @@ const App = () => {
       />
 
       <Route
-        path="/job-search"
+        path={ROUTES.JOB_SEARCH}
         element={
           <MainLayout pageTitle="Job Search">
             <JobSearchPage />
@@ -42,7 +44,7 @@ const App = () => {
       />
 
       <Route
-        path="/saved-jobs"
+        path={ROUTES.SAVED_JOBS}
         element={
           <MainLayout pageTitle="Saved Jobs">
             <SavedJobsPage />
@@ -51,7 +53,7 @@ const App = () => {
       />
 
       <Route
-        path="/applications"
+        path={ROUTES.APPLICATIONS}
         element={
           <MainLayout pageTitle="Applications">
             <ApplicationsPage />
@@ -60,7 +62,7 @@ const App = () => {
       />
 
       <Route
-        path="/interview-prep"
+        path={ROUTES.INTERVIEW_PREP}
         element={
           <MainLayout pageTitle="Interview Prep">
             <InterviewPrepPage />
@@ -69,7 +71,7 @@ const App = () => {
       />
 
       <Route
-        path="/ai-assistant"
+        path={ROUTES.AI_ASSISTANT}
         element={
           <MainLayout pageTitle="AI Assistant">
             <AIAssistantPage />
@@ -78,7 +80,7 @@ const App = () => {
       />
 
       <Route
-        path="/settings"
+        path={ROUTES.SETTINGS}
         element={
           <MainLayout pageTitle="Settings">
             <SettingsPage />

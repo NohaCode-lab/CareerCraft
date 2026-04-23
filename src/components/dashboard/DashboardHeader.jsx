@@ -1,15 +1,20 @@
 import React from 'react';
 
+const getGreetingByHour = (hour) => {
+  if (hour < 12) {
+    return 'Good morning';
+  }
+
+  if (hour < 18) {
+    return 'Good afternoon';
+  }
+
+  return 'Good evening';
+};
+
 const DashboardHeader = ({ userName = 'Noha' }) => {
   const currentHour = new Date().getHours();
-
-  let greeting = 'Good evening';
-
-  if (currentHour < 12) {
-    greeting = 'Good morning';
-  } else if (currentHour < 18) {
-    greeting = 'Good afternoon';
-  }
+  const greeting = getGreetingByHour(currentHour);
 
   return (
     <section

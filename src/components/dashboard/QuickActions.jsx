@@ -1,30 +1,44 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  ArrowRight,
+  Briefcase,
+  FileText,
+  Settings,
+  Sparkles,
+} from 'lucide-react';
+import Card from '../ui/Card';
+import Button from '../ui/Button';
+import { ROUTES } from '../../config/routes';
 
 const actions = [
   {
     id: 'build-cv',
     title: 'Build CV',
-    description: 'Create and optimize your CV for ATS systems.',
-    path: '/cv-builder',
+    description: 'Create, improve, and tailor your CV for ATS-friendly applications.',
+    path: ROUTES.CV_BUILDER,
+    icon: FileText,
   },
   {
     id: 'search-jobs',
     title: 'Search Jobs',
-    description: 'Find jobs that match your skills and goals.',
-    path: '/job-search',
+    description: 'Explore relevant opportunities that match your skills and goals.',
+    path: ROUTES.JOB_SEARCH,
+    icon: Briefcase,
   },
   {
     id: 'interview-prep',
     title: 'Interview Prep',
-    description: 'Practice interview questions and improve answers.',
-    path: '/interview-prep',
+    description: 'Practice common questions and improve technical and behavioral answers.',
+    path: ROUTES.INTERVIEW_PREP,
+    icon: Sparkles,
   },
   {
     id: 'settings',
     title: 'Settings',
-    description: 'Manage your preferences and profile settings.',
-    path: '/settings',
+    description: 'Manage profile details, preferences, and app configuration.',
+    path: ROUTES.SETTINGS,
+    icon: Settings,
   },
 ];
 
@@ -32,42 +46,62 @@ const DashboardQuickActions = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="card-base p-6" aria-label="Quick actions">
-      <div className="mb-6">
-        <h2 className="section-title">Quick Actions</h2>
-        <p className="section-subtitle mt-1">
-          Jump quickly to the most important tools.
+    <section
+      className="space-y-4"
+      aria-labelledby="dashboard-quick-actions-heading"
+    >
+      <div>
+        <h2
+          id="dashboard-quick-actions-heading"
+          className="text-lg font-semibold text-white"
+        >
+          Quick Actions
+        </h2>
+        <p className="mt-1 text-sm text-slate-400">
+          Jump into the most important tools and keep your career workflow moving.
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {actions.map((action) => (
-          <div
-            key={action.id}
-            className="flex min-h-12 flex-col justify-between rounded-xl border border-slate-200 bg-white p-4 transition hover:shadow-md"
-          >
-            <div>
-              <h3 className="text-sm font-semibold text-slate-900">
-                {action.title}
-              </h3>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {actions.map((action) => {
+          const Icon = action.icon;
 
-              <p className="mt-2 text-sm text-slate-600">
-                {action.description}
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => navigate(action.path)}
-              className="mt-4 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              aria-label={`Open ${action.title}`}
+          return (
+            <Card
+              key={action.id}
+              className="group rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-lg backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-indigo-400/30 hover:shadow-xl"
+              aria-label={action.title}
             >
-              Open
-            </button>
-          </div>
-        ))}
+              <div className="flex h-full flex-col">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-indigo-400/20 bg-indigo-500/10 text-indigo-300 transition duration-300 group-hover:scale-105 group-hover:bg-indigo-500/15">
+                  <Icon size={20} />
+                </div>
+
+                <div className="flex-1">
+                  <h3 className="text-base font-semibold text-white">
+                    {action.title}
+                  </h3>
+
+                  <p className="mt-2 text-sm leading-6 text-slate-400">
+                    {action.description}
+                  </p>
+                </div>
+
+                <Button
+                  type="button"
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2"
+                  onClick={() => navigate(action.path)}
+                  aria-label={`Open ${action.title}`}
+                >
+                  Open
+                  <ArrowRight size={16} />
+                </Button>
+              </div>
+            </Card>
+          );
+        })}
       </div>
-    </div>
+    </section>
   );
 };
 

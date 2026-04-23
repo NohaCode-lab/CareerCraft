@@ -3,7 +3,6 @@ import InterviewChecklist from '../interview/InterviewChecklist';
 import STARBuilder from '../interview/STARBuilder';
 import QuestionCategory from '../interview/QuestionCategory';
 import QuestionCard from '../interview/QuestionCard';
-import MainLayout from '../layout/MainLayout';
 import PageHeader from '../layout/PageHeader';
 
 const questionCategories = [
@@ -65,7 +64,7 @@ const sampleQuestions = [
 
 const InterviewPrepPage = () => {
   return (
-    <MainLayout pageTitle="Interview Prep">
+    <div className="space-y-6">
       <PageHeader
         title="Interview Prep"
         description="Practice common interview questions, build strong STAR answers, and improve your interview readiness."
@@ -121,7 +120,7 @@ const InterviewPrepPage = () => {
           </div>
         </section>
       </div>
-    </MainLayout>
+    </div>
   );
 };
 

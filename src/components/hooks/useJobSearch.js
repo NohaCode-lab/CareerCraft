@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from 'react';
 import useDebounce from './useDebounce';
 import { fetchJobs } from '../services/jobApiService';
@@ -33,12 +32,22 @@ const useJobSearch = (initialFilters = {}) => {
       setError('');
 
       try {
-        const results = await fetchJobs(searchParams);
-        if (isMounted) {
-          setJobs(results);
+        const response = await fetchJobs(searchParams);
+
+        if (!isMounted) {
+          return;
         }
+
+        if (!response.success) {
+          setJobs([]);
+          setError(response.error || 'Failed to fetch jobs.');
+          return;
+        }
+
+        setJobs(response.data);
       } catch (err) {
         if (isMounted) {
+          setJobs([]);
           setError(err.message || 'Failed to fetch jobs.');
         }
       } finally {

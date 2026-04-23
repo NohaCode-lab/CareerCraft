@@ -1,66 +1,86 @@
 import React, { useMemo } from 'react';
-import { Briefcase, Bookmark, FileText, Trophy } from 'lucide-react';
 import StatCard from '../ui/StatCard';
-import { useJobs } from '../../hooks/useJobs';
-import { useApplications } from '../../hooks/useApplications';
+import useJobs from '../../hooks/useJobs';
+import useApplications from '../../hooks/useApplications';
+import { dashboardStatsConfig } from '../data/dashboard/stats';
 
 const DashboardStats = () => {
   const { savedJobs = [], jobs = [] } = useJobs();
   const { applications = [] } = useApplications();
 
   const stats = useMemo(() => {
-    const interviewCount = applications.filter(
-      (application) =>
-        application.status?.toLowerCase() === 'interview' ||
-        application.status?.toLowerCase() === 'interview scheduled'
-    ).length;
+    const sourceData = {
+      jobs: Array.isArray(jobs) ? jobs : [],
+      savedJobs: Array.isArray(savedJobs) ? savedJobs : [],
+      applications: Array.isArray(applications) ? applications : [],
+    };
 
-    return [
-      {
-        id: 'saved-jobs',
-        title: 'Saved Jobs',
-        value: savedJobs.length,
-        description: 'Opportunities bookmarked for later',
-        icon: Bookmark,
-      },
-      {
-        id: 'applications',
-        title: 'Applications',
-        value: applications.length,
-        description: 'Roles you have already applied to',
-        icon: Briefcase,
-      },
-      {
-        id: 'interviews',
-        title: 'Interviews',
-        value: interviewCount,
-        description: 'Upcoming or active interview stages',
-        icon: Trophy,
-      },
-      {
-        id: 'available-jobs',
-        title: 'Available Jobs',
-        value: jobs.length,
-        description: 'Jobs currently in your local feed',
-        icon: FileText,
-      },
-    ];
-  }, [applications, jobs.length, savedJobs.length]);
+    if (!Array.isArray(dashboardStatsConfig) || dashboardStatsConfig.length === 0) {
+      return [];
+    }
+
+    return dashboardStatsConfig.map((item) => {
+      let value = '0';
+
+      try {
+        const rawValue = item.getValue?.(sourceData);
+
+        if (rawValue === null || rawValue === undefined || rawValue === '') {
+          value = '0';
+        } else {
+          value = rawValue;
+        }
+      } catch {
+        value = '0';
+      }
+
+      return {
+        id: item.id,
+        title: item.title,
+        value,
+        description: item.description,
+        icon: item.icon,
+      };
+    });
+  }, [applications, jobs, savedJobs]);
+
+  if (!stats.length) {
+    return null;
+  }
 
   return (
     <section
-      className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
-      aria-label="Dashboard statistics"
+      className="space-y-4"
+      aria-labelledby="dashboard-stats-heading"
     >
-      {stats.map((stat) => (
-        <StatCard
-          key={stat.id}
-          title={stat.title}
-          value={stat.value}
-          description={stat.description}
-          icon={stat.icon}
-        />
-      ))}
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <h2
+            id="dashboard-stats-heading"
+            className="text-lg font-semibold text-white"
+          >
+            Overview
+          </h2>
+          <p className="mt-1 text-sm text-slate-400">
+            Track your job search activity and profile momentum in one place.
+          </p>
+        </div>
+      </div>
+
+      <div
+        className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+        aria-label="Dashboard statistics"
+      >
+        {stats.map((stat) => (
+          <StatCard
+            key={stat.id}
+            title={stat.title}
+            value={stat.value}
+            description={stat.description}
+            icon={stat.icon}
+          />
+        ))}
+      </div>
     </section>
   );
 };

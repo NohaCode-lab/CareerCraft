@@ -7,9 +7,14 @@ import DashboardRecentApplications from '../dashboard/DashboardRecentApplication
 import DashboardSavedJobsPreview from '../dashboard/DashboardSavedJobsPreview';
 import DashboardInterviewPrepPreview from '../dashboard/DashboardInterviewPrepPreview';
 import DashboardProfileStrength from '../dashboard/DashboardProfileStrength';
-import { fadeUpDelayed } from '../../utils/motion';
+import { useAuth } from '../../hooks/useAuth';
+import { fadeUpDelayed } from '../utils/motion';
 
 const Dashboard = () => {
+  const { user } = useAuth();
+
+  const userName = user?.name?.trim() || 'there';
+
   return (
     <div className="space-y-6">
       <motion.div
@@ -17,11 +22,11 @@ const Dashboard = () => {
         initial="hidden"
         animate="visible"
       >
-        <DashboardHeader userName="Noha" />
+        <DashboardHeader userName={userName} />
       </motion.div>
 
       <motion.section
-        aria-label="Statistics"
+        aria-label="Dashboard statistics"
         variants={fadeUpDelayed(0.05)}
         initial="hidden"
         animate="visible"
@@ -52,7 +57,7 @@ const Dashboard = () => {
 
         <div className="space-y-6">
           <motion.section
-            aria-label="Saved jobs"
+            aria-label="Saved jobs preview"
             variants={fadeUpDelayed(0.2)}
             initial="hidden"
             animate="visible"
@@ -61,7 +66,7 @@ const Dashboard = () => {
           </motion.section>
 
           <motion.section
-            aria-label="Interview preparation"
+            aria-label="Interview preparation preview"
             variants={fadeUpDelayed(0.25)}
             initial="hidden"
             animate="visible"

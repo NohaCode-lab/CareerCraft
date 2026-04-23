@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FileEdit, Search, MessageSquareText, Settings } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
+import { ROUTES } from '../config/routes';
 
 const actions = [
   {
@@ -10,28 +11,28 @@ const actions = [
     title: 'Build CV',
     description: 'Edit your CV and improve ATS readiness.',
     icon: FileEdit,
-    path: '/cv-builder',
+    path: ROUTES.CV_BUILDER,
   },
   {
     id: 'search-jobs',
     title: 'Search Jobs',
     description: 'Explore matching opportunities.',
     icon: Search,
-    path: '/job-search',
+    path: ROUTES.JOB_SEARCH,
   },
   {
     id: 'interview-prep',
     title: 'Interview Prep',
     description: 'Practice common interview questions.',
     icon: MessageSquareText,
-    path: '/interview-prep',
+    path: ROUTES.INTERVIEW_PREP,
   },
   {
     id: 'settings',
     title: 'Settings',
     description: 'Adjust preferences and language.',
     icon: Settings,
-    path: '/settings',
+    path: ROUTES.SETTINGS,
   },
 ];
 

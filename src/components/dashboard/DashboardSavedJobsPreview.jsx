@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import EmptyState from '../ui/EmptyState';
-import { useJobs } from '../../hooks/useJobs';
+import useJobs from '../../hooks/useJobs';
+import { ROUTES } from '../config/routes';
 
 const DashboardSavedJobsPreview = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const DashboardSavedJobsPreview = () => {
           title="No saved jobs yet"
           description="Bookmark jobs you like and they will appear here."
           actionLabel="Browse Jobs"
-          onAction={() => navigate('/job-search')}
+          onAction={() => navigate(ROUTES.JOB_SEARCH)}
         />
       </Card>
     );
@@ -46,7 +47,7 @@ const DashboardSavedJobsPreview = () => {
 
         <Button
           variant="secondary"
-          onClick={() => navigate('/saved-jobs')}
+          onClick={() => navigate(ROUTES.SAVED_JOBS)}
           aria-label="View all saved jobs"
         >
           View All
