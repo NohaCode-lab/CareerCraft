@@ -1,27 +1,35 @@
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^[+]?[\d\s\-()]{7,20}$/;
+
+const toSafeString = (value) => String(value ?? '').trim();
 
 export const isRequired = (value) => {
   if (Array.isArray(value)) {
     return value.length > 0;
   }
 
-  return value !== null && value !== undefined && String(value).trim() !== '';
+  return toSafeString(value) !== '';
 };
 
 export const isEmail = (value) => {
-  if (!isRequired(value)) {
+  const safeValue = toSafeString(value);
+
+  if (!isRequired(safeValue)) {
     return false;
   }
 
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value).trim());
+  return EMAIL_REGEX.test(safeValue);
 };
 
 export const isUrl = (value) => {
-  if (!isRequired(value)) {
+  const safeValue = toSafeString(value);
+
+  if (!isRequired(safeValue)) {
     return false;
   }
 
   try {
-    new URL(String(value).trim());
+    new URL(safeValue);
     return true;
   } catch {
     return false;
@@ -29,27 +37,33 @@ export const isUrl = (value) => {
 };
 
 export const minLength = (value, min) => {
-  if (!isRequired(value)) {
+  const safeValue = toSafeString(value);
+
+  if (!isRequired(safeValue)) {
     return false;
   }
 
-  return String(value).trim().length >= min;
+  return safeValue.length >= min;
 };
 
 export const maxLength = (value, max) => {
-  if (!isRequired(value)) {
+  const safeValue = toSafeString(value);
+
+  if (!isRequired(safeValue)) {
     return false;
   }
 
-  return String(value).trim().length <= max;
+  return safeValue.length <= max;
 };
 
 export const isPhoneNumber = (value) => {
-  if (!isRequired(value)) {
+  const safeValue = toSafeString(value);
+
+  if (!isRequired(safeValue)) {
     return false;
   }
 
-  return /^[+]?[\d\s\-()]{7,20}$/.test(String(value).trim());
+  return PHONE_REGEX.test(safeValue);
 };
 
 export const validateCVForm = (formData = {}) => {
@@ -80,4 +94,8 @@ export const validateCVForm = (formData = {}) => {
   }
 
   return errors;
+};
+
+export const hasValidationErrors = (errors = {}) => {
+  return Object.keys(errors).length > 0;
 };

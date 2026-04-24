@@ -1,24 +1,53 @@
-
 import dayjs from 'dayjs';
 
-export const formatDate = (date) => dayjs(date).format('MMM D, YYYY');
+// ==============================
+// Date
+// ==============================
 
-export const generateId = (prefix = 'item') =>
-  `${prefix}-${Math.random().toString(36).slice(2, 10)}`;
+export const formatDate = (date, format = 'MMM D, YYYY') => {
+  if (!date) return '';
 
-export const truncateText = (text = '', maxLength = 120) => {
-  if (text.length <= maxLength) {
-    return text;
-  }
+  const parsed = dayjs(date);
+  if (!parsed.isValid()) return '';
 
-  return `${text.slice(0, maxLength)}...`;
+  return parsed.format(format);
 };
 
+// ==============================
+// ID Generator
+// ==============================
+
+export const generateId = (prefix = 'item') => {
+  const random = Math.random().toString(36).slice(2, 10);
+  const timestamp = Date.now().toString(36);
+
+  return `${prefix}-${timestamp}-${random}`;
+};
+
+// ==============================
+// Text
+// ==============================
+
+export const truncateText = (text = '', maxLength = 120) => {
+  if (typeof text !== 'string') return '';
+
+  if (text.length <= maxLength) return text;
+
+  return `${text.slice(0, maxLength).trim()}...`;
+};
+
+// ==============================
+// Initials
+// ==============================
+
 export const getInitials = (value = '') => {
+  if (typeof value !== 'string') return '';
+
   return value
+    .trim()
     .split(' ')
     .filter(Boolean)
     .slice(0, 2)
-    .map((word) => word[0]?.toUpperCase())
+    .map((word) => word.charAt(0).toUpperCase())
     .join('');
 };

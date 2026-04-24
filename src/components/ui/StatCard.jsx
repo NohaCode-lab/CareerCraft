@@ -1,27 +1,51 @@
-const StatCard = ({ label, value, icon: Icon, hint }) => {
+const StatCard = ({
+  title,
+  label,
+  value = 0,
+  description,
+  hint,
+  icon: Icon,
+  className = '',
+}) => {
+  const displayTitle = title || label;
+  const displayDescription = description || hint;
+
   return (
     <div
-      className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
-      aria-label={`${label}: ${value}`}
+      className={[
+        'group rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-lg shadow-black/20 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-indigo-400/30 hover:shadow-xl',
+        className,
+      ].join(' ')}
+      aria-label={`${displayTitle || 'Statistic'}: ${value}`}
+      role="status"
+      aria-live="polite"
     >
       <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-sm font-medium text-slate-500">{label}</p>
+        <div className="min-w-0">
+          {/* Title */}
+          <p className="text-sm font-medium text-slate-400">
+            {displayTitle}
+          </p>
 
-          <p className="mt-3 text-3xl font-bold tracking-tight text-slate-900">
+          {/* Value */}
+          <p className="mt-3 text-3xl font-bold tracking-tight text-white">
             {value}
           </p>
 
-          {hint ? (
-            <p className="mt-2 text-sm text-slate-500">{hint}</p>
-          ) : null}
+          {/* Description */}
+          {displayDescription && (
+            <p className="mt-2 text-sm leading-6 text-slate-400">
+              {displayDescription}
+            </p>
+          )}
         </div>
 
-        {Icon ? (
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600">
+        {/* Icon */}
+        {Icon && (
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-indigo-400/20 bg-indigo-500/10 text-indigo-300 transition duration-300 group-hover:scale-105 group-hover:bg-indigo-500/15">
             <Icon className="h-6 w-6" />
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );

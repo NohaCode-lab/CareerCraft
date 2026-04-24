@@ -1,20 +1,38 @@
-
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-export const exportElementToPdf = async (element, fileName = 'career-craft-document.pdf') => {
+const DEFAULT_PDF_FILE_NAME = 'career-craft-document.pdf';
+
+const PDF_OPTIONS = {
+  orientation: 'p',
+  unit: 'mm',
+  format: 'a4',
+};
+
+const CANVAS_OPTIONS = {
+  scale: 2,
+  useCORS: true,
+  backgroundColor: '#ffffff',
+};
+
+export const exportElementToPdf = async (
+  element,
+  fileName = DEFAULT_PDF_FILE_NAME
+) => {
   if (!element) {
     throw new Error('Target element is required for PDF export.');
   }
 
-  const canvas = await html2canvas(element, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: '#ffffff',
-  });
+  const safeFileName = fileName.trim() || DEFAULT_PDF_FILE_NAME;
+
+  const canvas = await html2canvas(element, CANVAS_OPTIONS);
 
   const imageData = canvas.toDataURL('image/png');
-  const pdf = new jsPDF('p', 'mm', 'a4');
+  const pdf = new jsPDF(
+    PDF_OPTIONS.orientation,
+    PDF_OPTIONS.unit,
+    PDF_OPTIONS.format
+  );
 
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
@@ -35,5 +53,5 @@ export const exportElementToPdf = async (element, fileName = 'career-craft-docum
     remainingHeight -= pageHeight;
   }
 
-  pdf.save(fileName);
+  pdf.save(safeFileName);
 };

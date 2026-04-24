@@ -1,29 +1,55 @@
+import { AlertCircle, CheckCircle2, Info, TriangleAlert, X } from 'lucide-react';
 
 const toastStyles = {
-  info: 'border-sky-200 bg-sky-50 text-sky-700',
-  success: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  warning: 'border-amber-200 bg-amber-50 text-amber-700',
-  error: 'border-red-200 bg-red-50 text-red-700',
+  info: {
+    container: 'border-sky-400/20 bg-sky-500/10 text-sky-300',
+    icon: Info,
+  },
+  success: {
+    container: 'border-emerald-400/20 bg-emerald-500/10 text-emerald-300',
+    icon: CheckCircle2,
+  },
+  warning: {
+    container: 'border-amber-400/20 bg-amber-500/10 text-amber-300',
+    icon: TriangleAlert,
+  },
+  error: {
+    container: 'border-red-400/20 bg-red-500/10 text-red-300',
+    icon: AlertCircle,
+  },
 };
 
 const Toast = ({ message, type = 'info', onClose }) => {
+  const toast = toastStyles[type] || toastStyles.info;
+  const Icon = toast.icon;
+
   return (
     <div
       className={[
-        'flex items-start justify-between gap-4 rounded-2xl border px-4 py-3 shadow-sm',
-        toastStyles[type] || toastStyles.info,
+        'flex items-start justify-between gap-4 rounded-2xl border px-4 py-3 shadow-lg shadow-black/20 backdrop-blur-sm',
+        toast.container,
       ].join(' ')}
+      role="alert"
+      aria-live="assertive"
     >
-      <p className="text-sm font-medium">{message}</p>
+      <div className="flex items-start gap-3">
+        <Icon className="mt-0.5 h-5 w-5 shrink-0" />
 
-      <button
-        type="button"
-        onClick={onClose}
-        className="rounded-md p-1 text-current transition hover:bg-white/50"
-        aria-label="Close toast"
-      >
-        ✕
-      </button>
+        <p className="text-sm font-medium leading-6">
+          {message}
+        </p>
+      </div>
+
+      {onClose && (
+        <button
+          type="button"
+          onClick={onClose}
+          className="rounded-lg p-1 text-current transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
+          aria-label="Close toast"
+        >
+          <X size={16} />
+        </button>
+      )}
     </div>
   );
 };

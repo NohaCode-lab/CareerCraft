@@ -1,81 +1,182 @@
+import React from 'react';
+import { RotateCcw, Search } from 'lucide-react';
+import { jobFilters } from '../data/jobs/filters';
+import { jobTypes } from '../data/jobs/jobTypes';
 
-import React, { useMemo } from "react";
-import { mockJobs } from "../data/jobs/mockJobs";
-import { mockApplications } from "../data/applications/mockApplications";
-
-const getMatchScore = (job) => {
-  let score = 50;
-
-  const title = job.title.toLowerCase();
-  const requirements = (job.requirements || []).join(" ").toLowerCase();
-  const description = (job.description || "").toLowerCase();
-
-  if (title.includes("frontend")) score += 15;
-  if (title.includes("react")) score += 20;
-  if (title.includes("ui")) score += 10;
-
-  if (requirements.includes("react")) score += 10;
-  if (requirements.includes("javascript")) score += 5;
-  if (requirements.includes("css")) score += 5;
-  if (description.includes("responsive")) score += 5;
-
-  if (job.remote) score += 5;
-  if (job.country === "DE" || job.country === "NL" || job.country === "EU") score += 5;
-
-  return Math.min(score, 100);
+const defaultFilters = {
+  search: '',
+  country: '',
+  seniority: '',
+  workMode: '',
+  employmentType: '',
+  savedOnly: false,
+  appliedOnly: false,
 };
 
-const JobMatch = () => {
-  const matchedJobs = useMemo(() => {
-    const appliedJobIds = new Set(
-      mockApplications
-        .filter((application) => application.jobId)
-        .map((application) => application.jobId)
-    );
+const JobFilters = ({ filters = defaultFilters, onChange, onReset }) => {
+  const handleInputChange = (event) => {
+    const { name, value, type, checked } = event.target;
 
-    return mockJobs
-      .map((job) => ({
-        ...job,
-        matchScore: getMatchScore(job),
-      }))
-      .filter((job) => !appliedJobIds.has(job.id))
-      .sort((firstJob, secondJob) => secondJob.matchScore - firstJob.matchScore)
-      .slice(0, 5);
-  }, []);
+    onChange?.({
+      ...filters,
+      [name]: type === 'checkbox' ? checked : value,
+    });
+  };
+
+  const selectClassName =
+    'w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200 outline-none transition focus:border-indigo-400/50 focus:bg-white/10 focus:ring-2 focus:ring-indigo-400/20';
+
+  const labelClassName = 'mb-2 block text-sm font-medium text-slate-300';
 
   return (
-    <section className="border rounded-lg p-4 space-y-4">
-      <div>
-        <h2 className="text-xl font-semibold">Top Job Matches</h2>
-        <p className="text-sm">
-          Suggested matches based on your frontend and React-focused target roles.
-        </p>
+    <section className="rounded-3xl border border-white/10 bg-white/3 p-5 shadow-sm">
+      <div className="mb-5 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+        <div>
+          <h2 className="text-lg font-semibold text-white">Job Filters</h2>
+          <p className="mt-1 text-sm text-slate-400">
+            Find roles that match your goals faster.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={onReset}
+          className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
+        >
+          <RotateCcw className="h-4 w-4" />
+          Reset
+        </button>
       </div>
 
-      {matchedJobs.length === 0 ? (
-        <p>No job matches available right now.</p>
-      ) : (
-        <div className="space-y-3">
-          {matchedJobs.map((job) => (
-            <article key={job.id} className="border rounded p-3">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <h3 className="font-semibold">{job.title}</h3>
-                  <p className="text-sm">
-                    {job.company} • {job.location}
-                  </p>
-                </div>
+      <div className="space-y-5">
+        <div>
+          <label className={labelClassName} htmlFor="search">
+            Search
+          </label>
 
-                <div className="text-sm font-medium">
-                  Match: {job.matchScore}%
-                </div>
-              </div>
-            </article>
-          ))}
+          <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 transition focus-within:border-indigo-400/50 focus-within:bg-white/10 focus-within:ring-2 focus-within:ring-indigo-400/20">
+            <Search className="h-4 w-4 text-slate-500" />
+
+            <input
+              id="search"
+              name="search"
+              type="text"
+              value={filters.search}
+              onChange={handleInputChange}
+              placeholder="Search by title, company, or location"
+              className="w-full bg-transparent text-sm text-slate-200 outline-none placeholder:text-slate-500"
+            />
+          </div>
         </div>
-      )}
+
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div>
+            <label className={labelClassName} htmlFor="country">
+              Country
+            </label>
+            <select
+              id="country"
+              name="country"
+              value={filters.country}
+              onChange={handleInputChange}
+              className={selectClassName}
+            >
+              <option value="">All countries</option>
+              {jobFilters.countries.map((country) => (
+                <option key={country.code} value={country.code}>
+                  {country.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className={labelClassName} htmlFor="seniority">
+              Seniority
+            </label>
+            <select
+              id="seniority"
+              name="seniority"
+              value={filters.seniority}
+              onChange={handleInputChange}
+              className={selectClassName}
+            >
+              <option value="">All levels</option>
+              {jobFilters.seniorityLevels.map((level) => (
+                <option key={level.id} value={level.label}>
+                  {level.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className={labelClassName} htmlFor="workMode">
+              Work mode
+            </label>
+            <select
+              id="workMode"
+              name="workMode"
+              value={filters.workMode}
+              onChange={handleInputChange}
+              className={selectClassName}
+            >
+              <option value="">All work modes</option>
+              {jobFilters.workModes.map((mode) => (
+                <option key={mode.id} value={mode.id}>
+                  {mode.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className={labelClassName} htmlFor="employmentType">
+              Employment type
+            </label>
+            <select
+              id="employmentType"
+              name="employmentType"
+              value={filters.employmentType}
+              onChange={handleInputChange}
+              className={selectClassName}
+            >
+              <option value="">All types</option>
+              {jobTypes.map((type) => (
+                <option key={type.id} value={type.label}>
+                  {type.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-3">
+          <label className="flex cursor-pointer items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300 transition hover:bg-white/10">
+            <input
+              type="checkbox"
+              name="savedOnly"
+              checked={filters.savedOnly}
+              onChange={handleInputChange}
+              className="h-4 w-4 rounded border-white/20 bg-slate-950 accent-indigo-500"
+            />
+            Saved only
+          </label>
+
+          <label className="flex cursor-pointer items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300 transition hover:bg-white/10">
+            <input
+              type="checkbox"
+              name="appliedOnly"
+              checked={filters.appliedOnly}
+              onChange={handleInputChange}
+              className="h-4 w-4 rounded border-white/20 bg-slate-950 accent-indigo-500"
+            />
+            Applied only
+          </label>
+        </div>
+      </div>
     </section>
   );
 };
 
-export default JobMatch;
+export default JobFilters; 

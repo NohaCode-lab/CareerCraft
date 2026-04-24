@@ -1,17 +1,56 @@
+const progressVariants = {
+  default: 'bg-indigo-500',
+  success: 'bg-emerald-500',
+  warning: 'bg-amber-500',
+  danger: 'bg-red-500',
+};
 
-const ProgressBar = ({ value = 0, className = '' }) => {
-  const safeValue = Math.min(Math.max(value, 0), 100);
+const progressSizes = {
+  sm: 'h-2',
+  md: 'h-3',
+  lg: 'h-4',
+};
+
+const ProgressBar = ({
+  value = 0,
+  label = 'Progress',
+  showLabel = true,
+  variant = 'default',
+  size = 'md',
+  className = '',
+}) => {
+  const safeValue = Math.min(Math.max(Number(value) || 0, 0), 100);
+
+  const variantClass = progressVariants[variant] || progressVariants.default;
+  const sizeClass = progressSizes[size] || progressSizes.md;
 
   return (
     <div className={['w-full', className].join(' ')}>
-      <div className="mb-2 flex items-center justify-between">
-        <span className="text-sm font-medium text-slate-700">Progress</span>
-        <span className="text-sm text-slate-500">{safeValue}%</span>
-      </div>
+      {showLabel && (
+        <div className="mb-2 flex items-center justify-between">
+          <span className="text-sm font-medium text-slate-300">{label}</span>
+          <span className="text-sm font-semibold text-white">
+            {safeValue}%
+          </span>
+        </div>
+      )}
 
-      <div className="h-3 w-full rounded-full bg-slate-200">
+      <div
+        className={[
+          'w-full overflow-hidden rounded-full bg-slate-800',
+          sizeClass,
+        ].join(' ')}
+        role="progressbar"
+        aria-valuenow={safeValue}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label={label}
+      >
         <div
-          className="h-3 rounded-full bg-indigo-600 transition-all duration-300"
+          className={[
+            'h-full rounded-full transition-all duration-500 ease-out',
+            variantClass,
+          ].join(' ')}
           style={{ width: `${safeValue}%` }}
         />
       </div>

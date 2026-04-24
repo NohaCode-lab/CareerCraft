@@ -1,5 +1,5 @@
-
 import React from "react";
+import { Bookmark, MapPin, Briefcase, Clock, Home, TrendingUp } from "lucide-react";
 
 const formatSalary = (salaryRange) => {
   if (!salaryRange) return "Salary not specified";
@@ -17,76 +17,97 @@ const JobCard = ({ job, onSave, onApply, onSelect }) => {
   if (!job) return null;
 
   const {
+    id,
     title,
     company,
-    source,
     location,
     workMode,
     employmentType,
     seniority,
     salaryRange,
-    description,
-    requirements = [],
     postedAt,
     isSaved,
     isApplied,
   } = job;
 
   return (
-    <article className="border rounded-lg p-4 space-y-3">
-      <div>
-        <h3 className="text-xl font-semibold">{title}</h3>
-        <p className="text-sm">
-          {company} • {source}
-        </p>
-      </div>
-
-      <div className="text-sm space-y-1">
-        <p><strong>Location:</strong> {location}</p>
-        <p><strong>Work Mode:</strong> {workMode}</p>
-        <p><strong>Employment Type:</strong> {employmentType}</p>
-        <p><strong>Seniority:</strong> {seniority}</p>
-        <p><strong>Salary:</strong> {formatSalary(salaryRange)}</p>
-        <p><strong>Posted:</strong> {postedAt}</p>
-      </div>
-
-      <p className="text-sm">{description}</p>
-
-      {requirements.length > 0 && (
+    <article className="group relative rounded-3xl border border-white/10 bg-white/3 p-5 transition-all duration-300 hover:border-indigo-400/30 hover:shadow-lg hover:shadow-indigo-500/10">
+      
+      {/* Top */}
+      <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="font-medium mb-1">Requirements</p>
-          <ul className="list-disc pl-5 text-sm space-y-1">
-            {requirements.map((requirement, index) => (
-              <li key={`${title}-requirement-${index}`}>{requirement}</li>
-            ))}
-          </ul>
+          <h3 className="text-lg font-semibold text-white transition group-hover:text-indigo-300">
+            {title}
+          </h3>
+          <p className="text-sm text-slate-400">{company}</p>
         </div>
-      )}
 
-      <div className="flex flex-wrap gap-2 pt-2">
         <button
-          type="button"
+          onClick={() => onSave?.(id)}
+          className={`flex h-10 w-10 items-center justify-center rounded-xl transition
+            ${
+              isSaved
+                ? "bg-indigo-500 text-white"
+                : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
+            }`}
+        >
+          <Bookmark className="h-4 w-4" />
+        </button>
+      </div>
+
+      {/* Meta */}
+      <div className="mt-4 flex flex-wrap gap-2 text-xs">
+        <span className="flex items-center gap-1 rounded-lg bg-white/5 px-2 py-1 text-slate-400">
+          <MapPin className="h-3 w-3" />
+          {location}
+        </span>
+
+        <span className="flex items-center gap-1 rounded-lg bg-white/5 px-2 py-1 text-slate-400">
+          <Home className="h-3 w-3" />
+          {workMode}
+        </span>
+
+        <span className="flex items-center gap-1 rounded-lg bg-white/5 px-2 py-1 text-slate-400">
+          <Briefcase className="h-3 w-3" />
+          {employmentType}
+        </span>
+
+        <span className="flex items-center gap-1 rounded-lg bg-white/5 px-2 py-1 text-slate-400">
+          <TrendingUp className="h-3 w-3" />
+          {seniority}
+        </span>
+
+        <span className="flex items-center gap-1 rounded-lg bg-white/5 px-2 py-1 text-slate-400">
+          <Clock className="h-3 w-3" />
+          {postedAt}
+        </span>
+      </div>
+
+      {/* Salary */}
+      <p className="mt-3 text-sm text-slate-300">
+        {formatSalary(salaryRange)}
+      </p>
+
+      {/* Actions */}
+      <div className="mt-5 flex items-center gap-2">
+        <button
           onClick={() => onSelect?.(job)}
-          className="border rounded px-3 py-2"
+          className="flex-1 rounded-xl bg-white/5 px-4 py-2 text-sm text-slate-300 transition hover:bg-white/10 hover:text-white"
         >
-          View Details
+          View
         </button>
 
         <button
-          type="button"
-          onClick={() => onSave?.(job.id)}
-          className="border rounded px-3 py-2"
-        >
-          {isSaved ? "Unsave Job" : "Save Job"}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => onApply?.(job.id)}
-          className="border rounded px-3 py-2"
+          onClick={() => onApply?.(id)}
           disabled={isApplied}
+          className={`flex-1 rounded-xl px-4 py-2 text-sm font-medium transition
+            ${
+              isApplied
+                ? "cursor-not-allowed bg-emerald-500/20 text-emerald-400"
+                : "bg-indigo-500 text-white hover:bg-indigo-600"
+            }`}
         >
-          {isApplied ? "Applied" : "Mark as Applied"}
+          {isApplied ? "Applied" : "Apply"}
         </button>
       </div>
     </article>

@@ -9,7 +9,8 @@ const questionCategories = [
   {
     id: 'behavioral',
     title: 'Behavioral Questions',
-    description: 'Practice answering questions about your past experiences, teamwork, and problem solving.',
+    description:
+      'Practice answering questions about your past experiences, teamwork, and problem solving.',
     count: 6,
     type: 'behavioral',
     isActive: true,
@@ -17,7 +18,8 @@ const questionCategories = [
   {
     id: 'technical',
     title: 'Technical Questions',
-    description: 'Prepare for technical concepts, tools, workflows, and role-specific knowledge.',
+    description:
+      'Prepare for technical concepts, tools, workflows, and role-specific knowledge.',
     count: 4,
     type: 'technical',
     isActive: false,
@@ -25,7 +27,8 @@ const questionCategories = [
   {
     id: 'hr',
     title: 'HR Questions',
-    description: 'Get ready for common HR questions about motivation, strengths, and career goals.',
+    description:
+      'Get ready for common HR questions about motivation, strengths, and career goals.',
     count: 5,
     type: 'hr',
     isActive: false,
@@ -64,62 +67,79 @@ const sampleQuestions = [
 
 const InterviewPrepPage = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <PageHeader
         title="Interview Prep"
         description="Practice common interview questions, build strong STAR answers, and improve your interview readiness."
       />
 
-      <div className="space-y-8">
-        <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-          <InterviewChecklist />
-          <STARBuilder />
+      <section
+        className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]"
+        aria-label="Interview preparation tools"
+      >
+        <InterviewChecklist />
+        <STARBuilder />
+      </section>
+
+      <section
+        className="space-y-4"
+        aria-labelledby="question-categories-heading"
+      >
+        <div>
+          <h2
+            id="question-categories-heading"
+            className="text-2xl font-bold text-white"
+          >
+            Question Categories
+          </h2>
+          <p className="mt-2 text-sm text-slate-400">
+            Explore the main interview areas you should prepare for.
+          </p>
         </div>
 
-        <section className="space-y-4">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900">Question Categories</h2>
-            <p className="mt-2 text-sm text-slate-600">
-              Explore the main interview areas you should prepare for.
-            </p>
-          </div>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {questionCategories.map((category) => (
+            <QuestionCategory
+              key={category.id}
+              title={category.title}
+              description={category.description}
+              count={category.count}
+              type={category.type}
+              isActive={category.isActive}
+            />
+          ))}
+        </div>
+      </section>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {questionCategories.map((category) => (
-              <QuestionCategory
-                key={category.id}
-                title={category.title}
-                description={category.description}
-                count={category.count}
-                type={category.type}
-                isActive={category.isActive}
-              />
-            ))}
-          </div>
-        </section>
+      <section
+        className="space-y-4"
+        aria-labelledby="practice-questions-heading"
+      >
+        <div>
+          <h2
+            id="practice-questions-heading"
+            className="text-2xl font-bold text-white"
+          >
+            Practice Questions
+          </h2>
+          <p className="mt-2 text-sm text-slate-400">
+            Review sample questions and train yourself to answer clearly and confidently.
+          </p>
+        </div>
 
-        <section className="space-y-4">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900">Practice Questions</h2>
-            <p className="mt-2 text-sm text-slate-600">
-              Review sample questions and train yourself to answer clearly and confidently.
-            </p>
-          </div>
-
-          <div className="grid gap-6">
-            {sampleQuestions.map((item) => (
-              <QuestionCard
-                key={item.id}
-                question={item.question}
-                category={item.category}
-                difficulty={item.difficulty}
-                tip={item.tip}
-                sampleAnswer={item.sampleAnswer}
-              />
-            ))}
-          </div>
-        </section>
-      </div>
+        <div className="grid gap-6">
+          {sampleQuestions.map((item) => (
+            <QuestionCard
+              key={item.id}
+              question={item.question}
+              category={item.category}
+              difficulty={item.difficulty}
+              tip={item.tip}
+              sampleAnswer={item.sampleAnswer}
+            />
+          ))}
+        </div>
+      </section>
     </div>
   );
 };

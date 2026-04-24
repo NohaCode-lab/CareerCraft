@@ -1,17 +1,25 @@
 import PageHeader from '../layout/PageHeader';
+import AIAssistantChat from '../ai/AIAssistantChat';
+import CoverLetterGenerator from '../ai/CoverLetterGenerator';
 
 const AIAssistantPage = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <PageHeader
         title="AI Assistant"
-        description="Use AI tools to improve your resume, generate cover letters, and get career guidance."
+        description="Use AI tools to improve your CV, generate cover letters, and get personalized career guidance."
       />
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <p className="text-sm text-slate-600">
-          AI Assistant content will be added here.
-        </p>
+      <div className="grid gap-6 xl:grid-cols-2">
+        {/* AI Chat */}
+        <div className="space-y-4">
+          <AIAssistantChat />
+        </div>
+
+        {/* Cover Letter Generator */}
+        <div className="space-y-4">
+          <CoverLetterGenerator />
+        </div>
       </div>
     </div>
   );

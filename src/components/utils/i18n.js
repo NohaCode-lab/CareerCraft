@@ -1,5 +1,9 @@
 import { LANGUAGES } from './constants';
 
+// ==============================
+// Translations
+// ==============================
+
 export const translations = {
   [LANGUAGES.EN]: {
     appName: 'CareerCraft',
@@ -27,14 +31,14 @@ export const translations = {
 
   [LANGUAGES.AR]: {
     appName: 'CareerCraft',
-    dashboard: 'Dashboard',
-    cvBuilder: 'CV Builder',
-    jobSearch: 'Job Search',
-    savedJobs: 'Saved Jobs',
-    applications: 'Applications',
-    interviewPrep: 'Interview Prep',
-    aiAssistant: 'AI Assistant',
-    settings: 'Settings',
+    dashboard: 'لوحة التحكم',
+    cvBuilder: 'منشئ السيرة الذاتية',
+    jobSearch: 'البحث عن وظيفة',
+    savedJobs: 'الوظائف المحفوظة',
+    applications: 'طلبات التوظيف',
+    interviewPrep: 'التحضير للمقابلات',
+    aiAssistant: 'المساعد الذكي',
+    settings: 'الإعدادات',
   },
 
   [LANGUAGES.NL]: {
@@ -50,6 +54,21 @@ export const translations = {
   },
 };
 
+// ==============================
+// Get full dictionary
+// ==============================
+
 export const getTranslation = (language = LANGUAGES.EN) => {
   return translations[language] || translations[LANGUAGES.EN];
+};
+
+// ==============================
+// Get single key (safe)
+// ==============================
+
+export const t = (key, language = LANGUAGES.EN) => {
+  const langPack = translations[language] || translations[LANGUAGES.EN];
+  const fallback = translations[LANGUAGES.EN];
+
+  return langPack[key] || fallback[key] || key;
 };

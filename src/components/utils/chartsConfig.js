@@ -1,3 +1,6 @@
+// ==============================
+// Chart Config
+// ==============================
 
 export const applicationStatusChartConfig = {
   dataKey: 'value',
@@ -9,20 +12,52 @@ export const weeklyApplicationsChartConfig = {
   dataKey: 'applications',
 };
 
-export const buildStatusChartData = (applications = []) => {
-  const counts = {
-    Saved: 0,
-    Applied: 0,
-    Interview: 0,
-    Offer: 0,
-    Rejected: 0,
-  };
+// ==============================
+// Constants
+// ==============================
+
+const DEFAULT_STATUSES = [
+  'Saved',
+  'Applied',
+  'Interview',
+  'Offer',
+  'Rejected',
+];
+
+// ==============================
+// Helpers
+// ==============================
+
+const normalizeStatus = (status) => {
+  if (!status || typeof status !== 'string') return null;
+  return status.trim();
+};
+
+// ==============================
+// Builders
+// ==============================
+
+export const buildStatusChartData = (
+  applications = [],
+  statuses = DEFAULT_STATUSES
+) => {
+  if (!Array.isArray(applications)) return [];
+
+  const counts = statuses.reduce((acc, status) => {
+    acc[status] = 0;
+    return acc;
+  }, {});
 
   applications.forEach((application) => {
-    if (counts[application.status] !== undefined) {
-      counts[application.status] += 1;
+    const status = normalizeStatus(application?.status);
+
+    if (status && counts[status] !== undefined) {
+      counts[status] += 1;
     }
   });
 
-  return Object.entries(counts).map(([name, value]) => ({ name, value }));
+  return Object.entries(counts).map(([name, value]) => ({
+    name,
+    value,
+  }));
 };
