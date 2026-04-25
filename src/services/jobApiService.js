@@ -1,5 +1,4 @@
-import { mockJobs } from '../data/jobs/mockJobs';
-
+import { mockJobs } from "../components/data/jobs/mockJobs";
 const createSuccessResponse = (data) => ({
   success: true,
   data,

@@ -43,16 +43,16 @@ const sampleQuestions = [
     difficulty: 'Medium',
     tip: 'Use the STAR method and focus on your actions and measurable results.',
     sampleAnswer:
-      'In my previous project, we had a deadline issue because part of the UI was not responsive across devices. I reviewed the layout structure, identified the styling conflicts, rebuilt the section using a mobile-first approach, and tested it on multiple breakpoints. As a result, the issue was resolved before delivery and the final user experience improved significantly.',
+      'In my previous project, we had a deadline issue because part of the UI was not responsive across devices...',
   },
   {
     id: 2,
     question: 'Why do you want to work for this company?',
     category: 'HR',
     difficulty: 'Easy',
-    tip: 'Connect your skills and goals with the company mission, product, or culture.',
+    tip: 'Connect your skills and goals with the company mission.',
     sampleAnswer:
-      'I want to work for this company because I value building user-focused digital products, and I appreciate how your team combines innovation with practical impact. I believe my front-end development skills and focus on clean UI can contribute meaningfully to your product goals.',
+      'I want to work for this company because I value building user-focused digital products...',
   },
   {
     id: 3,
@@ -61,28 +61,32 @@ const sampleQuestions = [
     difficulty: 'Medium',
     tip: 'Show that you stay calm, prioritize tasks, and communicate clearly.',
     sampleAnswer:
-      'When I work under pressure, I first break the work into clear priorities, focus on the highest-impact tasks, and communicate progress early. This helps me stay organized, reduce stress, and deliver quality work on time.',
+      'When I work under pressure, I first break the work into clear priorities...',
   },
 ];
 
 const InterviewPrepPage = () => {
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <PageHeader
         title="Interview Prep"
         description="Practice common interview questions, build strong STAR answers, and improve your interview readiness."
       />
 
+      {/* Tools */}
       <section
         className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]"
         aria-label="Interview preparation tools"
       >
         <InterviewChecklist />
-        <STARBuilder />
+        <div className="xl:sticky xl:top-24">
+          <STARBuilder />
+        </div>
       </section>
 
+      {/* Categories */}
       <section
-        className="space-y-4"
+        className="space-y-5"
         aria-labelledby="question-categories-heading"
       >
         <div>
@@ -92,6 +96,7 @@ const InterviewPrepPage = () => {
           >
             Question Categories
           </h2>
+
           <p className="mt-2 text-sm text-slate-400">
             Explore the main interview areas you should prepare for.
           </p>
@@ -101,42 +106,40 @@ const InterviewPrepPage = () => {
           {questionCategories.map((category) => (
             <QuestionCategory
               key={category.id}
-              title={category.title}
-              description={category.description}
-              count={category.count}
-              type={category.type}
-              isActive={category.isActive}
+              {...category}
             />
           ))}
         </div>
       </section>
 
+      {/* Questions */}
       <section
-        className="space-y-4"
+        className="space-y-5"
         aria-labelledby="practice-questions-heading"
       >
-        <div>
-          <h2
-            id="practice-questions-heading"
-            className="text-2xl font-bold text-white"
-          >
-            Practice Questions
-          </h2>
-          <p className="mt-2 text-sm text-slate-400">
-            Review sample questions and train yourself to answer clearly and confidently.
-          </p>
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2
+              id="practice-questions-heading"
+              className="text-2xl font-bold text-white"
+            >
+              Practice Questions
+            </h2>
+
+            <p className="mt-2 text-sm text-slate-400">
+              Review sample questions and train yourself to answer clearly and confidently.
+            </p>
+          </div>
+
+          {/* Count */}
+          <span className="text-sm text-slate-400">
+            {sampleQuestions.length} questions
+          </span>
         </div>
 
         <div className="grid gap-6">
           {sampleQuestions.map((item) => (
-            <QuestionCard
-              key={item.id}
-              question={item.question}
-              category={item.category}
-              difficulty={item.difficulty}
-              tip={item.tip}
-              sampleAnswer={item.sampleAnswer}
-            />
+            <QuestionCard key={item.id} {...item} />
           ))}
         </div>
       </section>

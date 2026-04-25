@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import StatCard from '../ui/StatCard';
 import useJobs from '../../hooks/useJobs';
 import useApplications from '../../hooks/useApplications';
-import { dashboardStatsConfig } from '../data/dashboard/stats';
+import { dashboardStatsConfig } from '../../data/dashboard/stats';
 
 const DashboardStats = () => {
   const { savedJobs = [], jobs = [] } = useJobs();

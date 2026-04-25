@@ -11,15 +11,13 @@ const AIAssistantPage = () => {
       />
 
       <div className="grid gap-6 xl:grid-cols-2">
-        {/* AI Chat */}
-        <div className="space-y-4">
+        <section className="space-y-4" aria-label="AI career chat">
           <AIAssistantChat />
-        </div>
+        </section>
 
-        {/* Cover Letter Generator */}
-        <div className="space-y-4">
+        <section className="space-y-4" aria-label="Cover letter generator">
           <CoverLetterGenerator />
-        </div>
+        </section>
       </div>
     </div>
   );

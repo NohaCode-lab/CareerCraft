@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+
 import DashboardHeader from '../dashboard/DashboardHeader';
 import DashboardStats from '../dashboard/DashboardStats';
 import DashboardQuickActions from '../dashboard/DashboardQuickActions';
@@ -7,8 +8,9 @@ import DashboardRecentApplications from '../dashboard/DashboardRecentApplication
 import DashboardSavedJobsPreview from '../dashboard/DashboardSavedJobsPreview';
 import DashboardInterviewPrepPreview from '../dashboard/DashboardInterviewPrepPreview';
 import DashboardProfileStrength from '../dashboard/DashboardProfileStrength';
+
 import { useAuth } from '../../hooks/useAuth';
-import { fadeUpDelayed } from '../utils/motion';
+import { fadeUpDelayed } from '../../utils/motion';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -16,12 +18,8 @@ const Dashboard = () => {
   const userName = user?.name?.trim() || 'there';
 
   return (
-    <div className="space-y-6">
-      <motion.div
-        variants={fadeUpDelayed(0)}
-        initial="hidden"
-        animate="visible"
-      >
+    <div className="space-y-8">
+      <motion.div variants={fadeUpDelayed(0)} initial="hidden" animate="visible">
         <DashboardHeader userName={userName} />
       </motion.div>
 
@@ -55,7 +53,7 @@ const Dashboard = () => {
           </motion.section>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-6 xl:sticky xl:top-24">
           <motion.section
             aria-label="Saved jobs preview"
             variants={fadeUpDelayed(0.2)}

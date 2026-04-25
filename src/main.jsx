@@ -4,11 +4,12 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
 
-import LanguageProvider from './components/context/LanguageContext';
-import UIProvider from './components/context/UIContext';
-import AuthProvider from './components/context/AuthContext';
-import JobsProvider from './components/context/JobsContext';
-import ApplicationsProvider from './components/context/ApplicationsContext';
+import LanguageProvider from './context/LanguageContext';
+import UIProvider from './context/UIContext';
+import AuthProvider from './context/AuthContext';
+import JobsProvider from './context/JobsContext';
+import ApplicationsProvider from './context/ApplicationsContext';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>

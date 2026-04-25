@@ -1,7 +1,7 @@
 import React from 'react';
 import { RotateCcw, Search } from 'lucide-react';
-import { jobFilters } from '../data/jobs/filters';
-import { jobTypes } from '../data/jobs/jobTypes';
+import { jobFilters } from '../../data/jobs/filters';
+import { jobTypes } from '../../data/jobs/jobTypes';
 
 const defaultFilters = {
   search: '',

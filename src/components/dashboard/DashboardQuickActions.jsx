@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FileEdit, Search, MessageSquareText, Settings } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
-import { ROUTES } from '../config/routes';
+import { ROUTES } from '../../config/routes';
 
 const actions = [
   {

@@ -15,22 +15,18 @@ const CVBuilderPage = () => {
       />
 
       <div className="grid gap-6 xl:grid-cols-12">
-        <section
-          className="space-y-6 xl:col-span-5"
-          aria-label="CV editing tools"
-        >
+        <section className="space-y-6 xl:col-span-5" aria-label="CV editing tools">
           <CVForm />
           <TemplateSwitcher />
           <DragDropSections />
           <ATSAnalyzer />
         </section>
 
-        <section
-          className="space-y-6 xl:col-span-7"
-          aria-label="CV preview and export"
-        >
-          <CVPreview />
-          <CVDownload />
+        <section className="space-y-6 xl:col-span-7" aria-label="CV preview and export">
+          <div className="space-y-6 xl:sticky xl:top-24">
+            <CVPreview />
+            <CVDownload />
+          </div>
         </section>
       </div>
     </div>

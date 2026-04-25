@@ -11,7 +11,7 @@ import AIAssistantPage from './components/pages/AIAssistantPage';
 import SettingsPage from './components/pages/SettingsPage';
 import NotFoundPage from './components/pages/NotFoundPage';
 
-import { ROUTES } from './components/config/routes';
+import { ROUTES } from './config/routes';
 
 const App = () => {
   return (

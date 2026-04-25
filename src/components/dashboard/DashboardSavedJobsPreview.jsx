@@ -4,7 +4,7 @@ import Card from '../ui/Card';
 import Button from '../ui/Button';
 import EmptyState from '../ui/EmptyState';
 import useJobs from '../../hooks/useJobs';
-import { ROUTES } from '../config/routes';
+import { ROUTES } from '../../config/routes';
 
 const DashboardSavedJobsPreview = () => {
   const navigate = useNavigate();

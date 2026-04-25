@@ -10,33 +10,29 @@ const useJobSearch = (initialFilters = {}) => {
     employmentType: initialFilters.employmentType || '',
     seniority: initialFilters.seniority || '',
   });
+
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
   const debouncedQuery = useDebounce(query, 400);
 
-  const searchParams = useMemo(
-    () => ({
-      query: debouncedQuery,
-      ...filters,
-    }),
-    [debouncedQuery, filters]
-  );
+  const searchParams = useMemo(() => ({
+    query: debouncedQuery,
+    ...filters,
+  }), [debouncedQuery, filters]);
 
   useEffect(() => {
-    let isMounted = true;
+    const controller = new AbortController();
 
     const loadJobs = async () => {
       setIsLoading(true);
       setError('');
 
       try {
-        const response = await fetchJobs(searchParams);
-
-        if (!isMounted) {
-          return;
-        }
+        const response = await fetchJobs(searchParams, {
+          signal: controller.signal,
+        });
 
         if (!response.success) {
           setJobs([]);
@@ -46,29 +42,47 @@ const useJobSearch = (initialFilters = {}) => {
 
         setJobs(response.data);
       } catch (err) {
-        if (isMounted) {
+        if (err.name !== 'AbortError') {
           setJobs([]);
           setError(err.message || 'Failed to fetch jobs.');
         }
       } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       }
     };
 
     loadJobs();
 
     return () => {
-      isMounted = false;
+      controller.abort();
     };
   }, [searchParams]);
+
+  // ✅ helper functions
+  const updateFilter = (key, value) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const resetFilters = () => {
+    setQuery('');
+    setFilters({
+      location: '',
+      remote: false,
+      employmentType: '',
+      seniority: '',
+    });
+  };
 
   return {
     query,
     setQuery,
     filters,
     setFilters,
+    updateFilter,
+    resetFilters,
     jobs,
     isLoading,
     error,

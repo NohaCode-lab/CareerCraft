@@ -46,11 +46,12 @@ const SettingsPage = () => {
           <LanguageSwitcher />
         </SettingsSection>
 
-        <section className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg backdrop-blur-sm">
+        <section className="rounded-3xl border border-white/10 bg-white/3 p-6 shadow-lg backdrop-blur-xl">
           <div className="mb-5">
             <h2 className="text-lg font-semibold text-white">
               More settings coming soon
             </h2>
+
             <p className="mt-2 text-sm leading-6 text-slate-400">
               Future updates will include notification preferences, CV defaults,
               export options, and additional personalization tools.
@@ -64,11 +65,12 @@ const SettingsPage = () => {
               return (
                 <div
                   key={item.id}
-                  className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-800/50 p-4 text-sm text-slate-300"
+                  className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-300 transition hover:bg-white/10 hover:text-white"
                 >
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-300">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-300 transition group-hover:bg-indigo-500/20 group-hover:text-indigo-200">
                     <Icon size={16} />
                   </div>
+
                   <span>{item.title}</span>
                 </div>
               );

@@ -5,7 +5,7 @@ import Button from '../ui/Button';
 import EmptyState from '../ui/EmptyState';
 import Badge from '../ui/Badge';
 import useApplications from '../../hooks/useApplications';
-import { ROUTES } from '../config/routes';
+import { ROUTES } from '../../config/routes';
 
 const getApplicationTimestamp = (application) => {
   return new Date(application.appliedAt || application.date || 0).getTime();
