@@ -1,14 +1,4 @@
-import { useMemo } from 'react';
-import useLocalStorage from '../../hooks/useLocalStorage';
-
-import {
-  createEducationItem,
-  createExperienceItem,
-  createLanguageItem,
-  createProjectItem,
-  defaultCV,
-  getSafeArray,
-} from './cvFormModel';
+import useCVFormState from '../../hooks/useCVFormState';
 
 const inputClasses =
   'w-full rounded-lg border border-slate-300 bg-white p-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20';
@@ -44,100 +34,15 @@ const EmptySectionState = ({ title, description }) => {
 };
 
 const CVForm = () => {
-  const [cvData, setCvData] = useLocalStorage('cvData', defaultCV);
-
-  const safeCVData = useMemo(() => {
-    return {
-      ...defaultCV,
-      ...(cvData || {}),
-      experience: getSafeArray(cvData?.experience),
-      education: getSafeArray(cvData?.education),
-      languages: getSafeArray(cvData?.languages),
-      projects: getSafeArray(cvData?.projects),
-    };
-  }, [cvData]);
-
-  const isNameInvalid =
-    safeCVData.fullName.trim().length > 0 &&
-    safeCVData.fullName.trim().length < 3;
-
-  const isEmailInvalid =
-    safeCVData.email.trim().length > 0 &&
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safeCVData.email.trim());
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setCvData((previousData) => ({
-      ...defaultCV,
-      ...(previousData || {}),
-      [name]: value,
-    }));
-  };
-
-  const handleListChange = (section, index, field, value) => {
-    setCvData((previousData) => {
-      const currentData = {
-        ...defaultCV,
-        ...(previousData || {}),
-      };
-
-      const updatedItems = [...getSafeArray(currentData[section])];
-
-      updatedItems[index] = {
-        ...(updatedItems[index] || {}),
-        [field]: value,
-      };
-
-      return {
-        ...currentData,
-        [section]: updatedItems,
-      };
-    });
-  };
-
-  const addItem = (section) => {
-    const factories = {
-      experience: createExperienceItem,
-      education: createEducationItem,
-      languages: createLanguageItem,
-      projects: createProjectItem,
-    };
-
-    const createItem = factories[section];
-
-    if (!createItem) {
-      return;
-    }
-
-    setCvData((previousData) => {
-      const currentData = {
-        ...defaultCV,
-        ...(previousData || {}),
-      };
-
-      return {
-        ...currentData,
-        [section]: [...getSafeArray(currentData[section]), createItem()],
-      };
-    });
-  };
-
-  const removeItem = (section, index) => {
-    setCvData((previousData) => {
-      const currentData = {
-        ...defaultCV,
-        ...(previousData || {}),
-      };
-
-      return {
-        ...currentData,
-        [section]: getSafeArray(currentData[section]).filter(
-          (_, itemIndex) => itemIndex !== index
-        ),
-      };
-    });
-  };
+  const {
+    safeCVData,
+    isNameInvalid,
+    isEmailInvalid,
+    handleChange,
+    handleListChange,
+    addItem,
+    removeItem,
+  } = useCVFormState();
 
   return (
     <div className="card-base p-6">
