@@ -9,7 +9,7 @@ import DashboardSavedJobsPreview from '../dashboard/DashboardSavedJobsPreview';
 import DashboardInterviewPrepPreview from '../dashboard/DashboardInterviewPrepPreview';
 import DashboardProfileStrength from '../dashboard/DashboardProfileStrength';
 
-import { useAuth } from '../../hooks/useAuth';
+import  useAuth  from '../../hooks/useAuth';
 import { fadeUpDelayed } from '../../utils/motion';
 
 const Dashboard = () => {

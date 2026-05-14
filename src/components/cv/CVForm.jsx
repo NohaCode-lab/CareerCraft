@@ -1,18 +1,14 @@
+import { useMemo } from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
-const defaultCV = {
-  fullName: '',
-  title: '',
-  email: '',
-  phone: '',
-  location: '',
-  summary: '',
-  skills: '',
-  experience: [],
-  education: [],
-  languages: [],
-  projects: [],
-};
+import {
+  createEducationItem,
+  createExperienceItem,
+  createLanguageItem,
+  createProjectItem,
+  defaultCV,
+  getSafeArray,
+} from './cvFormModel';
 
 const inputClasses =
   'w-full rounded-lg border border-slate-300 bg-white p-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20';
@@ -21,62 +17,75 @@ const labelClasses = 'mb-2 block text-sm font-medium text-slate-700';
 
 const sectionCardClasses = 'rounded-xl border border-slate-200 bg-slate-50 p-4';
 
-const createExperienceItem = () => ({
-  id: Date.now() + Math.random(),
-  role: '',
-  company: '',
-  duration: '',
-  description: '',
-});
+const addButtonClasses =
+  'rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/30';
 
-const createEducationItem = () => ({
-  id: Date.now() + Math.random(),
-  degree: '',
-  school: '',
-  year: '',
-});
+const removeButtonClasses =
+  'text-sm font-medium text-red-600 transition hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-500/20';
 
-const createLanguageItem = () => ({
-  id: Date.now() + Math.random(),
-  name: '',
-  level: '',
-});
+const helperTextClasses = 'mt-2 text-xs text-slate-500';
 
-const createProjectItem = () => ({
-  id: Date.now() + Math.random(),
-  title: '',
-  description: '',
-  link: '',
-});
+const errorTextClasses = 'mt-1 text-xs font-medium text-red-500';
+
+const getInputClasses = (hasError) => {
+  return [
+    inputClasses,
+    hasError ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : '',
+  ].join(' ');
+};
+
+const EmptySectionState = ({ title, description }) => {
+  return (
+    <div className="rounded-xl border border-dashed border-slate-300 bg-white p-6 text-center">
+      <p className="text-sm font-medium text-slate-600">{title}</p>
+      <p className="mt-1 text-xs text-slate-400">{description}</p>
+    </div>
+  );
+};
 
 const CVForm = () => {
   const [cvData, setCvData] = useLocalStorage('cvData', defaultCV);
 
-  const safeCVData = {
-    ...defaultCV,
-    ...(cvData || {}),
-    experience: Array.isArray(cvData?.experience) ? cvData.experience : [],
-    education: Array.isArray(cvData?.education) ? cvData.education : [],
-    languages: Array.isArray(cvData?.languages) ? cvData.languages : [],
-    projects: Array.isArray(cvData?.projects) ? cvData.projects : [],
-  };
+  const safeCVData = useMemo(() => {
+    return {
+      ...defaultCV,
+      ...(cvData || {}),
+      experience: getSafeArray(cvData?.experience),
+      education: getSafeArray(cvData?.education),
+      languages: getSafeArray(cvData?.languages),
+      projects: getSafeArray(cvData?.projects),
+    };
+  }, [cvData]);
+
+  const isNameInvalid =
+    safeCVData.fullName.trim().length > 0 &&
+    safeCVData.fullName.trim().length < 3;
+
+  const isEmailInvalid =
+    safeCVData.email.trim().length > 0 &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safeCVData.email.trim());
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
     setCvData((previousData) => ({
-      ...(previousData || defaultCV),
+      ...defaultCV,
+      ...(previousData || {}),
       [name]: value,
     }));
   };
 
   const handleListChange = (section, index, field, value) => {
     setCvData((previousData) => {
-      const currentData = previousData || defaultCV;
-      const updatedItems = [...(currentData[section] || [])];
+      const currentData = {
+        ...defaultCV,
+        ...(previousData || {}),
+      };
+
+      const updatedItems = [...getSafeArray(currentData[section])];
 
       updatedItems[index] = {
-        ...updatedItems[index],
+        ...(updatedItems[index] || {}),
         [field]: value,
       };
 
@@ -102,25 +111,30 @@ const CVForm = () => {
     }
 
     setCvData((previousData) => {
-      const currentData = previousData || defaultCV;
+      const currentData = {
+        ...defaultCV,
+        ...(previousData || {}),
+      };
 
       return {
         ...currentData,
-        [section]: [...(currentData[section] || []), createItem()],
+        [section]: [...getSafeArray(currentData[section]), createItem()],
       };
     });
   };
 
   const removeItem = (section, index) => {
     setCvData((previousData) => {
-      const currentData = previousData || defaultCV;
-      const updatedItems = [...(currentData[section] || [])];
-
-      updatedItems.splice(index, 1);
+      const currentData = {
+        ...defaultCV,
+        ...(previousData || {}),
+      };
 
       return {
         ...currentData,
-        [section]: updatedItems,
+        [section]: getSafeArray(currentData[section]).filter(
+          (_, itemIndex) => itemIndex !== index
+        ),
       };
     });
   };
@@ -146,8 +160,14 @@ const CVForm = () => {
             placeholder="Enter your full name"
             value={safeCVData.fullName}
             onChange={handleChange}
-            className={inputClasses}
+            className={getInputClasses(isNameInvalid)}
+            autoComplete="name"
           />
+          {isNameInvalid && (
+            <p className={errorTextClasses}>
+              Name must be at least 3 characters.
+            </p>
+          )}
         </div>
 
         <div>
@@ -162,6 +182,7 @@ const CVForm = () => {
             value={safeCVData.title}
             onChange={handleChange}
             className={inputClasses}
+            autoComplete="organization-title"
           />
         </div>
 
@@ -176,8 +197,12 @@ const CVForm = () => {
             placeholder="name@example.com"
             value={safeCVData.email}
             onChange={handleChange}
-            className={inputClasses}
+            className={getInputClasses(isEmailInvalid)}
+            autoComplete="email"
           />
+          {isEmailInvalid && (
+            <p className={errorTextClasses}>Enter a valid email address.</p>
+          )}
         </div>
 
         <div>
@@ -192,6 +217,7 @@ const CVForm = () => {
             value={safeCVData.phone}
             onChange={handleChange}
             className={inputClasses}
+            autoComplete="tel"
           />
         </div>
 
@@ -207,6 +233,7 @@ const CVForm = () => {
             value={safeCVData.location}
             onChange={handleChange}
             className={inputClasses}
+            autoComplete="address-level2"
           />
         </div>
       </div>
@@ -239,18 +266,16 @@ const CVForm = () => {
           rows={3}
           className={inputClasses}
         />
-        <p className="mt-2 text-xs text-slate-500">
-          Separate each skill with a comma.
-        </p>
+        <p className={helperTextClasses}>Separate each skill with a comma.</p>
       </div>
 
       <div className="mt-8">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between gap-4">
           <h3 className="text-lg font-semibold text-slate-900">Experience</h3>
           <button
             type="button"
             onClick={() => addItem('experience')}
-            className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700"
+            className={addButtonClasses}
           >
             Add Experience
           </button>
@@ -260,14 +285,14 @@ const CVForm = () => {
           <div className="space-y-4">
             {safeCVData.experience.map((item, index) => (
               <div key={item.id || index} className={sectionCardClasses}>
-                <div className="mb-4 flex items-center justify-between">
+                <div className="mb-4 flex items-center justify-between gap-4">
                   <p className="text-sm font-semibold text-slate-800">
                     Experience #{index + 1}
                   </p>
                   <button
                     type="button"
                     onClick={() => removeItem('experience', index)}
-                    className="text-sm font-medium text-red-600 transition hover:text-red-700"
+                    className={removeButtonClasses}
                   >
                     Remove
                   </button>
@@ -350,19 +375,20 @@ const CVForm = () => {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-slate-500">
-            No experience added yet.
-          </p>
+          <EmptySectionState
+            title="No experience added yet."
+            description='Click "Add Experience" to start building your career story.'
+          />
         )}
       </div>
 
       <div className="mt-8">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between gap-4">
           <h3 className="text-lg font-semibold text-slate-900">Education</h3>
           <button
             type="button"
             onClick={() => addItem('education')}
-            className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700"
+            className={addButtonClasses}
           >
             Add Education
           </button>
@@ -372,14 +398,14 @@ const CVForm = () => {
           <div className="space-y-4">
             {safeCVData.education.map((item, index) => (
               <div key={item.id || index} className={sectionCardClasses}>
-                <div className="mb-4 flex items-center justify-between">
+                <div className="mb-4 flex items-center justify-between gap-4">
                   <p className="text-sm font-semibold text-slate-800">
                     Education #{index + 1}
                   </p>
                   <button
                     type="button"
                     onClick={() => removeItem('education', index)}
-                    className="text-sm font-medium text-red-600 transition hover:text-red-700"
+                    className={removeButtonClasses}
                   >
                     Remove
                   </button>
@@ -444,19 +470,20 @@ const CVForm = () => {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-slate-500">
-            No education added yet.
-          </p>
+          <EmptySectionState
+            title="No education added yet."
+            description='Click "Add Education" to add your academic background.'
+          />
         )}
       </div>
 
       <div className="mt-8">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between gap-4">
           <h3 className="text-lg font-semibold text-slate-900">Languages</h3>
           <button
             type="button"
             onClick={() => addItem('languages')}
-            className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700"
+            className={addButtonClasses}
           >
             Add Language
           </button>
@@ -466,14 +493,14 @@ const CVForm = () => {
           <div className="space-y-4">
             {safeCVData.languages.map((item, index) => (
               <div key={item.id || index} className={sectionCardClasses}>
-                <div className="mb-4 flex items-center justify-between">
+                <div className="mb-4 flex items-center justify-between gap-4">
                   <p className="text-sm font-semibold text-slate-800">
                     Language #{index + 1}
                   </p>
                   <button
                     type="button"
                     onClick={() => removeItem('languages', index)}
-                    className="text-sm font-medium text-red-600 transition hover:text-red-700"
+                    className={removeButtonClasses}
                   >
                     Remove
                   </button>
@@ -520,19 +547,20 @@ const CVForm = () => {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-slate-500">
-            No languages added yet.
-          </p>
+          <EmptySectionState
+            title="No languages added yet."
+            description='Click "Add Language" to show your language skills.'
+          />
         )}
       </div>
 
       <div className="mt-8">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between gap-4">
           <h3 className="text-lg font-semibold text-slate-900">Projects</h3>
           <button
             type="button"
             onClick={() => addItem('projects')}
-            className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700"
+            className={addButtonClasses}
           >
             Add Project
           </button>
@@ -542,14 +570,14 @@ const CVForm = () => {
           <div className="space-y-4">
             {safeCVData.projects.map((item, index) => (
               <div key={item.id || index} className={sectionCardClasses}>
-                <div className="mb-4 flex items-center justify-between">
+                <div className="mb-4 flex items-center justify-between gap-4">
                   <p className="text-sm font-semibold text-slate-800">
                     Project #{index + 1}
                   </p>
                   <button
                     type="button"
                     onClick={() => removeItem('projects', index)}
-                    className="text-sm font-medium text-red-600 transition hover:text-red-700"
+                    className={removeButtonClasses}
                   >
                     Remove
                   </button>
@@ -614,9 +642,10 @@ const CVForm = () => {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-slate-500">
-            No projects added yet.
-          </p>
+          <EmptySectionState
+            title="No projects added yet."
+            description='Click "Add Project" to showcase your best work.'
+          />
         )}
       </div>
     </div>

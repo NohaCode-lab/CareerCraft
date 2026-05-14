@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import European from '../../templates/European';
 import Modern from '../../templates/Modern';
 import Minimal from '../../templates/Minimal';
+
 const defaultCV = {
   fullName: '',
   title: '',
@@ -35,6 +36,12 @@ const templateOptions = [
   },
 ];
 
+const templates = {
+  european: European,
+  modern: Modern,
+  minimal: Minimal,
+};
+
 const parseSkills = (skills) => {
   if (Array.isArray(skills)) {
     return skills.filter(Boolean);
@@ -56,7 +63,11 @@ const getSafeArray = (value) => {
 
 const CVPreview = () => {
   const [cvData] = useLocalStorage('cvData', defaultCV);
-  const [selectedTemplate, setSelectedTemplate] = useState('european');
+
+  const [selectedTemplate, setSelectedTemplate] = useLocalStorage(
+    'cvTemplate',
+    'european'
+  );
 
   const safeCVData = useMemo(() => {
     const data = cvData || defaultCV;
@@ -73,12 +84,6 @@ const CVPreview = () => {
   }, [cvData]);
 
   const selectedTemplateComponent = useMemo(() => {
-    const templates = {
-      european: European,
-      modern: Modern,
-      minimal: Minimal,
-    };
-
     return templates[selectedTemplate] || European;
   }, [selectedTemplate]);
 
@@ -175,13 +180,12 @@ const CVPreview = () => {
             </div>
           </div>
 
-          <div
-            id="cv-preview"
-            className="overflow-hidden rounded-3xl bg-white"
-          >
+          <div id="cv-preview"
+  className="overflow-hidden rounded-3xl bg-white break-words [word-break:break-word]"
+>
             <TemplateComponent data={safeCVData} />
           </div>
-        </div>
+           </div>
       </div>
     </div>
   );

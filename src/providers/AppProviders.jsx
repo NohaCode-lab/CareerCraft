@@ -1,35 +1,27 @@
+import PropTypes from 'prop-types';
 
-import React from "react";
+import AuthProvider from '../context/AuthContext';
+import ApplicationsProvider from '../context/ApplicationsContext';
+import JobsProvider from '../context/JobsContext';
+import LanguageProvider from '../context/LanguageContext';
+import UIProvider from '../context/UIContext';
 
-import { AuthProvider } from "../context/AuthProvider";
-import { UIProvider } from "../context/UIProvider";
-import { CVProvider } from "../context/CVProvider";
-import { JobsProvider } from "../context/JobsProvider";
-import { ApplicationsProvider } from "../context/ApplicationsProvider";
-import { InterviewProvider } from "../context/InterviewProvider";
-import { AssistantProvider } from "../context/AssistantProvider";
-import { SettingsProvider } from "../context/SettingsProvider";
+const providers = [
+  AuthProvider,
+  LanguageProvider,
+  UIProvider,
+  JobsProvider,
+  ApplicationsProvider,
+];
 
 const AppProviders = ({ children }) => {
-  return (
-    <AuthProvider>
-      <SettingsProvider>
-        <UIProvider>
-          <CVProvider>
-            <JobsProvider>
-              <ApplicationsProvider>
-                <InterviewProvider>
-                  <AssistantProvider>
-                    {children}
-                  </AssistantProvider>
-                </InterviewProvider>
-              </ApplicationsProvider>
-            </JobsProvider>
-          </CVProvider>
-        </UIProvider>
-      </SettingsProvider>
-    </AuthProvider>
-  );
+  return providers.reduceRight((content, Provider) => {
+    return <Provider>{content}</Provider>;
+  }, children);
+};
+
+AppProviders.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default AppProviders;

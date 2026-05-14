@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+
 import MainLayout from './components/layout/MainLayout';
 
 import Dashboard from './components/pages/Dashboard';
@@ -13,88 +14,67 @@ import NotFoundPage from './components/pages/NotFoundPage';
 
 import { ROUTES } from './config/routes';
 
+const appRoutes = [
+  {
+    path: ROUTES.DASHBOARD,
+    pageTitle: 'Dashboard',
+    element: <Dashboard />,
+  },
+  {
+    path: ROUTES.CV_BUILDER,
+    pageTitle: 'CV Builder',
+    element: <CVBuilderPage />,
+  },
+  {
+    path: ROUTES.JOB_SEARCH,
+    pageTitle: 'Job Search',
+    element: <JobSearchPage />,
+  },
+  {
+    path: ROUTES.SAVED_JOBS,
+    pageTitle: 'Saved Jobs',
+    element: <SavedJobsPage />,
+  },
+  {
+    path: ROUTES.APPLICATIONS,
+    pageTitle: 'Applications',
+    element: <ApplicationsPage />,
+  },
+  {
+    path: ROUTES.INTERVIEW_PREP,
+    pageTitle: 'Interview Prep',
+    element: <InterviewPrepPage />,
+  },
+  {
+    path: ROUTES.AI_ASSISTANT,
+    pageTitle: 'AI Assistant',
+    element: <AIAssistantPage />,
+  },
+  {
+    path: ROUTES.SETTINGS,
+    pageTitle: 'Settings',
+    element: <SettingsPage />,
+  },
+];
+
+const renderWithLayout = (pageTitle, element) => {
+  return <MainLayout pageTitle={pageTitle}>{element}</MainLayout>;
+};
+
 const App = () => {
   return (
     <Routes>
-      <Route
-        path={ROUTES.DASHBOARD}
-        element={
-          <MainLayout pageTitle="Dashboard">
-            <Dashboard />
-          </MainLayout>
-        }
-      />
-
-      <Route
-        path={ROUTES.CV_BUILDER}
-        element={
-          <MainLayout pageTitle="CV Builder">
-            <CVBuilderPage />
-          </MainLayout>
-        }
-      />
-
-      <Route
-        path={ROUTES.JOB_SEARCH}
-        element={
-          <MainLayout pageTitle="Job Search">
-            <JobSearchPage />
-          </MainLayout>
-        }
-      />
-
-      <Route
-        path={ROUTES.SAVED_JOBS}
-        element={
-          <MainLayout pageTitle="Saved Jobs">
-            <SavedJobsPage />
-          </MainLayout>
-        }
-      />
-
-      <Route
-        path={ROUTES.APPLICATIONS}
-        element={
-          <MainLayout pageTitle="Applications">
-            <ApplicationsPage />
-          </MainLayout>
-        }
-      />
-
-      <Route
-        path={ROUTES.INTERVIEW_PREP}
-        element={
-          <MainLayout pageTitle="Interview Prep">
-            <InterviewPrepPage />
-          </MainLayout>
-        }
-      />
-
-      <Route
-        path={ROUTES.AI_ASSISTANT}
-        element={
-          <MainLayout pageTitle="AI Assistant">
-            <AIAssistantPage />
-          </MainLayout>
-        }
-      />
-
-      <Route
-        path={ROUTES.SETTINGS}
-        element={
-          <MainLayout pageTitle="Settings">
-            <SettingsPage />
-          </MainLayout>
-        }
-      />
+      {appRoutes.map(({ path, pageTitle, element }) => (
+        <Route
+          key={path}
+          path={path}
+          element={renderWithLayout(pageTitle, element)}
+        />
+      ))}
 
       <Route
         path="*"
-        element={
-          <MainLayout pageTitle="Page Not Found">
-            <NotFoundPage />
-          </MainLayout>
-        }
+        element={renderWithLayout('Page Not Found', <NotFoundPage />)}
       />
     </Routes>
   );

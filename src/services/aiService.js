@@ -8,6 +8,28 @@ const DEFAULT_CAREER_SUGGESTIONS = [
   'Highlight measurable impact in project descriptions.',
 ];
 
+const DEFAULT_CV_CONTENT = {
+  summary:
+    'Motivated front-end developer focused on building clean, responsive, and user-friendly web applications using modern React practices.',
+  skills: [
+    'React',
+    'JavaScript',
+    'HTML5',
+    'CSS3',
+    'Tailwind CSS',
+    'Responsive Design',
+    'Git',
+    'UI/UX Fundamentals',
+  ],
+  experience:
+    'Built responsive portfolio projects, career tools, and interactive user interfaces using React, Vite, Tailwind CSS, and reusable component architecture.',
+  suggestions: [
+    'Add measurable results to your project descriptions.',
+    'Match your CV keywords with the target job description.',
+    'Keep your CV clear, ATS-friendly, and focused on impact.',
+  ],
+};
+
 const createSuccessResponse = (data) => ({
   success: true,
   data,
@@ -20,13 +42,34 @@ const createErrorResponse = (message) => ({
   error: message,
 });
 
-const normalizeText = (value, fallback) => {
+const normalizeText = (value, fallback = '') => {
   if (typeof value !== 'string') {
     return fallback;
   }
 
   const trimmedValue = value.trim();
   return trimmedValue || fallback;
+};
+
+export const generateCV = async (prompt = '') => {
+  try {
+    const safePrompt = normalizeText(prompt);
+
+    if (!safePrompt) {
+      return createErrorResponse('Prompt is required to generate CV content.');
+    }
+
+    const generatedCV = {
+      ...DEFAULT_CV_CONTENT,
+      targetPrompt: safePrompt,
+    };
+
+    return createSuccessResponse(generatedCV);
+  } catch (error) {
+    return createErrorResponse(
+      error instanceof Error ? error.message : 'Failed to generate CV content.'
+    );
+  }
 };
 
 export const generateCoverLetter = async ({

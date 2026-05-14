@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { CheckCircle2, CircleAlert, Sparkles } from 'lucide-react';
 import Card from '../ui/Card';
 import ProgressBar from '../ui/ProgressBar';
-import { useAuth } from '../../hooks/useAuth';
+import  useAuth  from '../../hooks/useAuth';
 
 const DashboardProfileStrength = () => {
   const { user } = useAuth();
