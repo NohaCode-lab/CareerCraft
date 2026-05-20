@@ -1,6 +1,8 @@
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const MotionDiv = motion.div;
+
 const modalSizes = {
   sm: 'max-w-md',
   md: 'max-w-lg',
@@ -27,7 +29,7 @@ const Modal = ({
           aria-labelledby="modal-title"
           onClick={onClose}
         >
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
@@ -59,7 +61,7 @@ const Modal = ({
             <div className="px-6 py-5 text-slate-300">
               {children}
             </div>
-          </motion.div>
+          </MotionDiv>
         </div>
       )}
     </AnimatePresence>

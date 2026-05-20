@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 
+const MotionDiv = motion.div;
+
 const EmptyState = ({
   title,
   description,
@@ -7,7 +9,7 @@ const EmptyState = ({
   icon,
 }) => {
   return (
-    <motion.div
+    <MotionDiv
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       className="flex flex-col items-center justify-center rounded-3xl border border-white/10 bg-slate-900/70 p-10 text-center shadow-lg shadow-black/20 backdrop-blur"
@@ -31,7 +33,7 @@ const EmptyState = ({
 
       {/* Action */}
       {action && <div className="mt-6">{action}</div>}
-    </motion.div>
+    </MotionDiv>
   );
 };
 

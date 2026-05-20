@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 
-import LanguageContext from '../../context/LanguageContext';
-import { translations } from '../../config/translations';
+import LanguageContext from '../context/LanguageContext';
+import { translations } from '../config/translations';
 
 const EMPTY_TEXT = '';
 
@@ -170,6 +170,7 @@ const ExperienceItem = ({ item }) => {
 
 ExperienceItem.propTypes = {
   item: PropTypes.shape({
+    id: PropTypes.string,
     role: PropTypes.string,
     title: PropTypes.string,
     company: PropTypes.string,
@@ -236,6 +237,7 @@ const EducationItem = ({ item }) => {
 
 EducationItem.propTypes = {
   item: PropTypes.shape({
+    id: PropTypes.string,
     degree: PropTypes.string,
     school: PropTypes.string,
     institution: PropTypes.string,
@@ -296,6 +298,7 @@ const ProjectItem = ({ item }) => {
 
 ProjectItem.propTypes = {
   item: PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string,
     title: PropTypes.string,
     link: PropTypes.string,
@@ -334,6 +337,7 @@ LanguageItem.propTypes = {
   item: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({
+      id: PropTypes.string,
       name: PropTypes.string,
       level: PropTypes.string,
     }),
@@ -372,6 +376,7 @@ CertificationItem.propTypes = {
   item: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({
+      id: PropTypes.string,
       title: PropTypes.string,
       issuer: PropTypes.string,
       date: PropTypes.string,
@@ -463,7 +468,7 @@ const Modern = ({ data }) => {
               <div className="mt-5 space-y-5">
                 {experience.map((item, index) => (
                   <ExperienceItem
-                    key={`${item.role || item.title || item.company || 'experience'}-${index}`}
+                    key={item.id ?? `${item.role || item.title || item.company || 'experience'}-${index}`}
                     item={item}
                   />
                 ))}
@@ -477,7 +482,7 @@ const Modern = ({ data }) => {
               <div className="mt-5 space-y-5">
                 {projects.map((item, index) => (
                   <ProjectItem
-                    key={`${item.name || item.title || 'project'}-${index}`}
+                    key={item.id ?? `${item.name || item.title || 'project'}-${index}`}
                     item={item}
                   />
                 ))}
@@ -491,7 +496,7 @@ const Modern = ({ data }) => {
               <div className="mt-5 space-y-5">
                 {education.map((item, index) => (
                   <EducationItem
-                    key={`${item.degree || item.school || item.institution || 'education'}-${index}`}
+                    key={item.id ?? `${item.degree || item.school || item.institution || 'education'}-${index}`}
                     item={item}
                   />
                 ))}
@@ -516,9 +521,13 @@ const Modern = ({ data }) => {
               <div className="mt-3 space-y-2">
                 {languages.map((item, index) => (
                   <LanguageItem
-                    key={`language-${index}-${
-                      typeof item === 'string' ? item : item.name || 'item'
-                    }`}
+                    key={
+                      typeof item === 'object' && item?.id
+                        ? item.id
+                        : `language-${index}-${
+                            typeof item === 'string' ? item : item.name || 'item'
+                          }`
+                    }
                     item={item}
                   />
                 ))}
@@ -532,9 +541,13 @@ const Modern = ({ data }) => {
               <div className="mt-3 space-y-2">
                 {certifications.map((item, index) => (
                   <CertificationItem
-                    key={`certification-${index}-${
-                      typeof item === 'string' ? item : item.title || 'item'
-                    }`}
+                    key={
+                      typeof item === 'object' && item?.id
+                        ? item.id
+                        : `certification-${index}-${
+                            typeof item === 'string' ? item : item.title || 'item'
+                          }`
+                    }
                     item={item}
                   />
                 ))}
@@ -571,6 +584,7 @@ Modern.propTypes = {
       PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.shape({
+          id: PropTypes.string,
           name: PropTypes.string,
           level: PropTypes.string,
         }),
@@ -580,6 +594,7 @@ Modern.propTypes = {
       PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.shape({
+          id: PropTypes.string,
           title: PropTypes.string,
           issuer: PropTypes.string,
           date: PropTypes.string,

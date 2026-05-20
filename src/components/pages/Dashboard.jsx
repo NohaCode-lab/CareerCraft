@@ -12,6 +12,9 @@ import DashboardProfileStrength from '../dashboard/DashboardProfileStrength';
 import  useAuth  from '../../hooks/useAuth';
 import { fadeUpDelayed } from '../../utils/motion';
 
+const MotionDiv = motion.div;
+const MotionSection = motion.section;
+
 const Dashboard = () => {
   const { user } = useAuth();
 
@@ -19,67 +22,67 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-8">
-      <motion.div variants={fadeUpDelayed(0)} initial="hidden" animate="visible">
+      <MotionDiv variants={fadeUpDelayed(0)} initial="hidden" animate="visible">
         <DashboardHeader userName={userName} />
-      </motion.div>
+      </MotionDiv>
 
-      <motion.section
+      <MotionSection
         aria-label="Dashboard statistics"
         variants={fadeUpDelayed(0.05)}
         initial="hidden"
         animate="visible"
       >
         <DashboardStats />
-      </motion.section>
+      </MotionSection>
 
       <div className="grid gap-6 xl:grid-cols-3">
         <div className="space-y-6 xl:col-span-2">
-          <motion.section
+          <MotionSection
             aria-label="Recent applications"
             variants={fadeUpDelayed(0.1)}
             initial="hidden"
             animate="visible"
           >
             <DashboardRecentApplications />
-          </motion.section>
+          </MotionSection>
 
-          <motion.section
+          <MotionSection
             aria-label="Quick actions"
             variants={fadeUpDelayed(0.15)}
             initial="hidden"
             animate="visible"
           >
             <DashboardQuickActions />
-          </motion.section>
+          </MotionSection>
         </div>
 
         <div className="space-y-6 xl:sticky xl:top-24">
-          <motion.section
+          <MotionSection
             aria-label="Saved jobs preview"
             variants={fadeUpDelayed(0.2)}
             initial="hidden"
             animate="visible"
           >
             <DashboardSavedJobsPreview />
-          </motion.section>
+          </MotionSection>
 
-          <motion.section
+          <MotionSection
             aria-label="Interview preparation preview"
             variants={fadeUpDelayed(0.25)}
             initial="hidden"
             animate="visible"
           >
             <DashboardInterviewPrepPreview />
-          </motion.section>
+          </MotionSection>
 
-          <motion.section
+          <MotionSection
             aria-label="Profile strength"
             variants={fadeUpDelayed(0.3)}
             initial="hidden"
             animate="visible"
           >
             <DashboardProfileStrength />
-          </motion.section>
+          </MotionSection>
         </div>
       </div>
     </div>

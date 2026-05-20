@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { createElement } from 'react';
 
 import AuthProvider from '../context/AuthContext';
 import ApplicationsProvider from '../context/ApplicationsContext';
@@ -16,7 +17,7 @@ const providers = [
 
 const AppProviders = ({ children }) => {
   return providers.reduceRight((content, Provider) => {
-    return <Provider>{content}</Provider>;
+    return createElement(Provider, null, content);
   }, children);
 };
 
