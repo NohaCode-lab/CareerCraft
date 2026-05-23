@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 
-import LanguageContext from '../../context/LanguageContext';
-import { translations } from '../../config/translations';
+import LanguageContext from '../context/LanguageContext';
+import { translations } from '../config/translations';
 
 const EMPTY_TEXT = '';
 
