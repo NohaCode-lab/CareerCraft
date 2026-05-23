@@ -6,7 +6,7 @@ const useAuth = () => {
 
   if (!context) {
     throw new Error(
-      "useAuth must be used within AuthProvider. Make sure AuthProvider wraps your app in main.jsx or AppProviders.jsx."
+      "useAuth must be used within AuthProvider. Make sure AuthProvider wraps your app in main.jsx or AppProviders.jsx.",
     );
   }
 
