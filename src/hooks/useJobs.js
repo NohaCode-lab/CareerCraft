@@ -11,21 +11,27 @@ const useJobs = () => {
   const {
     jobs,
     savedJobs,
-    applications,
+    appliedJobs,
+    selectedJob,
+    addJob,
     saveJob,
     unsaveJob,
     applyJob,
     selectJob,
+    clearSelectedJob,
   } = context;
 
   return {
     jobs,
     savedJobs,
-    applications,
+    appliedJobs,
+    selectedJob,
+    addJob,
     saveJob,
     unsaveJob,
     applyJob,
     selectJob,
+    clearSelectedJob,
   };
 };
 

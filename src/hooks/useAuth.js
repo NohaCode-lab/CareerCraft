@@ -13,25 +13,17 @@ const useAuth = () => {
   const {
     user = null,
     isAuthenticated = false,
-    isLoading = false,
-    error = null,
     login,
     logout,
-    register,
     updateUser,
-    clearAuthError,
   } = context;
 
   return {
     user,
     isAuthenticated,
-    isLoading,
-    error,
     login,
     logout,
-    register,
     updateUser,
-    clearAuthError,
   };
 };
 
