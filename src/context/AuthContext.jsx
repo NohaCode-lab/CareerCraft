@@ -1,17 +1,11 @@
 import { useMemo, useState } from "react";
 import AuthContext from "./auth-context";
+import * as storageService from "../services/storageService";
 
 const STORAGE_KEY = "career_user";
 
 const getInitialUser = () => {
-  try {
-    const savedUser = window.localStorage.getItem(STORAGE_KEY);
-    return savedUser ? JSON.parse(savedUser) : null;
-  } catch (error) {
-    console.error("Failed to parse user from localStorage:", error);
-    window.localStorage.removeItem(STORAGE_KEY);
-    return null;
-  }
+  return storageService.getItem(STORAGE_KEY, null);
 };
 
 function AuthProvider({ children }) {
@@ -19,12 +13,12 @@ function AuthProvider({ children }) {
 
   const login = (userData) => {
     setUser(userData);
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+    storageService.setItem(STORAGE_KEY, userData);
   };
 
   const logout = () => {
     setUser(null);
-    window.localStorage.removeItem(STORAGE_KEY);
+    storageService.removeItem(STORAGE_KEY);
   };
 
   const updateUser = (updates) => {
@@ -36,7 +30,7 @@ function AuthProvider({ children }) {
         ...updates,
       };
 
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedUser));
+      storageService.setItem(STORAGE_KEY, updatedUser);
       return updatedUser;
     });
   };
@@ -49,7 +43,7 @@ function AuthProvider({ children }) {
       logout,
       updateUser,
     }),
-    [user]
+    [user],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

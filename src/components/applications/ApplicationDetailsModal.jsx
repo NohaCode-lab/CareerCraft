@@ -1,4 +1,4 @@
-import StatusBadge from './StatusBadge';
+import StatusBadge from "./StatusBadge";
 
 const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
   if (!isOpen || !application) {
@@ -6,6 +6,7 @@ const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
   }
 
   const {
+    title,
     jobTitle,
     role,
     company,
@@ -13,13 +14,16 @@ const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
     status,
     appliedDate,
     appliedAt,
+    createdAt,
     notes,
     jobType,
+    employmentType,
     salary,
   } = application;
 
-  const displayTitle = jobTitle || role || 'Untitled Role';
-  const displayDate = appliedDate || appliedAt;
+  const displayTitle = title || jobTitle || role || "Untitled Role";
+  const displayDate = appliedDate || appliedAt || createdAt;
+  const displayJobType = jobType || employmentType || "Not specified";
 
   return (
     <div
@@ -36,7 +40,7 @@ const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
               {displayTitle}
             </h2>
             <p className="mt-1 text-sm text-slate-600">
-              {company || 'Unknown Company'}
+              {company || "Unknown Company"}
             </p>
           </div>
 
@@ -49,7 +53,7 @@ const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
               Location
             </p>
             <p className="mt-2 text-sm text-slate-800">
-              {location || 'Not specified'}
+              {location || "Not specified"}
             </p>
           </div>
 
@@ -60,7 +64,7 @@ const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
             <p className="mt-2 text-sm text-slate-800">
               {displayDate
                 ? new Date(displayDate).toLocaleDateString()
-                : 'Not specified'}
+                : "Not specified"}
             </p>
           </div>
 
@@ -68,9 +72,7 @@ const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
             <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
               Job Type
             </p>
-            <p className="mt-2 text-sm text-slate-800">
-              {jobType || 'Not specified'}
-            </p>
+            <p className="mt-2 text-sm text-slate-800">{displayJobType}</p>
           </div>
 
           <div className="rounded-xl bg-slate-50 p-4">
@@ -78,7 +80,7 @@ const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
               Salary
             </p>
             <p className="mt-2 text-sm text-slate-800">
-              {salary || 'Not specified'}
+              {salary || "Not specified"}
             </p>
           </div>
         </div>
@@ -88,7 +90,7 @@ const ApplicationDetailsModal = ({ isOpen, application, onClose }) => {
             Notes
           </p>
           <p className="mt-2 whitespace-pre-line text-sm leading-6 text-slate-700">
-            {notes || 'No notes available for this application.'}
+            {notes || "No notes available for this application."}
           </p>
         </div>
 

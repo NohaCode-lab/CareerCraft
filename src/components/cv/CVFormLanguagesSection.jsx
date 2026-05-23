@@ -1,18 +1,14 @@
-import CVFormEmptySection from './CVFormEmptySection';
+import { memo } from "react";
+import CVFormEmptySection from "./CVFormEmptySection";
 import {
   addButtonClasses,
   inputClasses,
   labelClasses,
   removeButtonClasses,
   sectionCardClasses,
-} from './cvFormStyles';
+} from "./cvFormStyles";
 
-const CVFormLanguagesSection = ({
-  items,
-  onAdd,
-  onRemove,
-  onFieldChange,
-}) => {
+const CVFormLanguagesSection = ({ items, onAdd, onRemove, onFieldChange }) => {
   return (
     <div className="mt-8">
       <div className="mb-4 flex items-center justify-between gap-4">
@@ -45,9 +41,9 @@ const CVFormLanguagesSection = ({
                   <input
                     type="text"
                     placeholder="English"
-                    value={item.name || ''}
+                    value={item.name || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'name', event.target.value)
+                      onFieldChange(index, "name", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -58,9 +54,9 @@ const CVFormLanguagesSection = ({
                   <input
                     type="text"
                     placeholder="Fluent"
-                    value={item.level || ''}
+                    value={item.level || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'level', event.target.value)
+                      onFieldChange(index, "level", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -79,4 +75,4 @@ const CVFormLanguagesSection = ({
   );
 };
 
-export default CVFormLanguagesSection;
+export default memo(CVFormLanguagesSection);

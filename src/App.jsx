@@ -1,58 +1,67 @@
-import { Route, Routes } from 'react-router-dom';
+import { lazy, Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
 
-import MainLayout from './components/layout/MainLayout';
+import MainLayout from "./components/layout/MainLayout";
+import Loader from "./components/ui/Loader";
 
-import Dashboard from './components/pages/Dashboard';
-import CVBuilderPage from './components/pages/CVBuilderPage';
-import JobSearchPage from './components/pages/JobSearchPage';
-import SavedJobsPage from './components/pages/SavedJobsPage';
-import ApplicationsPage from './components/pages/ApplicationsPage';
-import InterviewPrepPage from './components/pages/InterviewPrepPage';
-import AIAssistantPage from './components/pages/AIAssistantPage';
-import SettingsPage from './components/pages/SettingsPage';
-import NotFoundPage from './components/pages/NotFoundPage';
+import Dashboard from "./components/pages/Dashboard";
+import NotFoundPage from "./components/pages/NotFoundPage";
 
-import { ROUTES } from './config/routes';
+const CVBuilderPage = lazy(() => import("./components/pages/CVBuilderPage"));
+const JobSearchPage = lazy(() => import("./components/pages/JobSearchPage"));
+const SavedJobsPage = lazy(() => import("./components/pages/SavedJobsPage"));
+const ApplicationsPage = lazy(
+  () => import("./components/pages/ApplicationsPage"),
+);
+const InterviewPrepPage = lazy(
+  () => import("./components/pages/InterviewPrepPage"),
+);
+const AIAssistantPage = lazy(
+  () => import("./components/pages/AIAssistantPage"),
+);
+const SettingsPage = lazy(() => import("./components/pages/SettingsPage"));
+
+import { ROUTES } from "./config/routes";
 
 const appRoutes = [
   {
     path: ROUTES.DASHBOARD,
-    pageTitle: 'Dashboard',
+    pageTitle: "Dashboard",
     element: <Dashboard />,
   },
   {
     path: ROUTES.CV_BUILDER,
-    pageTitle: 'CV Builder',
+    pageTitle: "CV Builder",
     element: <CVBuilderPage />,
   },
   {
     path: ROUTES.JOB_SEARCH,
-    pageTitle: 'Job Search',
+    pageTitle: "Job Search",
     element: <JobSearchPage />,
   },
   {
     path: ROUTES.SAVED_JOBS,
-    pageTitle: 'Saved Jobs',
+    pageTitle: "Saved Jobs",
     element: <SavedJobsPage />,
   },
   {
     path: ROUTES.APPLICATIONS,
-    pageTitle: 'Applications',
+    pageTitle: "Applications",
     element: <ApplicationsPage />,
   },
   {
     path: ROUTES.INTERVIEW_PREP,
-    pageTitle: 'Interview Prep',
+    pageTitle: "Interview Prep",
     element: <InterviewPrepPage />,
   },
   {
     path: ROUTES.AI_ASSISTANT,
-    pageTitle: 'AI Assistant',
+    pageTitle: "AI Assistant",
     element: <AIAssistantPage />,
   },
   {
     path: ROUTES.SETTINGS,
-    pageTitle: 'Settings',
+    pageTitle: "Settings",
     element: <SettingsPage />,
   },
 ];
@@ -63,20 +72,22 @@ const renderWithLayout = (pageTitle, element) => {
 
 const App = () => {
   return (
-    <Routes>
-      {appRoutes.map(({ path, pageTitle, element }) => (
-        <Route
-          key={path}
-          path={path}
-          element={renderWithLayout(pageTitle, element)}
-        />
-      ))}
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        {appRoutes.map(({ path, pageTitle, element }) => (
+          <Route
+            key={path}
+            path={path}
+            element={renderWithLayout(pageTitle, element)}
+          />
+        ))}
 
-      <Route
-        path="*"
-        element={renderWithLayout('Page Not Found', <NotFoundPage />)}
-      />
-    </Routes>
+        <Route
+          path="*"
+          element={renderWithLayout("Page Not Found", <NotFoundPage />)}
+        />
+      </Routes>
+    </Suspense>
   );
 };
 

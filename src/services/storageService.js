@@ -1,5 +1,7 @@
 const isStorageAvailable = () => {
-  return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+  return (
+    typeof window !== "undefined" && typeof window.localStorage !== "undefined"
+  );
 };
 
 const getStorage = () => {
@@ -19,7 +21,9 @@ export const hasItem = (key) => {
 
     return storage.getItem(key) !== null;
   } catch (error) {
-    console.error(`Error checking localStorage key "${key}":`, error);
+    if (process.env.NODE_ENV === "development") {
+      console.error(`Error checking localStorage key "${key}":`, error);
+    }
     return false;
   }
 };
@@ -34,7 +38,9 @@ export const getItem = (key, fallback = null) => {
     const value = storage.getItem(key);
     return value ? JSON.parse(value) : fallback;
   } catch (error) {
-    console.error(`Error getting localStorage key "${key}":`, error);
+    if (process.env.NODE_ENV === "development") {
+      console.error(`Error getting localStorage key "${key}":`, error);
+    }
     return fallback;
   }
 };
@@ -49,7 +55,9 @@ export const setItem = (key, value) => {
     storage.setItem(key, JSON.stringify(value));
     return true;
   } catch (error) {
-    console.error(`Error setting localStorage key "${key}":`, error);
+    if (process.env.NODE_ENV === "development") {
+      console.error(`Error setting localStorage key "${key}":`, error);
+    }
     return false;
   }
 };
@@ -64,7 +72,9 @@ export const removeItem = (key) => {
     storage.removeItem(key);
     return true;
   } catch (error) {
-    console.error(`Error removing localStorage key "${key}":`, error);
+    if (process.env.NODE_ENV === "development") {
+      console.error(`Error removing localStorage key "${key}":`, error);
+    }
     return false;
   }
 };
@@ -79,7 +89,9 @@ export const clearStorage = () => {
     storage.clear();
     return true;
   } catch (error) {
-    console.error('Error clearing localStorage:', error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error clearing localStorage:", error);
+    }
     return false;
   }
 };

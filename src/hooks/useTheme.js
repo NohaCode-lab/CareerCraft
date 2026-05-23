@@ -1,28 +1,25 @@
-import { useEffect, useState } from 'react';
-import { STORAGE_KEYS, THEMES } from '../../utils/constants';
+import { useEffect, useState } from "react";
+import { STORAGE_KEYS, THEMES } from "../../utils/constants";
+import * as storageService from "../../services/storageService";
 
 const getSystemTheme = () => {
-  if (typeof window === 'undefined') return THEMES.LIGHT;
+  if (typeof window === "undefined") return THEMES.LIGHT;
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
     ? THEMES.DARK
     : THEMES.LIGHT;
 };
 
 const getInitialTheme = () => {
-  if (typeof window === 'undefined') return THEMES.LIGHT;
+  if (typeof window === "undefined") return THEMES.LIGHT;
 
-  try {
-    const savedTheme = window.localStorage.getItem(STORAGE_KEYS.THEME);
+  const savedTheme = storageService.getItem(STORAGE_KEYS.THEME, null);
 
-    if (savedTheme === THEMES.DARK || savedTheme === THEMES.LIGHT) {
-      return savedTheme;
-    }
-
-    return getSystemTheme();
-  } catch {
-    return THEMES.LIGHT;
+  if (savedTheme === THEMES.DARK || savedTheme === THEMES.LIGHT) {
+    return savedTheme;
   }
+
+  return getSystemTheme();
 };
 
 const useTheme = () => {
@@ -31,27 +28,19 @@ const useTheme = () => {
   useEffect(() => {
     const root = document.documentElement;
 
-    // ✅ set attribute (لـ CSS)
-    root.setAttribute('data-theme', theme);
+    root.setAttribute("data-theme", theme);
 
-    // ✅ set class (لـ Tailwind dark mode)
     if (theme === THEMES.DARK) {
-      root.classList.add('dark');
+      root.classList.add("dark");
     } else {
-      root.classList.remove('dark');
+      root.classList.remove("dark");
     }
 
-    try {
-      window.localStorage.setItem(STORAGE_KEYS.THEME, theme);
-    } catch (error) {
-      console.error('Error saving theme:', error);
-    }
+    storageService.setItem(STORAGE_KEYS.THEME, theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prev) =>
-      prev === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT
-    );
+    setTheme((prev) => (prev === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT));
   };
 
   return {

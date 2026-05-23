@@ -10,21 +10,25 @@ const useApplications = () => {
 
   const {
     applications,
+    groupedApplications,
     addApplication,
     updateApplication,
     removeApplication,
     selectApplication,
     selectedApplication,
+    clearSelectedApplication,
   } = context;
 
   return {
     applications,
+    groupedApplications,
     selectedApplication,
 
     addApplication,
     updateApplication,
     removeApplication,
     selectApplication,
+    clearSelectedApplication,
   };
 };
 

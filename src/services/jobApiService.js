@@ -1,4 +1,5 @@
-import { mockJobs } from "../components/data/jobs/mockJobs";
+import mockJobs from "../data/jobs/mockJobs";
+
 const createSuccessResponse = (data) => ({
   success: true,
   data,
@@ -12,8 +13,8 @@ const createErrorResponse = (message) => ({
 });
 
 const normalizeText = (value) => {
-  if (typeof value !== 'string') {
-    return '';
+  if (typeof value !== "string") {
+    return "";
   }
 
   return value.trim().toLowerCase();
@@ -35,30 +36,29 @@ const normalizeJob = (job) => ({
 
 const matchesFilters = (job, filters) => {
   const {
-    query = '',
-    location = '',
+    query = "",
+    location = "",
     remote = false,
-    employmentType = '',
-    seniority = '',
+    employmentType = "",
+    seniority = "",
   } = filters;
 
   const normalizedQuery = normalizeText(query);
   const normalizedLocation = normalizeText(location);
 
   const matchesQuery =
-    normalizedQuery === '' ||
+    normalizedQuery === "" ||
     normalizeText(job.title).includes(normalizedQuery) ||
     normalizeText(job.company).includes(normalizedQuery);
 
   const matchesLocation =
-    normalizedLocation === '' ||
+    normalizedLocation === "" ||
     normalizeText(job.location).includes(normalizedLocation);
 
   const matchesRemote = !remote || job.remote === true;
   const matchesEmploymentType =
-    employmentType === '' || job.employmentType === employmentType;
-  const matchesSeniority =
-    seniority === '' || job.seniority === seniority;
+    employmentType === "" || job.employmentType === employmentType;
+  const matchesSeniority = seniority === "" || job.seniority === seniority;
 
   return (
     matchesQuery &&
@@ -78,9 +78,7 @@ export const fetchJobs = async (filters = {}) => {
     return createSuccessResponse(filteredJobs);
   } catch (error) {
     return createErrorResponse(
-      error instanceof Error
-        ? error.message
-        : 'Failed to fetch jobs.'
+      error instanceof Error ? error.message : "Failed to fetch jobs.",
     );
   }
 };

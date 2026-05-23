@@ -20,6 +20,10 @@ const useUI = () => {
 
     loading,
     setLoading,
+
+    toast,
+    showToast,
+    clearToast,
   } = context;
 
   return {
@@ -34,6 +38,10 @@ const useUI = () => {
 
     loading,
     setLoading,
+
+    toast,
+    showToast,
+    clearToast,
   };
 };
 

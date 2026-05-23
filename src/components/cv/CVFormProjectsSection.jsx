@@ -1,18 +1,14 @@
-import CVFormEmptySection from './CVFormEmptySection';
+import { memo } from "react";
+import CVFormEmptySection from "./CVFormEmptySection";
 import {
   addButtonClasses,
   inputClasses,
   labelClasses,
   removeButtonClasses,
   sectionCardClasses,
-} from './cvFormStyles';
+} from "./cvFormStyles";
 
-const CVFormProjectsSection = ({
-  items,
-  onAdd,
-  onRemove,
-  onFieldChange,
-}) => {
+const CVFormProjectsSection = ({ items, onAdd, onRemove, onFieldChange }) => {
   return (
     <div className="mt-8">
       <div className="mb-4 flex items-center justify-between gap-4">
@@ -45,9 +41,9 @@ const CVFormProjectsSection = ({
                   <input
                     type="text"
                     placeholder="Portfolio Website"
-                    value={item.title || ''}
+                    value={item.title || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'title', event.target.value)
+                      onFieldChange(index, "title", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -58,9 +54,9 @@ const CVFormProjectsSection = ({
                   <textarea
                     rows={4}
                     placeholder="Describe the project, your role, and the technologies used."
-                    value={item.description || ''}
+                    value={item.description || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'description', event.target.value)
+                      onFieldChange(index, "description", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -71,9 +67,9 @@ const CVFormProjectsSection = ({
                   <input
                     type="url"
                     placeholder="https://github.com/username/project"
-                    value={item.link || ''}
+                    value={item.link || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'link', event.target.value)
+                      onFieldChange(index, "link", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -92,4 +88,4 @@ const CVFormProjectsSection = ({
   );
 };
 
-export default CVFormProjectsSection;
+export default memo(CVFormProjectsSection);

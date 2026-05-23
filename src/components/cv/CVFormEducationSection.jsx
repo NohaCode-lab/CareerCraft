@@ -1,18 +1,14 @@
-import CVFormEmptySection from './CVFormEmptySection';
+import { memo } from "react";
+import CVFormEmptySection from "./CVFormEmptySection";
 import {
   addButtonClasses,
   inputClasses,
   labelClasses,
   removeButtonClasses,
   sectionCardClasses,
-} from './cvFormStyles';
+} from "./cvFormStyles";
 
-const CVFormEducationSection = ({
-  items,
-  onAdd,
-  onRemove,
-  onFieldChange,
-}) => {
+const CVFormEducationSection = ({ items, onAdd, onRemove, onFieldChange }) => {
   return (
     <div className="mt-8">
       <div className="mb-4 flex items-center justify-between gap-4">
@@ -45,9 +41,9 @@ const CVFormEducationSection = ({
                   <input
                     type="text"
                     placeholder="Bachelor of Computer Science"
-                    value={item.degree || ''}
+                    value={item.degree || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'degree', event.target.value)
+                      onFieldChange(index, "degree", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -58,9 +54,9 @@ const CVFormEducationSection = ({
                   <input
                     type="text"
                     placeholder="University Name"
-                    value={item.school || ''}
+                    value={item.school || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'school', event.target.value)
+                      onFieldChange(index, "school", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -71,9 +67,9 @@ const CVFormEducationSection = ({
                   <input
                     type="text"
                     placeholder="2024"
-                    value={item.year || ''}
+                    value={item.year || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'year', event.target.value)
+                      onFieldChange(index, "year", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -92,4 +88,4 @@ const CVFormEducationSection = ({
   );
 };
 
-export default CVFormEducationSection;
+export default memo(CVFormEducationSection);

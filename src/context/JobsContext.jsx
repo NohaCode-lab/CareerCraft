@@ -1,16 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import JobsContext from "./jobs-context";
+import * as storageService from "../services/storageService";
 
 const STORAGE_KEY = "career_jobs";
 
 const getInitialJobs = () => {
-  try {
-    const storedJobs = window.localStorage.getItem(STORAGE_KEY);
-    return storedJobs ? JSON.parse(storedJobs) : [];
-  } catch (error) {
-    console.error("Failed to load jobs from localStorage:", error);
-    return [];
-  }
+  return storageService.getItem(STORAGE_KEY, []);
 };
 
 function JobsProvider({ children }) {
@@ -18,11 +13,7 @@ function JobsProvider({ children }) {
   const [selectedJob, setSelectedJob] = useState(null);
 
   useEffect(() => {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(jobs));
-    } catch (error) {
-      console.error("Failed to save jobs to localStorage:", error);
-    }
+    storageService.setItem(STORAGE_KEY, jobs);
   }, [jobs]);
 
   const addJob = (job) => {
@@ -37,24 +28,20 @@ function JobsProvider({ children }) {
   const saveJob = (id) => {
     setJobs((prev) =>
       prev.map((job) =>
-        job.id === id ? { ...job, isSaved: !job.isSaved } : job
-      )
+        job.id === id ? { ...job, isSaved: !job.isSaved } : job,
+      ),
     );
   };
 
   const unsaveJob = (id) => {
     setJobs((prev) =>
-      prev.map((job) =>
-        job.id === id ? { ...job, isSaved: false } : job
-      )
+      prev.map((job) => (job.id === id ? { ...job, isSaved: false } : job)),
     );
   };
 
   const applyJob = (id) => {
     setJobs((prev) =>
-      prev.map((job) =>
-        job.id === id ? { ...job, isApplied: true } : job
-      )
+      prev.map((job) => (job.id === id ? { ...job, isApplied: true } : job)),
     );
   };
 
@@ -88,14 +75,10 @@ function JobsProvider({ children }) {
       selectJob,
       clearSelectedJob,
     }),
-    [jobs, savedJobs, appliedJobs, selectedJob]
+    [jobs, savedJobs, appliedJobs, selectedJob],
   );
 
-  return (
-    <JobsContext.Provider value={value}>
-      {children}
-    </JobsContext.Provider>
-  );
+  return <JobsContext.Provider value={value}>{children}</JobsContext.Provider>;
 }
 
 export default JobsProvider;

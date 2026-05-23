@@ -1,18 +1,14 @@
-import CVFormEmptySection from './CVFormEmptySection';
+import { memo } from "react";
+import CVFormEmptySection from "./CVFormEmptySection";
 import {
   addButtonClasses,
   inputClasses,
   labelClasses,
   removeButtonClasses,
   sectionCardClasses,
-} from './cvFormStyles';
+} from "./cvFormStyles";
 
-const CVFormExperienceSection = ({
-  items,
-  onAdd,
-  onRemove,
-  onFieldChange,
-}) => {
+const CVFormExperienceSection = ({ items, onAdd, onRemove, onFieldChange }) => {
   return (
     <div className="mt-8">
       <div className="mb-4 flex items-center justify-between gap-4">
@@ -45,9 +41,9 @@ const CVFormExperienceSection = ({
                   <input
                     type="text"
                     placeholder="Front-End Developer"
-                    value={item.role || ''}
+                    value={item.role || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'role', event.target.value)
+                      onFieldChange(index, "role", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -58,9 +54,9 @@ const CVFormExperienceSection = ({
                   <input
                     type="text"
                     placeholder="Company Name"
-                    value={item.company || ''}
+                    value={item.company || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'company', event.target.value)
+                      onFieldChange(index, "company", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -71,9 +67,9 @@ const CVFormExperienceSection = ({
                   <input
                     type="text"
                     placeholder="Jan 2024 - Present"
-                    value={item.duration || ''}
+                    value={item.duration || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'duration', event.target.value)
+                      onFieldChange(index, "duration", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -84,9 +80,9 @@ const CVFormExperienceSection = ({
                   <textarea
                     rows={4}
                     placeholder="Describe your responsibilities and achievements."
-                    value={item.description || ''}
+                    value={item.description || ""}
                     onChange={(event) =>
-                      onFieldChange(index, 'description', event.target.value)
+                      onFieldChange(index, "description", event.target.value)
                     }
                     className={inputClasses}
                   />
@@ -105,4 +101,4 @@ const CVFormExperienceSection = ({
   );
 };
 
-export default CVFormExperienceSection;
+export default memo(CVFormExperienceSection);

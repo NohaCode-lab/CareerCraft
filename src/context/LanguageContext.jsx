@@ -1,28 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 import LanguageContext from "./language-context";
+import * as storageService from "../services/storageService";
 
 const STORAGE_KEY = "app_language";
-const SUPPORTED_LANGUAGES = ["en", "ar", "de", "nl"]; // 👈 تصحيح ln → nl
+const SUPPORTED_LANGUAGES = ["en", "ar", "de", "nl"];
 const RTL_LANGUAGES = ["ar"];
 
 const getInitialLanguage = () => {
-  try {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    return SUPPORTED_LANGUAGES.includes(saved) ? saved : "en";
-  } catch {
-    return "en";
-  }
+  const saved = storageService.getItem(STORAGE_KEY, "en");
+  return SUPPORTED_LANGUAGES.includes(saved) ? saved : "en";
 };
 
 function LanguageProvider({ children }) {
   const [language, setLanguage] = useState(getInitialLanguage);
 
   useEffect(() => {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, language);
-    } catch (e) {
-      console.error("Failed to persist language:", e);
-    }
+    storageService.setItem(STORAGE_KEY, language);
 
     const isRTL = RTL_LANGUAGES.includes(language);
     const root = document.documentElement;
@@ -47,9 +40,9 @@ function LanguageProvider({ children }) {
       setLanguage,
       toggleLanguage,
       isRTL,
-      availableLanguages: SUPPORTED_LANGUAGES, // 👈 مفيد للـ UI
+      availableLanguages: SUPPORTED_LANGUAGES,
     }),
-    [language, isRTL]
+    [language],
   );
 
   return (
@@ -59,4 +52,4 @@ function LanguageProvider({ children }) {
   );
 }
 
-export default LanguageProvider;  
+export default LanguageProvider;
