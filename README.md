@@ -1,8 +1,17 @@
 # 🚀 CareerCraft — AI Career & Interview Preparation Platform
 
+> *Built for Senior / Staff Software Engineering Portfolios & Public Demonstrations.*
+
+[![Enterprise CI Pipeline](https://img.shields.io/github/actions/workflow/status/NohaCode-lab/CareerCraft/ci.yml?branch=main&label=Enterprise%20CI%20Pipeline&logo=github)](https://github.com/NohaCode-lab/CareerCraft/actions)
+[![License](https://img.shields.io/badge/License-MIT-007EC6.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/tag/NohaCode-lab/CareerCraft?color=6f42c1&label=Release)](https://github.com/NohaCode-lab/CareerCraft/releases)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-007ACC.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.0-20B2AA.svg?logo=react&logoColor=white)](https://react.dev/)
+
 CareerCraft is an enterprise-grade, production-ready **AI Career & Interview Preparation Platform** built with a modern multi-service microservice topology: a **React 19 + TypeScript + Vite frontend**, a **Node.js Fastify BFF**, a stateful **Python FastAPI AI Microservice** powered by the **LangGraph workflow engine**, and a unified **LiteLLM AI Gateway**.
 
 ---
+
 
 ## 🎯 Architectural Overview
 
