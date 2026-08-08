@@ -104,9 +104,13 @@ export async function aiWorkflowRoutes(fastify: FastifyInstance) {
     return reply.status(200).send(result);
   });
 
-  fastify.post('/ai/evaluation/benchmark', async (request, reply) => {
-    const result = await workflowService.runAIEvaluationBenchmark(request.id);
-    return reply.status(200).send(result);
+  fastify.route({
+    method: ['GET', 'POST'],
+    url: '/ai/evaluation/benchmark',
+    handler: async (request, reply) => {
+      const result = await workflowService.runAIEvaluationBenchmark(request.id);
+      return reply.status(200).send(result);
+    }
   });
 
   fastify.get('/telemetry/traces', async (request, reply) => {
