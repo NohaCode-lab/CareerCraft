@@ -1,0 +1,38 @@
+[
+  {
+    "id": "gold-001",
+    "title": "Senior Frontend Engineer (React/TypeScript)",
+    "resume_text": "Senior Frontend Engineer with 4 years experience building responsive web applications using React 19, TypeScript, Vite, Tailwind CSS, and REST APIs. Implemented state management, code splitting, and unit testing using Vitest.",
+    "job_description": "We are seeking a Lead Frontend Engineer to architect scalable React web applications, Fastify Node.js BFF APIs, and stateful LangGraph AI microservices.",
+    "expected_skills": ["React 19", "TypeScript", "Vite", "Tailwind CSS", "REST APIs", "Vitest"],
+    "min_expected_ats_score": 75,
+    "expected_factuality_passed": true
+  },
+  {
+    "id": "gold-002",
+    "title": "Fullstack Engineer (Node.js/Fastify)",
+    "resume_text": "Fullstack Software Developer specializing in Fastify Node.js backend microservices, Zod input validation, Pino logging, and rate-limiting middleware. Built API gateways and microservices in TypeScript.",
+    "job_description": "Seeking Fullstack Engineer proficient in Node.js, Fastify, Zod validation, microservice security, CORS, Helmet, and Python AI integration.",
+    "expected_skills": ["Fastify", "Node.js", "Zod", "Pino", "TypeScript", "Microservices"],
+    "min_expected_ats_score": 80,
+    "expected_factuality_passed": true
+  },
+  {
+    "id": "gold-003",
+    "title": "AI Systems Engineer (Python/FastAPI/LangGraph)",
+    "resume_text": "AI Infrastructure Engineer with expertise in Python 3.11, FastAPI, Pydantic, LangGraph multi-agent stateful graphs, LiteLLM gateway proxying, and OpenRouter cloud model routing.",
+    "job_description": "Looking for an AI Systems Architect to build stateful multi-agent workflows using LangGraph, Python FastAPI microservices, LiteLLM proxying, and factuality guardrails.",
+    "expected_skills": ["Python", "FastAPI", "Pydantic", "LangGraph", "LiteLLM", "Multi-Agent Systems"],
+    "min_expected_ats_score": 85,
+    "expected_factuality_passed": true
+  },
+  {
+    "id": "gold-004",
+    "title": "Edge Case - Vague Candidate Resume",
+    "resume_text": "Worked on computer stuff. Assisted team with web pages and writing some code.",
+    "job_description": "Senior Lead Architect requiring 10 years experience in distributed systems, Kubernetes, and Go.",
+    "expected_skills": ["Web Development"],
+    "min_expected_ats_score": 40,
+    "expected_factuality_passed": true
+  }
+]

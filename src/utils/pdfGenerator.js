@@ -1,6 +1,3 @@
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-
 const DEFAULT_PDF_FILE_NAME = 'career-craft-document.pdf';
 
 const PDF_OPTIONS = {
@@ -24,6 +21,12 @@ export const exportElementToPdf = async (
   }
 
   const safeFileName = fileName.trim() || DEFAULT_PDF_FILE_NAME;
+
+  // Dynamic import on demand to reduce initial bundle size
+  const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
+    import('html2canvas'),
+    import('jspdf'),
+  ]);
 
   const canvas = await html2canvas(element, CANVAS_OPTIONS);
 

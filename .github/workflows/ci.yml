@@ -1,0 +1,57 @@
+name: CareerCraft Enterprise CI/CD Quality Gate
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  quality-gate:
+    name: Production Quality Gate (Tests, Lint, Build & Security)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js v24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python AI Microservice Dependencies
+        run: |
+          cd ai-service
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Python Pytest Suite (13 Tests)
+        run: |
+          cd ai-service
+          pytest
+
+      - name: Install Root Dependencies
+        run: npm ci
+
+      - name: Run ESLint Static Analysis
+        run: npm run lint
+
+      - name: Run Full Vitest Test Suite (45 Tests)
+        run: npm run test
+
+      - name: Build Fastify Node.js BFF TypeScript Target
+        run: |
+          cd backend
+          npm ci
+          npm run build
+
+      - name: Build React Vite Production Asset Bundle
+        run: npm run build
