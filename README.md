@@ -12,6 +12,12 @@ CareerCraft is an enterprise-grade, production-ready **AI Career & Interview Pre
 
 ---
 
+## 📸 Platform Overview & Interface
+
+![CareerCraft UI Preview](docs/assets/careercraft-preview.jpg)
+
+---
+
 
 ## 🎯 Architectural Overview
 
