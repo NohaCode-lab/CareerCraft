@@ -15,10 +15,10 @@ jobs:
       - name: Checkout Codebase
         uses: actions/checkout@v4
 
-      - name: Setup Node.js v24
+      - name: Setup Node.js v20 (LTS)
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: '20'
           cache: 'npm'
 
       - name: Setup Python 3.11
@@ -36,7 +36,7 @@ jobs:
       - name: Run Python Pytest Suite (13 Tests)
         run: |
           cd ai-service
-          pytest
+          PYTHONPATH=. python -m pytest
 
       - name: Install Root Dependencies
         run: npm ci
