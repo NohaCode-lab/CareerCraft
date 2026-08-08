@@ -1,0 +1,91 @@
+import React from 'react';
+import { Bell, FileText, Settings, LucideIcon } from 'lucide-react';
+import PageHeader from '../layout/PageHeader';
+import SettingsSection from '../settings/SettingsSection';
+import ThemeToggle from '../settings/ThemeToggle';
+import LanguageSwitcher from '../settings/LanguageSwitcher';
+
+interface UpcomingSetting {
+  id: string;
+  icon: LucideIcon;
+  title: string;
+}
+
+const upcomingSettings: UpcomingSetting[] = [
+  {
+    id: 'notifications',
+    icon: Bell,
+    title: 'Notification preferences',
+  },
+  {
+    id: 'cv-defaults',
+    icon: FileText,
+    title: 'CV defaults',
+  },
+  {
+    id: 'export-options',
+    icon: Settings,
+    title: 'Export options',
+  },
+];
+
+const SettingsPage: React.FC = () => {
+  return (
+    <div className="space-y-8">
+      <PageHeader
+        title="Settings"
+        description="Customize your CareerCraft experience, manage preferences, and personalize your workspace."
+      />
+
+      <div className="space-y-6">
+        <SettingsSection
+          title="Appearance"
+          description="Choose the theme that fits your workflow and visual preference."
+        >
+          <ThemeToggle />
+        </SettingsSection>
+
+        <SettingsSection
+          title="Language"
+          description="Select your preferred language for the application interface."
+        >
+          <LanguageSwitcher />
+        </SettingsSection>
+
+        <section className="rounded-3xl border border-white/10 bg-white/3 p-6 shadow-lg backdrop-blur-xl">
+          <div className="mb-5">
+            <h2 className="text-lg font-semibold text-white">
+              More settings coming soon
+            </h2>
+
+            <p className="mt-2 text-sm leading-6 text-slate-400">
+              Future updates will include notification preferences, CV defaults,
+              export options, and additional personalization tools.
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-3">
+            {upcomingSettings.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <div
+                  key={item.id}
+                  className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-300 transition hover:bg-white/10 hover:text-white"
+                >
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-300 transition group-hover:bg-indigo-500/20 group-hover:text-indigo-200">
+                    <Icon size={16} />
+                  </div>
+
+                  <span>{item.title}</span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
+export default SettingsPage;
