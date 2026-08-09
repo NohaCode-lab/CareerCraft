@@ -32,7 +32,7 @@ const JobSearchPage: React.FC = () => {
 
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
-      const searchValue = filters.search.toLowerCase().trim();
+      const searchValue = (filters.search || '').toLowerCase().trim();
 
       const matchesSearch =
         !searchValue ||
@@ -101,7 +101,7 @@ const JobSearchPage: React.FC = () => {
           <div>
             <h2 className="text-lg font-semibold text-white">{t('savedJobs', language)}</h2>
             <p className="mt-1 text-sm text-slate-400">
-              Quickly access jobs you saved earlier.
+              {t('savedJobsPreviewDesc', language)}
             </p>
           </div>
 
@@ -117,8 +117,8 @@ const JobSearchPage: React.FC = () => {
                 />
               ))
             ) : (
-              <div className="rounded-2xl border border-dashed border-white/10 bg-slate-800/40 p-4 text-sm text-slate-400">
-                No saved jobs yet.
+              <div className="rounded-2xl border border-dashed border-white/10 bg-slate-900/40 p-4 text-sm text-slate-400">
+                {t('noSavedJobsYet', language)}
               </div>
             )}
           </div>

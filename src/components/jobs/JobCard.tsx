@@ -1,9 +1,11 @@
 import React from "react";
 import { Bookmark, MapPin, Briefcase, Clock, Home, TrendingUp } from "lucide-react";
 import { Job } from "../../hooks/useJobs";
+import useLanguage from "../../hooks/useLanguage";
+import { t } from "../../utils/i18n";
 
 const formatSalary = (salaryRange: any) => {
-  if (!salaryRange) return "Salary not specified";
+  if (!salaryRange) return "";
 
   const { min, max, currency } = salaryRange;
 
@@ -11,7 +13,7 @@ const formatSalary = (salaryRange: any) => {
   if (min) return `From ${min.toLocaleString()} ${currency}`;
   if (max) return `Up to ${max.toLocaleString()} ${currency}`;
 
-  return "Salary not specified";
+  return "";
 };
 
 interface JobCardProps {
@@ -22,6 +24,8 @@ interface JobCardProps {
 }
 
 const JobCard: React.FC<JobCardProps> = ({ job, onSave, onApply, onSelect }) => {
+  const { language } = useLanguage();
+
   if (!job) return null;
 
   const {
@@ -38,84 +42,104 @@ const JobCard: React.FC<JobCardProps> = ({ job, onSave, onApply, onSelect }) => 
     isApplied,
   } = job;
 
+  const salaryText = formatSalary(salaryRange);
+
   return (
-    <article className="group relative rounded-3xl border border-white/10 bg-white/3 p-5 transition-all duration-300 hover:border-indigo-400/30 hover:shadow-lg hover:shadow-indigo-500/10">
+    <article className="group relative flex flex-col justify-between rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/30 hover:shadow-xl hover:shadow-indigo-500/10">
       
       {/* Top */}
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h3 className="text-lg font-semibold text-white transition group-hover:text-indigo-300">
-            {title}
-          </h3>
-          <p className="text-sm text-slate-400">{company}</p>
+      <div>
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h3 className="text-lg font-semibold text-white transition group-hover:text-indigo-300">
+              {title}
+            </h3>
+            <p className="text-sm text-slate-400">{company}</p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => onSave?.(id)}
+            aria-label={isSaved ? t('saved', language) : t('save', language)}
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl transition duration-200
+              ${
+                isSaved
+                  ? "bg-indigo-500 text-white shadow-md shadow-indigo-500/25 ring-1 ring-indigo-400/30"
+                  : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
+              }`}
+          >
+            <Bookmark className="h-4 w-4" />
+          </button>
         </div>
 
-        <button
-          onClick={() => onSave?.(id)}
-          className={`flex h-10 w-10 items-center justify-center rounded-xl transition
-            ${
-              isSaved
-                ? "bg-indigo-500 text-white"
-                : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
-            }`}
-        >
-          <Bookmark className="h-4 w-4" />
-        </button>
+        {/* Meta */}
+        <div className="mt-4 flex flex-wrap gap-2 text-xs">
+          {location && (
+            <span className="flex items-center gap-1.5 rounded-xl border border-white/5 bg-white/5 px-2.5 py-1 text-slate-400">
+              <MapPin className="h-3.5 w-3.5 text-slate-400" />
+              {location}
+            </span>
+          )}
+
+          {workMode && (
+            <span className="flex items-center gap-1.5 rounded-xl border border-white/5 bg-white/5 px-2.5 py-1 text-slate-400">
+              <Home className="h-3.5 w-3.5 text-slate-400" />
+              {workMode}
+            </span>
+          )}
+
+          {employmentType && (
+            <span className="flex items-center gap-1.5 rounded-xl border border-white/5 bg-white/5 px-2.5 py-1 text-slate-400">
+              <Briefcase className="h-3.5 w-3.5 text-slate-400" />
+              {employmentType}
+            </span>
+          )}
+
+          {seniority && (
+            <span className="flex items-center gap-1.5 rounded-xl border border-white/5 bg-white/5 px-2.5 py-1 text-slate-400">
+              <TrendingUp className="h-3.5 w-3.5 text-slate-400" />
+              {seniority}
+            </span>
+          )}
+
+          {postedAt && (
+            <span className="flex items-center gap-1.5 rounded-xl border border-white/5 bg-white/5 px-2.5 py-1 text-slate-400">
+              <Clock className="h-3.5 w-3.5 text-slate-400" />
+              {postedAt}
+            </span>
+          )}
+        </div>
+
+        {/* Salary */}
+        {salaryText && (
+          <p className="mt-3 text-sm font-medium text-emerald-400">
+            {salaryText}
+          </p>
+        )}
       </div>
-
-      {/* Meta */}
-      <div className="mt-4 flex flex-wrap gap-2 text-xs">
-        <span className="flex items-center gap-1 rounded-lg bg-white/5 px-2 py-1 text-slate-400">
-          <MapPin className="h-3 w-3" />
-          {location}
-        </span>
-
-        <span className="flex items-center gap-1 rounded-lg bg-white/5 px-2 py-1 text-slate-400">
-          <Home className="h-3 w-3" />
-          {workMode}
-        </span>
-
-        <span className="flex items-center gap-1 rounded-lg bg-white/5 px-2 py-1 text-slate-400">
-          <Briefcase className="h-3 w-3" />
-          {employmentType}
-        </span>
-
-        <span className="flex items-center gap-1 rounded-lg bg-white/5 px-2 py-1 text-slate-400">
-          <TrendingUp className="h-3 w-3" />
-          {seniority}
-        </span>
-
-        <span className="flex items-center gap-1 rounded-lg bg-white/5 px-2 py-1 text-slate-400">
-          <Clock className="h-3 w-3" />
-          {postedAt}
-        </span>
-      </div>
-
-      {/* Salary */}
-      <p className="mt-3 text-sm text-slate-300">
-        {formatSalary(salaryRange)}
-      </p>
 
       {/* Actions */}
-      <div className="mt-5 flex items-center gap-2">
+      <div className="mt-5 flex items-center gap-3">
         <button
+          type="button"
           onClick={() => onSelect?.(job)}
-          className="flex-1 rounded-xl bg-white/5 px-4 py-2 text-sm text-slate-300 transition hover:bg-white/10 hover:text-white"
+          className="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-slate-300 transition duration-200 hover:bg-white/10 hover:text-white"
         >
-          View
+          {t('view', language)}
         </button>
 
         <button
+          type="button"
           onClick={() => onApply?.(id)}
           disabled={isApplied}
-          className={`flex-1 rounded-xl px-4 py-2 text-sm font-medium transition
+          className={`flex-1 rounded-2xl px-4 py-2.5 text-sm font-semibold transition duration-200 shadow-md
             ${
               isApplied
-                ? "cursor-not-allowed bg-emerald-500/20 text-emerald-400"
-                : "bg-indigo-500 text-white hover:bg-indigo-600"
+                ? "cursor-not-allowed bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                : "bg-indigo-600 text-white hover:bg-indigo-500 shadow-indigo-600/30 ring-1 ring-indigo-400/30"
             }`}
         >
-          {isApplied ? "Applied" : "Apply"}
+          {isApplied ? t('applied', language) : t('apply', language)}
         </button>
       </div>
     </article>

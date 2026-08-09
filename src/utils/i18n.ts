@@ -60,6 +60,23 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     browseJobs: 'Browse Jobs',
     startPractice: 'Start Practice',
 
+    // Job Filters & Job Search
+    jobFiltersTitle: 'Job Filters',
+    jobFiltersDesc: 'Find roles that match your goals faster.',
+    searchByTitleCompanyLocation: 'Search by title, company, or location',
+    country: 'Country',
+    allCountries: 'All countries',
+    seniority: 'Seniority',
+    allLevels: 'All levels',
+    workMode: 'Work mode',
+    allWorkModes: 'All work modes',
+    employmentType: 'Employment type',
+    allTypes: 'All types',
+    savedOnly: 'Saved only',
+    appliedOnly: 'Applied only',
+    noJobsFoundTitle: 'No jobs found',
+    noJobsFoundDesc: 'Try adjusting your filters or search keywords.',
+
     // Dashboard Overview & Stats
     overviewTitle: 'Overview',
     overviewDesc: 'Track your job search activity and profile momentum in one place.',
@@ -241,6 +258,23 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     applyNow: 'Jetzt bewerben',
     browseJobs: 'Jobs durchsuchen',
     startPractice: 'Übung starten',
+
+    // Job Filters & Job Search
+    jobFiltersTitle: 'Filter',
+    jobFiltersDesc: 'Finden Sie passende Stellenangebote schneller.',
+    searchByTitleCompanyLocation: 'Nach Titel, Firma oder Ort suchen',
+    country: 'Land',
+    allCountries: 'Alle Länder',
+    seniority: 'Erfahrungsstufe',
+    allLevels: 'Alle Stufen',
+    workMode: 'Arbeitsmodell',
+    allWorkModes: 'Alle Modelle',
+    employmentType: 'Anstellungsart',
+    allTypes: 'Alle Arten',
+    savedOnly: 'Nur gespeicherte',
+    appliedOnly: 'Nur beworbene',
+    noJobsFoundTitle: 'Keine Jobs gefunden',
+    noJobsFoundDesc: 'Versuchen Sie, Ihre Filter oder Suchbegriffe anzupassen.',
 
     // Dashboard Overview & Stats
     overviewTitle: 'Übersicht',
@@ -424,6 +458,23 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     applyNow: 'قدّم الآن',
     browseJobs: 'تصفح الوظائف',
     startPractice: 'بدء التدريب',
+
+    // Job Filters & Job Search
+    jobFiltersTitle: 'مرشحات الوظائف',
+    jobFiltersDesc: 'اعثر على الوظائف المناسبة لأهدافك بشكل أسرع.',
+    searchByTitleCompanyLocation: 'البحث حسب المسمى الوظيفي أو الشركة أو الموقع',
+    country: 'الدولة',
+    allCountries: 'جميع الدول',
+    seniority: 'مستوى الخبرة',
+    allLevels: 'جميع المستويات',
+    workMode: 'نمط العمل',
+    allWorkModes: 'جميع أنماط العمل',
+    employmentType: 'نوع التوظيف',
+    allTypes: 'جميع الأنواع',
+    savedOnly: 'المحفوظة فقط',
+    appliedOnly: 'المقدم عليها فقط',
+    noJobsFoundTitle: 'لم يتم العثور على وظائف',
+    noJobsFoundDesc: 'جرب تعديل المرشحات أو كلمات البحث.',
 
     // Dashboard Overview & Stats
     overviewTitle: 'نظرة عامة',

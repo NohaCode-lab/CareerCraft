@@ -1,6 +1,8 @@
 import React from 'react';
 import JobCard from './JobCard';
 import { Job } from '../../hooks/useJobs';
+import useLanguage from '../../hooks/useLanguage';
+import { t } from '../../utils/i18n';
 
 interface JobListProps {
   jobs?: Job[];
@@ -10,12 +12,14 @@ interface JobListProps {
 }
 
 const JobList: React.FC<JobListProps> = ({ jobs = [], onSave, onApply, onSelect }) => {
+  const { language } = useLanguage();
+
   if (!jobs.length) {
     return (
-      <section className="rounded-3xl border border-white/10 bg-white/3 p-8 text-center shadow-sm">
-        <h3 className="text-lg font-semibold text-white">No jobs found</h3>
+      <section className="rounded-3xl border border-white/10 bg-slate-900/80 p-8 text-center shadow-lg backdrop-blur-sm">
+        <h3 className="text-lg font-semibold text-white">{t('noJobsFoundTitle', language)}</h3>
         <p className="mt-2 text-sm text-slate-400">
-          Try adjusting your filters or search keywords.
+          {t('noJobsFoundDesc', language)}
         </p>
       </section>
     );
