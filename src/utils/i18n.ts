@@ -37,8 +37,9 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
 
     // Error Boundary & 404
     somethingWentWrong: 'Something went wrong',
-    somethingWentWrongDesc: 'An unexpected error occurred while rendering this section. You can refresh the view to retry.',
+    somethingWentWrongDesc: 'An unexpected error occurred while rendering this section. You can try again or return to the dashboard.',
     reloadSection: 'Reload Section',
+    tryAgain: 'Try Again',
     pageNotFound: 'Page Not Found',
     pageNotFoundDesc: 'The page you are looking for does not exist, may have been moved, or the URL is incorrect.',
     backToDashboard: 'Back to Dashboard',
@@ -271,8 +272,9 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
 
     // Error Boundary & 404
     somethingWentWrong: 'Etwas ist schiefgelaufen',
-    somethingWentWrongDesc: 'Ein unerwarteter Fehler ist beim Laden aufgetreten. Bitte laden Sie den Bereich neu.',
+    somethingWentWrongDesc: 'Ein unerwarteter Fehler ist beim Laden aufgetreten. Sie können es erneut versuchen oder zum Dashboard zurückkehren.',
     reloadSection: 'Seite neu laden',
+    tryAgain: 'Erneut versuchen',
     pageNotFound: 'Seite nicht gefunden',
     pageNotFoundDesc: 'Die von Ihnen gesuchte Seite existiert nicht oder die URL ist falsch.',
     backToDashboard: 'Zurück zum Dashboard',
@@ -505,8 +507,9 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
 
     // Error Boundary & 404
     somethingWentWrong: 'حدث خطأ غير متوقع',
-    somethingWentWrongDesc: 'حدث خطأ أثناء تحميل هذا القسم. يمكنك إعادة التحديث للمحاولة مجدداً.',
+    somethingWentWrongDesc: 'حدث خطأ أثناء تحميل هذا القسم. يمكنك المحاولة مجدداً أو العودة إلى لوحة التحكم.',
     reloadSection: 'إعادة تحديث الصفحة',
+    tryAgain: 'المحاولة مجدداً',
     pageNotFound: 'الصفحة غير موجودة',
     pageNotFoundDesc: 'الصفحة التي تبحث عنها غير موجودة أو ربما تم نقلها أو الرابط غير صحيح.',
     backToDashboard: 'العودة إلى لوحة التحكم',
