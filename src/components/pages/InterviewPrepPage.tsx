@@ -88,8 +88,8 @@ const InterviewPrepPage: React.FC = () => {
   return (
     <div className="space-y-8">
       <PageHeader
-        title={t('interviewPrep', language)}
-        description="AI-powered interview question generator, personalized STAR answer coaching, mock interviews, and readiness scoring."
+        title={t('interviewPrepTitle', language)}
+        description={t('interviewPrepDesc', language)}
       />
 
       {/* Tabs */}
@@ -123,11 +123,11 @@ const InterviewPrepPage: React.FC = () => {
       {/* Context Drawer */}
       <div className="rounded-3xl border border-white/10 bg-slate-900/60 p-6 backdrop-blur-xl">
         <h3 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-indigo-400" /> Candidate Resume & Job Description Context
+          <Sparkles className="h-4 w-4 text-indigo-400" /> {t('contextHeader', language)}
         </h3>
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1">Candidate Resume Summary</label>
+            <label className="block text-xs font-medium text-slate-400 mb-1">{t('resumeSummaryLabel', language)}</label>
             <textarea
               value={resumeText}
               onChange={(e) => setResumeText(e.target.value)}
@@ -136,7 +136,7 @@ const InterviewPrepPage: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1">Target Job Description</label>
+            <label className="block text-xs font-medium text-slate-400 mb-1">{t('targetJobDescLabel', language)}</label>
             <textarea
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
@@ -156,11 +156,11 @@ const InterviewPrepPage: React.FC = () => {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`rounded-xl px-3 py-1.5 text-xs font-medium capitalize transition ${
+                  className={`rounded-xl px-3 py-1.5 text-xs font-medium transition ${
                     selectedCategory === cat ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40' : 'bg-white/5 text-slate-400 hover:bg-white/10'
                   }`}
                 >
-                  {cat}
+                  {t(cat, language)}
                 </button>
               ))}
             </div>
@@ -170,14 +170,14 @@ const InterviewPrepPage: React.FC = () => {
               disabled={loading}
               className="flex items-center gap-2 rounded-2xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:opacity-50"
             >
-              <Sparkles className="h-4 w-4" /> {loading ? 'Generating...' : t('generateQuestions', language)}
+              <Sparkles className="h-4 w-4" /> {loading ? t('generatingQuestions', language) : t('generateQuestions', language)}
             </button>
           </div>
 
           <div className="grid gap-4">
             {questions.length === 0 ? (
               <div className="rounded-3xl border border-white/10 bg-slate-900/40 p-8 text-center text-slate-400">
-                Click <strong>"Generate AI Questions"</strong> to analyze your resume and target job description.
+                {t('questionsEmpty', language)}
               </div>
             ) : (
               questions.map((q) => (
@@ -193,7 +193,7 @@ const InterviewPrepPage: React.FC = () => {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <div className="flex gap-2 mb-2">
-                        <span className="rounded-full bg-indigo-500/10 px-3 py-0.5 text-xs font-semibold uppercase text-indigo-400">{q.category}</span>
+                        <span className="rounded-full bg-indigo-500/10 px-3 py-0.5 text-xs font-semibold uppercase text-indigo-400">{t(q.category, language) || q.category}</span>
                         <span className="rounded-full bg-slate-800 px-3 py-0.5 text-xs font-medium text-slate-300 capitalize">{q.difficulty}</span>
                       </div>
                       <h4 className="text-base font-semibold text-white">{q.question}</h4>
@@ -204,7 +204,7 @@ const InterviewPrepPage: React.FC = () => {
                       onClick={(e) => { e.stopPropagation(); handleGenerateSTARAnswer(q); setActiveTab('star'); }}
                       className="rounded-2xl border border-indigo-500/40 bg-indigo-500/10 px-3 py-1.5 text-xs font-medium text-indigo-300 hover:bg-indigo-500/20"
                     >
-                      STAR Answer
+                      {t('starAnswer', language)}
                     </button>
                   </div>
                 </div>
@@ -220,7 +220,7 @@ const InterviewPrepPage: React.FC = () => {
           {selectedQuestion ? (
             <div className="rounded-3xl border border-white/10 bg-slate-900/60 p-6 space-y-6">
               <div>
-                <span className="text-xs font-semibold uppercase text-indigo-400">Question</span>
+                <span className="text-xs font-semibold uppercase text-indigo-400">{t('targetQuestionHeader', language)}</span>
                 <h3 className="text-lg font-bold text-white mt-1">{selectedQuestion.question}</h3>
               </div>
 
@@ -230,31 +230,31 @@ const InterviewPrepPage: React.FC = () => {
                   disabled={loading}
                   className="flex items-center gap-2 rounded-2xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-50"
                 >
-                  <Sparkles className="h-4 w-4" /> {loading ? 'Generating STAR Answer...' : 'Generate My STAR Answer'}
+                  <Sparkles className="h-4 w-4" /> {loading ? t('generatingStarAnswer', language) : t('generateStarAnswer', language)}
                 </button>
               ) : (
                 <div className="space-y-4">
                   <div className="grid gap-3 md:grid-cols-2">
                     <div className="rounded-2xl border border-white/5 bg-slate-950/80 p-4">
-                      <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Situation</span>
+                      <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">{t('starSituation', language)}</span>
                       <p className="mt-1 text-xs text-slate-300">{starAnswer.situation}</p>
                     </div>
                     <div className="rounded-2xl border border-white/5 bg-slate-950/80 p-4">
-                      <span className="text-xs font-bold uppercase tracking-wider text-cyan-400">Task</span>
+                      <span className="text-xs font-bold uppercase tracking-wider text-cyan-400">{t('starTask', language)}</span>
                       <p className="mt-1 text-xs text-slate-300">{starAnswer.task}</p>
                     </div>
                     <div className="rounded-2xl border border-white/5 bg-slate-950/80 p-4">
-                      <span className="text-xs font-bold uppercase tracking-wider text-indigo-400">Action</span>
+                      <span className="text-xs font-bold uppercase tracking-wider text-indigo-400">{t('starAction', language)}</span>
                       <p className="mt-1 text-xs text-slate-300">{starAnswer.action}</p>
                     </div>
                     <div className="rounded-2xl border border-white/5 bg-slate-950/80 p-4">
-                      <span className="text-xs font-bold uppercase tracking-wider text-amber-400">Result</span>
+                      <span className="text-xs font-bold uppercase tracking-wider text-amber-400">{t('starResult', language)}</span>
                       <p className="mt-1 text-xs text-slate-300">{starAnswer.result}</p>
                     </div>
                   </div>
 
                   <div className="rounded-2xl border border-indigo-500/20 bg-indigo-950/30 p-4">
-                    <span className="text-xs font-semibold uppercase text-indigo-300">Complete Answer Script</span>
+                    <span className="text-xs font-semibold uppercase text-indigo-300">{t('completeAnswerScript', language)}</span>
                     <p className="mt-2 text-sm leading-relaxed text-slate-200">{starAnswer.answerText}</p>
                   </div>
                 </div>
@@ -262,7 +262,7 @@ const InterviewPrepPage: React.FC = () => {
             </div>
           ) : (
             <div className="rounded-3xl border border-white/10 bg-slate-900/40 p-8 text-center text-slate-400">
-              Please select a question from the <strong>Questions Generator</strong> tab first.
+              {t('starSelectFirst', language)}
             </div>
           )}
         </div>
@@ -273,16 +273,16 @@ const InterviewPrepPage: React.FC = () => {
         <div className="space-y-6">
           <div className="rounded-3xl border border-white/10 bg-slate-900/60 p-6 space-y-4">
             <div>
-              <label className="block text-xs font-semibold uppercase text-indigo-400">Target Interview Question</label>
+              <label className="block text-xs font-semibold uppercase text-indigo-400">{t('targetQuestion', language)}</label>
               <p className="mt-1 text-base font-semibold text-white">{selectedQuestion ? selectedQuestion.question : 'How do you ensure React component performance and prevent redundant re-renders?'}</p>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">Your Practice Answer</label>
+              <label className="block text-xs font-medium text-slate-400 mb-1">{t('practiceAnswerLabel', language)}</label>
               <textarea
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
-                placeholder="Type or paste your spoken answer here to receive instant AI coaching feedback..."
+                placeholder={t('practiceAnswerPlaceholder', language)}
                 rows={4}
                 className="w-full rounded-2xl border border-white/10 bg-slate-950 p-4 text-sm text-slate-200 outline-none focus:border-indigo-500"
               />
@@ -293,7 +293,7 @@ const InterviewPrepPage: React.FC = () => {
               disabled={loading || !userAnswer.trim()}
               className="flex items-center gap-2 rounded-2xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-50"
             >
-              <Send className="h-4 w-4" /> {loading ? 'Evaluating...' : t('evaluateAnswer', language)}
+              <Send className="h-4 w-4" /> {loading ? t('evaluatingAnswer', language) : t('evaluateAnswer', language)}
             </button>
           </div>
 
@@ -301,39 +301,39 @@ const InterviewPrepPage: React.FC = () => {
             <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 space-y-6">
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div>
-                  <h4 className="text-lg font-bold text-white">AI Evaluation Report</h4>
-                  <p className="text-xs text-slate-400">Coaching score estimate based on technical accuracy and structure</p>
+                  <h4 className="text-lg font-bold text-white">{t('evaluationReportTitle', language)}</h4>
+                  <p className="text-xs text-slate-400">{t('coachingScoreEst', language)}</p>
                 </div>
                 <div className="text-right">
                   <span className="text-3xl font-extrabold text-indigo-400">{evaluation.overallScore}/100</span>
-                  <span className="block text-xs text-slate-400">Overall Score</span>
+                  <span className="block text-xs text-slate-400">{t('overallScoreLabel', language)}</span>
                 </div>
               </div>
 
               <div className="grid gap-3 sm:grid-cols-3">
                 <div className="rounded-2xl border border-white/5 bg-slate-950 p-3 text-center">
-                  <span className="text-xs text-slate-400 block">Relevance</span>
+                  <span className="text-xs text-slate-400 block">{t('relevance', language)}</span>
                   <span className="text-lg font-bold text-emerald-400">{evaluation.relevance}%</span>
                 </div>
                 <div className="rounded-2xl border border-white/5 bg-slate-950 p-3 text-center">
-                  <span className="text-xs text-slate-400 block">Structure</span>
+                  <span className="text-xs text-slate-400 block">{t('structure', language)}</span>
                   <span className="text-lg font-bold text-cyan-400">{evaluation.structure}%</span>
                 </div>
                 <div className="rounded-2xl border border-white/5 bg-slate-950 p-3 text-center">
-                  <span className="text-xs text-slate-400 block">Job Alignment</span>
+                  <span className="text-xs text-slate-400 block">{t('jobAlignment', language)}</span>
                   <span className="text-lg font-bold text-amber-400">{evaluation.jobAlignment}%</span>
                 </div>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="rounded-2xl border border-emerald-500/20 bg-emerald-950/20 p-4">
-                  <h5 className="text-xs font-bold uppercase text-emerald-400 mb-2">Key Strengths</h5>
+                  <h5 className="text-xs font-bold uppercase text-emerald-400 mb-2">{t('keyStrengths', language)}</h5>
                   <ul className="space-y-1 text-xs text-slate-300 list-disc list-inside">
                     {evaluation.feedback.map((item, idx) => <li key={idx}>{item}</li>)}
                   </ul>
                 </div>
                 <div className="rounded-2xl border border-amber-500/20 bg-amber-950/20 p-4">
-                  <h5 className="text-xs font-bold uppercase text-amber-400 mb-2">Recommended Improvements</h5>
+                  <h5 className="text-xs font-bold uppercase text-amber-400 mb-2">{t('recommendedImprovements', language)}</h5>
                   <ul className="space-y-1 text-xs text-slate-300 list-disc list-inside">
                     {evaluation.improvements.map((item, idx) => <li key={idx}>{item}</li>)}
                   </ul>
@@ -351,7 +351,7 @@ const InterviewPrepPage: React.FC = () => {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-bold text-white">{t('mockInterview', language)}</h3>
-                <p className="text-xs text-slate-400">Interactive live question-and-answer practice session</p>
+                <p className="text-xs text-slate-400">{t('mockInterviewDesc', language)}</p>
               </div>
               <button
                 onClick={() => {
@@ -361,15 +361,15 @@ const InterviewPrepPage: React.FC = () => {
                 }}
                 className="rounded-2xl bg-indigo-600 px-5 py-2 text-xs font-semibold text-white hover:bg-indigo-500"
               >
-                Start Mock Session
+                {t('startMockSession', language)}
               </button>
             </div>
 
             {mockActive && selectedQuestion && (
               <div className="space-y-4 pt-4 border-t border-white/10">
                 <div className="flex items-center justify-between text-xs text-indigo-400 font-semibold">
-                  <span>Question {mockIndex + 1} of {questions.length || 4}</span>
-                  <span className="uppercase">{selectedQuestion.category}</span>
+                  <span>{t('questionProgress', language).replace('{index}', String(mockIndex + 1)).replace('{total}', String(questions.length || 4))}</span>
+                  <span className="uppercase">{t(selectedQuestion.category, language) || selectedQuestion.category}</span>
                 </div>
 
                 <div className="rounded-2xl bg-slate-950 p-4 border border-white/5">
@@ -379,7 +379,7 @@ const InterviewPrepPage: React.FC = () => {
                 <textarea
                   value={userAnswer}
                   onChange={(e) => setUserAnswer(e.target.value)}
-                  placeholder="Type your answer to this question..."
+                  placeholder={t('practiceAnswerPlaceholder', language)}
                   rows={4}
                   className="w-full rounded-2xl border border-white/10 bg-slate-950 p-3 text-xs text-slate-200 outline-none focus:border-indigo-500"
                 />
@@ -389,14 +389,14 @@ const InterviewPrepPage: React.FC = () => {
                   disabled={loading || !userAnswer.trim()}
                   className="rounded-2xl bg-indigo-600 px-6 py-2 text-xs font-semibold text-white hover:bg-indigo-500 disabled:opacity-50"
                 >
-                  Submit & Next Question
+                  {t('submitAndNext', language)}
                 </button>
               </div>
             )}
 
             {mockFeedbackHistory.length > 0 && (
               <div className="mt-6 border-t border-white/10 pt-4 space-y-3">
-                <h4 className="text-xs font-bold uppercase text-slate-400">Mock Session Completed Answers ({mockFeedbackHistory.length})</h4>
+                <h4 className="text-xs font-bold uppercase text-slate-400">{t('mockCompletedTitle', language)} ({mockFeedbackHistory.length})</h4>
                 {mockFeedbackHistory.map((item, idx) => (
                   <div key={idx} className="rounded-2xl border border-white/5 bg-slate-950 p-3 text-xs space-y-1">
                     <span className="font-semibold text-indigo-300">{item.question}</span>
@@ -417,29 +417,29 @@ const InterviewPrepPage: React.FC = () => {
             <div className="rounded-3xl border border-indigo-500/30 bg-indigo-950/20 p-6 text-center">
               <span className="text-xs font-semibold uppercase tracking-wider text-indigo-400">{t('interviewReadiness', language)}</span>
               <div className="mt-3 text-5xl font-extrabold text-white">{readiness.overallReadiness}%</div>
-              <p className="mt-2 text-xs text-slate-400">Calculated readiness metric</p>
+              <p className="mt-2 text-xs text-slate-400">{t('calculatedReadiness', language)}</p>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-slate-900/60 p-6 space-y-3 md:col-span-2">
-              <h4 className="text-sm font-semibold text-white">Score Breakdown by Category</h4>
+              <h4 className="text-sm font-semibold text-white">{t('scoreBreakdown', language)}</h4>
               <div className="space-y-2">
                 <div>
                   <div className="flex justify-between text-xs text-slate-300 mb-1">
-                    <span>Technical Score</span>
+                    <span>{t('technicalScore', language)}</span>
                     <span>{readiness.technicalScore}%</span>
                   </div>
                   <div className="h-2 w-full rounded-full bg-slate-800"><div className="h-2 rounded-full bg-indigo-500" style={{ width: `${readiness.technicalScore}%` }} /></div>
                 </div>
                 <div>
                   <div className="flex justify-between text-xs text-slate-300 mb-1">
-                    <span>Behavioral Score</span>
+                    <span>{t('behavioralScore', language)}</span>
                     <span>{readiness.behavioralScore}%</span>
                   </div>
                   <div className="h-2 w-full rounded-full bg-slate-800"><div className="h-2 rounded-full bg-emerald-500" style={{ width: `${readiness.behavioralScore}%` }} /></div>
                 </div>
                 <div>
                   <div className="flex justify-between text-xs text-slate-300 mb-1">
-                    <span>Target Job Alignment</span>
+                    <span>{t('targetJobAlignment', language)}</span>
                     <span>{readiness.jobAlignmentScore}%</span>
                   </div>
                   <div className="h-2 w-full rounded-full bg-slate-800"><div className="h-2 rounded-full bg-amber-500" style={{ width: `${readiness.jobAlignmentScore}%` }} /></div>

@@ -2,13 +2,17 @@ import React from 'react';
 import PageHeader from '../layout/PageHeader';
 import AIAssistantChat from '../ai/AIAssistantChat';
 import CoverLetterGenerator from '../ai/CoverLetterGenerator';
+import useLanguage from '../../hooks/useLanguage';
+import { t } from '../../utils/i18n';
 
 const AIAssistantPage: React.FC = () => {
+  const { language } = useLanguage();
+
   return (
     <div className="space-y-8">
       <PageHeader
-        title="AI Assistant"
-        description="Use AI tools to improve your CV, generate cover letters, and get personalized career guidance."
+        title={t('aiAssistant', language)}
+        description={t('aiAssistantDesc', language)}
       />
 
       <div className="grid gap-6 xl:grid-cols-2">

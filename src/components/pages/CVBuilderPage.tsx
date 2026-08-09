@@ -2,44 +2,29 @@ import React from 'react';
 import PageHeader from '../layout/PageHeader';
 import CVForm from '../cv/CVForm';
 import CVPreview from '../cv/CVPreview';
-import CVDownload from '../cv/CVDownload';
-import TemplateSwitcher from '../cv/TemplateSwitcher';
-import ATSAnalyzer from '../cv/ATSAnalyzer';
-import DragDropSections from '../cv/DragDropSections';
+import useLanguage from '../../hooks/useLanguage';
+import { t } from '../../utils/i18n';
 
 const CVBuilderPage: React.FC = () => {
+  const { language } = useLanguage();
+
   return (
-    <main
-      className="space-y-8"
-      aria-labelledby="cv-builder-page-title"
-    >
+    <div className="space-y-8">
       <PageHeader
-        title="CV Builder"
-        description="Create, edit, analyze, and export a professional ATS-friendly resume."
+        title={t('cvBuilder', language)}
+        description={t('cvBuilderDesc', language)}
       />
 
-      <div className="grid gap-6 xl:grid-cols-12 xl:items-start">
-        <aside
-          className="space-y-6 xl:col-span-5"
-          aria-label="CV editing, template, section order, and ATS analysis tools"
-        >
+      <div className="grid gap-8 xl:grid-cols-12">
+        <section className="space-y-6 xl:col-span-6" aria-label="CV form builder">
           <CVForm />
-          <TemplateSwitcher />
-          <DragDropSections />
-          <ATSAnalyzer />
-        </aside>
+        </section>
 
-        <section
-          className="space-y-6 xl:col-span-7"
-          aria-label="Live CV preview and PDF export"
-        >
-          <div className="space-y-6 xl:sticky xl:top-24">
-            <CVPreview />
-            <CVDownload />
-          </div>
+        <section className="space-y-6 xl:col-span-6" aria-label="Live CV preview">
+          <CVPreview />
         </section>
       </div>
-    </main>
+    </div>
   );
 };
 

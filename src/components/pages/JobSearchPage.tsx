@@ -4,6 +4,8 @@ import JobList from '../jobs/JobList';
 import JobFilters, { JobFilterState } from '../jobs/JobFilters';
 import SavedJobCard from '../jobs/SavedJobCard';
 import useJobs from '../../hooks/useJobs';
+import useLanguage from '../../hooks/useLanguage';
+import { t } from '../../utils/i18n';
 
 const initialFilters: JobFilterState = {
   search: '',
@@ -16,6 +18,7 @@ const initialFilters: JobFilterState = {
 };
 
 const JobSearchPage: React.FC = () => {
+  const { language } = useLanguage();
   const {
     jobs = [],
     savedJobs = [],
@@ -72,8 +75,8 @@ const JobSearchPage: React.FC = () => {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Job Search"
-        description="Search for roles, filter opportunities, and discover jobs that match your goals."
+        title={t('jobSearch', language)}
+        description={t('jobSearchDesc', language)}
       />
 
       <div className="grid gap-6 xl:grid-cols-12">
@@ -96,7 +99,7 @@ const JobSearchPage: React.FC = () => {
 
         <section className="space-y-4 xl:col-span-3" aria-label="Saved jobs">
           <div>
-            <h2 className="text-lg font-semibold text-white">Saved Jobs</h2>
+            <h2 className="text-lg font-semibold text-white">{t('savedJobs', language)}</h2>
             <p className="mt-1 text-sm text-slate-400">
               Quickly access jobs you saved earlier.
             </p>
