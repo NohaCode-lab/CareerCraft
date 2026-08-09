@@ -1,13 +1,15 @@
 import React, { useMemo } from 'react';
 import ApplicationColumn from './ApplicationColumn';
 import { Application } from '../../hooks/useApplications';
+import useLanguage from '../../hooks/useLanguage';
+import { translations } from '../../config/translations';
 
 const STATUSES = [
-  { key: 'applied', label: 'Applied' },
-  { key: 'reviewing', label: 'Reviewing' },
-  { key: 'interview', label: 'Interview' },
-  { key: 'offer', label: 'Offer' },
-  { key: 'rejected', label: 'Rejected' },
+  { key: 'applied', label: 'Applied', tKey: 'statusApplied' },
+  { key: 'reviewing', label: 'Reviewing', tKey: 'statusReviewing' },
+  { key: 'interview', label: 'Interview', tKey: 'statusInterview' },
+  { key: 'offer', label: 'Offer', tKey: 'statusOffer' },
+  { key: 'rejected', label: 'Rejected', tKey: 'statusRejected' },
 ];
 
 const normalizeStatus = (status?: string): string => {
@@ -34,6 +36,9 @@ interface ApplicationBoardProps {
 }
 
 const ApplicationBoard: React.FC<ApplicationBoardProps> = ({ applications = [], onCardClick }) => {
+  const { language } = useLanguage();
+  const t = translations[language] || translations.en;
+
   const groupedApplications = useMemo(() => {
     const groups = STATUSES.reduce((accumulator, status) => {
       accumulator[status.key] = [];
@@ -52,15 +57,19 @@ const ApplicationBoard: React.FC<ApplicationBoardProps> = ({ applications = [], 
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
-      {STATUSES.map((status) => (
-        <ApplicationColumn
-          key={status.key}
-          title={status.label}
-          statusKey={status.key}
-          applications={groupedApplications[status.key]}
-          onCardClick={onCardClick}
-        />
-      ))}
+      {STATUSES.map((status) => {
+        const title = (t as any)[status.tKey] || status.label;
+
+        return (
+          <ApplicationColumn
+            key={status.key}
+            title={title}
+            statusKey={status.key}
+            applications={groupedApplications[status.key]}
+            onCardClick={onCardClick}
+          />
+        );
+      })}
     </div>
   );
 };

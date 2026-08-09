@@ -65,6 +65,13 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     browseJobs: 'Browse Jobs',
     startPractice: 'Start Practice',
 
+    // Kanban Statuses
+    statusApplied: 'Applied',
+    statusReviewing: 'Reviewing',
+    statusInterview: 'Interview',
+    statusOffer: 'Offer',
+    statusRejected: 'Rejected',
+
     // Job Filters & Job Search
     jobFiltersTitle: 'Job Filters',
     jobFiltersDesc: 'Find roles that match your goals faster.',
@@ -158,6 +165,17 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     savePreferences: 'Save & Apply Preferences',
     preferencesSavedToast: 'Preferences saved successfully',
 
+    // Cover Letter & AI Tools
+    coverLetterTitle: 'Cover Letter Generator',
+    coverLetterDesc: 'Generate a tailored cover letter using your role, company, skills, and experience.',
+    generateCoverLetter: 'Generate Cover Letter',
+    generatedCoverLetterTitle: 'Generated Cover Letter',
+    fullNameLabel: 'Full Name',
+    jobTitleLabel: 'Job Title',
+    companyNameLabel: 'Company Name',
+    experienceLabel: 'Experience',
+    skillsLabel: 'Key Skills',
+
     // CV Builder
     summary: 'Professional Summary',
     experience: 'Work Experience',
@@ -231,7 +249,7 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     stayCareerReadyDesc: 'Bewerbungen verfolgen, Lebenslauf optimieren und auf Vorstellungsgespräche vorbereiten.',
     searchDashboard: 'Dashboard durchsuchen...',
 
-    // Navigation & Page Descs (Formal Professional German: Stellensuche & Gespeicherte Stellen)
+    // Navigation & Page Descs (Formal Professional German)
     dashboard: 'Dashboard',
     dashboardDesc: 'Willkommen zurück! Hier ist Ihr Karrierefortschritt und Ihre aktuellen Bewerbungen.',
     cvBuilder: 'Lebenslauf',
@@ -277,6 +295,13 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     applyNow: 'Jetzt bewerben',
     browseJobs: 'Stellenangebote durchsuchen',
     startPractice: 'Übung starten',
+
+    // Kanban Statuses
+    statusApplied: 'Beworben',
+    statusReviewing: 'In Prüfung',
+    statusInterview: 'Vorstellungsgespräch',
+    statusOffer: 'Stellenangebot',
+    statusRejected: 'Absage',
 
     // Job Filters & Job Search
     jobFiltersTitle: 'Stellen-Filter',
@@ -370,6 +395,17 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     preferredFormat: 'Bevorzugtes Exportformat',
     savePreferences: 'Einstellungen speichern & anwenden',
     preferencesSavedToast: 'Einstellungen erfolgreich gespeichert',
+
+    // Cover Letter & AI Tools
+    coverLetterTitle: 'Anschreiben-Generator',
+    coverLetterDesc: 'Erstellen Sie ein maßgeschneidertes Anschreiben basierend auf Ihrer Rolle, Firma und Erfahrung.',
+    generateCoverLetter: 'Anschreiben generieren',
+    generatedCoverLetterTitle: 'Generiertes Anschreiben',
+    fullNameLabel: 'Vollständiger Name',
+    jobTitleLabel: 'Angestrebte Berufsbezeichnung',
+    companyNameLabel: 'Unternehmensname',
+    experienceLabel: 'Berufserfahrung',
+    skillsLabel: 'Wichtigste Kenntnisse',
 
     // CV Builder
     summary: 'Profil & Zusammenfassung',
@@ -491,6 +527,13 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     browseJobs: 'تصفح الوظائف',
     startPractice: 'بدء التدريب',
 
+    // Kanban Statuses
+    statusApplied: 'تم التقديم',
+    statusReviewing: 'قيد المراجعة',
+    statusInterview: 'المقابلة',
+    statusOffer: 'العرض الوظيفي',
+    statusRejected: 'مرفوض',
+
     // Job Filters & Job Search
     jobFiltersTitle: 'مرشحات الوظائف',
     jobFiltersDesc: 'اعثر على الوظائف المناسبة لأهدافك بشكل أسرع.',
@@ -531,7 +574,7 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     profileHealth: 'صحة الملف الشخصي',
     profileStrength: 'قوة الملف المهني',
     profileStrengthDesc: 'أكمل بيانات ملفك المهني لتحسين التوصيات وتجهيز سيرتك الذاتية لفرص أفضل.',
-    completionScore: 'نسبة الاكتفال',
+    completionScore: 'نسبة الاكتمال',
     sectionsCompleted: 'تم إكمال {completed} من أصل {total} أقسام في الملف المهني',
     needsImprovement: 'يحتاج تحسين',
     good: 'جيد',
@@ -584,6 +627,17 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     savePreferences: 'حفظ وتطبيق التفضيلات',
     preferencesSavedToast: 'تم حفظ التفضيلات بنجاح',
 
+    // Cover Letter & AI Tools
+    coverLetterTitle: 'مولد خطاب التغطية',
+    coverLetterDesc: 'أنشئ خطاب تغطية مخصصاً واحترافياً لطلبك القادم باستخدام مهاراتك وخبراتك.',
+    generateCoverLetter: 'توليد خطاب التغطية',
+    generatedCoverLetterTitle: 'خطاب التغطية المُولد',
+    fullNameLabel: 'الاسم الكامل',
+    jobTitleLabel: 'المسمى الوظيفي المستهدف',
+    companyNameLabel: 'اسم الشركة',
+    experienceLabel: 'الخبرة العملية',
+    skillsLabel: 'المهارات الرئيسية',
+
     // CV Builder
     summary: 'الملخص المهني',
     experience: 'الخبرة العملية',
@@ -606,7 +660,7 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
 
     // Interview Categories & Drawer
     contextHeader: 'سياق السيرة الذاتية ووصف الوظيفة المستهدفة',
-    resumeSummaryLabel: 'ملخص السيرة الذاتية للفيصل',
+    resumeSummaryLabel: 'ملخص السيرة الذاتية للمرشح',
     targetJobDescLabel: 'وصف الوظيفة المستهدفة',
     all: 'الكل',
     technical: 'تقني',
