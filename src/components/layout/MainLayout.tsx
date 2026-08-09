@@ -20,8 +20,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, pageTitle = 'Dashboar
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="flex min-h-screen">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-slate-50 text-slate-900 transition-colors duration-200 dark:bg-slate-950 dark:text-slate-100">
+      <div className="flex min-h-screen w-full max-w-full overflow-x-hidden">
         <Sidebar />
 
         <MobileSidebar
@@ -29,14 +29,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, pageTitle = 'Dashboar
           onClose={closeMobileSidebar}
         />
 
-        <div className="flex min-h-screen flex-1 flex-col overflow-hidden">
+        <div className="flex min-h-screen w-full max-w-full flex-1 flex-col overflow-x-hidden">
           <Navbar title={pageTitle} onMenuClick={openMobileSidebar} />
 
           <main
-            className="flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.16),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(14,165,233,0.12),transparent_30%)] px-4 py-6 sm:px-6 lg:px-8"
+            className="flex-1 overflow-x-hidden overflow-y-auto px-4 py-6 sm:px-6 lg:px-8 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.08),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(14,165,233,0.06),transparent_30%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.16),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(14,165,233,0.12),transparent_30%)]"
             aria-label={`${pageTitle} page content`}
           >
-            <div className="mx-auto w-full max-w-7xl">{children}</div>
+            <div className="mx-auto w-full max-w-7xl overflow-x-hidden">{children}</div>
           </main>
         </div>
       </div>

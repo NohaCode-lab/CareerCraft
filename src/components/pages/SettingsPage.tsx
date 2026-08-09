@@ -121,13 +121,13 @@ const SettingsPage: React.FC = () => {
           <LanguageSwitcher />
         </SettingsSection>
 
-        <section className="rounded-3xl border border-white/10 bg-slate-900/60 p-6 shadow-lg backdrop-blur-xl">
+        <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-colors duration-200 dark:border-white/10 dark:bg-slate-900/60 dark:shadow-lg dark:backdrop-blur-xl">
           <div className="mb-5">
-            <h2 className="text-lg font-semibold text-white">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
               {t.moreSettingsTitle}
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-slate-300">
+            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
               {t.moreSettingsDesc}
             </p>
           </div>
@@ -142,17 +142,17 @@ const SettingsPage: React.FC = () => {
                   key={item.id}
                   type="button"
                   onClick={() => handleCardClick(item.id)}
-                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-4 text-left text-sm text-slate-300 transition hover:border-indigo-400/40 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
+                  className="group flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4 text-left text-sm text-slate-700 transition hover:border-indigo-500 hover:bg-slate-100 hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-indigo-400/40 dark:hover:bg-white/10 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-300 transition group-hover:bg-indigo-500/20 group-hover:text-indigo-200">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-300 transition group-hover:bg-indigo-100 dark:group-hover:bg-indigo-500/20">
                       <Icon size={16} />
                     </div>
 
-                    <span className="font-semibold">{title}</span>
+                    <span className="font-semibold truncate">{title}</span>
                   </div>
 
-                  <span className="rounded-full bg-indigo-500/10 px-2.5 py-0.5 text-xs font-semibold text-indigo-400 border border-indigo-500/20">
+                  <span className="shrink-0 rounded-full bg-indigo-50 dark:bg-indigo-500/10 px-2.5 py-0.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20">
                     Configure
                   </span>
                 </button>
@@ -162,12 +162,12 @@ const SettingsPage: React.FC = () => {
         </section>
 
         {activeModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
-            <div className="w-full max-w-lg rounded-3xl border border-white/10 bg-slate-900 p-6 shadow-2xl space-y-6">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <div className="flex items-center gap-2 text-indigo-300">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-md">
+            <div className="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-slate-900 space-y-6">
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-4">
+                <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-300">
                   <SlidersHorizontal size={20} />
-                  <h3 className="text-lg font-bold text-white">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                     {activeModal === 'notifications'
                       ? t.notificationsPref
                       : activeModal === 'cv-defaults'
@@ -178,7 +178,7 @@ const SettingsPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setActiveModal(null)}
-                  className="rounded-xl p-1 text-slate-400 hover:bg-white/10 hover:text-white"
+                  className="rounded-xl p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/10 dark:hover:text-white"
                 >
                   ✕
                 </button>
@@ -187,35 +187,35 @@ const SettingsPage: React.FC = () => {
               {/* MODAL 1: NOTIFICATION PREFERENCES */}
               {activeModal === 'notifications' && (
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-slate-950 p-4">
+                  <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-white/5 dark:bg-slate-950">
                     <div className="flex items-center gap-3">
-                      <Mail className="h-5 w-5 text-indigo-400" />
+                      <Mail className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
                       <div>
-                        <p className="text-sm font-semibold text-white">{t.notificationAlerts || 'Email Job Match Alerts'}</p>
-                        <p className="text-xs text-slate-400">Receive alerts when new jobs match your skills</p>
+                        <p className="text-sm font-semibold text-slate-900 dark:text-white">{t.notificationAlerts || 'Email Job Match Alerts'}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">Receive alerts when new jobs match your skills</p>
                       </div>
                     </div>
                     <button
                       type="button"
                       onClick={() => handleTogglePref('emailAlerts')}
-                      className={`h-6 w-11 rounded-full transition ${preferences.emailAlerts ? 'bg-indigo-600' : 'bg-slate-700'}`}
+                      className={`h-6 w-11 rounded-full transition ${preferences.emailAlerts ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-700'}`}
                     >
                       <span className={`block h-5 w-5 rounded-full bg-white transition ${preferences.emailAlerts ? 'translate-x-5' : 'translate-x-0.5'}`} />
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-slate-950 p-4">
+                  <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-white/5 dark:bg-slate-950">
                     <div className="flex items-center gap-3">
-                      <Bell className="h-5 w-5 text-indigo-400" />
+                      <Bell className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
                       <div>
-                        <p className="text-sm font-semibold text-white">{t.statusReminders || 'Application Status Reminders'}</p>
-                        <p className="text-xs text-slate-400">Follow-up reminders for active interviews</p>
+                        <p className="text-sm font-semibold text-slate-900 dark:text-white">{t.statusReminders || 'Application Status Reminders'}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">Follow-up reminders for active interviews</p>
                       </div>
                     </div>
                     <button
                       type="button"
                       onClick={() => handleTogglePref('statusReminders')}
-                      className={`h-6 w-11 rounded-full transition ${preferences.statusReminders ? 'bg-indigo-600' : 'bg-slate-700'}`}
+                      className={`h-6 w-11 rounded-full transition ${preferences.statusReminders ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-700'}`}
                     >
                       <span className={`block h-5 w-5 rounded-full bg-white transition ${preferences.statusReminders ? 'translate-x-5' : 'translate-x-0.5'}`} />
                     </button>
@@ -227,7 +227,7 @@ const SettingsPage: React.FC = () => {
               {activeModal === 'cv-defaults' && (
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-xs font-semibold uppercase text-indigo-400 mb-2">{t.defaultTemplate || 'Default Template'}</label>
+                    <label className="block text-xs font-semibold uppercase text-indigo-600 dark:text-indigo-400 mb-2">{t.defaultTemplate || 'Default Template'}</label>
                     <div className="grid grid-cols-3 gap-2">
                       {['european', 'modern', 'minimal'].map((tpl) => (
                         <button
@@ -236,8 +236,8 @@ const SettingsPage: React.FC = () => {
                           onClick={() => handleSelectPref('defaultTemplate', tpl)}
                           className={`rounded-2xl border p-3 text-center text-xs font-semibold capitalize transition ${
                             preferences.defaultTemplate === tpl
-                              ? 'border-indigo-500 bg-indigo-500/20 text-white'
-                              : 'border-white/10 bg-slate-950 text-slate-400 hover:bg-white/5'
+                              ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-500/20 dark:text-white'
+                              : 'border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 dark:border-white/10 dark:bg-slate-950 dark:text-slate-400 dark:hover:bg-white/5'
                           }`}
                         >
                           {tpl}
@@ -246,18 +246,18 @@ const SettingsPage: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-slate-950 p-4">
+                  <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-white/5 dark:bg-slate-950">
                     <div className="flex items-center gap-3">
-                      <ShieldCheck className="h-5 w-5 text-indigo-400" />
+                      <ShieldCheck className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
                       <div>
-                        <p className="text-sm font-semibold text-white">{t.atsOptimization || 'ATS Optimization Mode'}</p>
-                        <p className="text-xs text-slate-400">Ensure CV layout passes machine scanners</p>
+                        <p className="text-sm font-semibold text-slate-900 dark:text-white">{t.atsOptimization || 'ATS Optimization Mode'}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">Ensure CV layout passes machine scanners</p>
                       </div>
                     </div>
                     <button
                       type="button"
                       onClick={() => handleTogglePref('atsOptimization')}
-                      className={`h-6 w-11 rounded-full transition ${preferences.atsOptimization ? 'bg-indigo-600' : 'bg-slate-700'}`}
+                      className={`h-6 w-11 rounded-full transition ${preferences.atsOptimization ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-700'}`}
                     >
                       <span className={`block h-5 w-5 rounded-full bg-white transition ${preferences.atsOptimization ? 'translate-x-5' : 'translate-x-0.5'}`} />
                     </button>
@@ -269,7 +269,7 @@ const SettingsPage: React.FC = () => {
               {activeModal === 'export-options' && (
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-xs font-semibold uppercase text-indigo-400 mb-2">{t.preferredFormat || 'Preferred Export Format'}</label>
+                    <label className="block text-xs font-semibold uppercase text-indigo-600 dark:text-indigo-400 mb-2">{t.preferredFormat || 'Preferred Export Format'}</label>
                     <div className="grid grid-cols-3 gap-2">
                       {[
                         { id: 'pdf', label: 'PDF Document', icon: FileText },
@@ -284,8 +284,8 @@ const SettingsPage: React.FC = () => {
                             onClick={() => handleSelectPref('preferredFormat', fmt.id)}
                             className={`flex flex-col items-center gap-2 rounded-2xl border p-3 text-center text-xs font-semibold transition ${
                               preferences.preferredFormat === fmt.id
-                                ? 'border-indigo-500 bg-indigo-500/20 text-white'
-                                : 'border-white/10 bg-slate-950 text-slate-400 hover:bg-white/5'
+                                ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-500/20 dark:text-white'
+                                : 'border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 dark:border-white/10 dark:bg-slate-950 dark:text-slate-400 dark:hover:bg-white/5'
                             }`}
                           >
                             <Icon className="h-4 w-4" />
@@ -298,11 +298,11 @@ const SettingsPage: React.FC = () => {
                 </div>
               )}
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-white/10">
                 <button
                   type="button"
                   onClick={() => setActiveModal(null)}
-                  className="rounded-2xl bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/10"
+                  className="rounded-2xl bg-slate-100 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-200 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10"
                 >
                   {t.cancel || 'Cancel'}
                 </button>
