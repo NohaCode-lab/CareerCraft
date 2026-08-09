@@ -42,7 +42,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ item, onClick }) => {
       aria-label={translatedLabel}
       className={({ isActive }) =>
         [
-          'group relative flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200',
+          'group relative flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200 min-w-0',
           'focus:outline-none focus:ring-2 focus:ring-indigo-400/40',
           isActive
             ? 'bg-indigo-500/15 text-white shadow-sm ring-1 ring-indigo-400/20'
@@ -62,7 +62,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ item, onClick }) => {
 
           <span
             className={[
-              'flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-200',
+              'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all duration-200',
               isActive
                 ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/20'
                 : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white',
@@ -71,7 +71,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ item, onClick }) => {
             <Icon className="h-5 w-5" />
           </span>
 
-          <span className="truncate">{translatedLabel}</span>
+          <span className="line-clamp-2 leading-snug break-words min-w-0">{translatedLabel}</span>
         </>
       )}
     </NavLink>
