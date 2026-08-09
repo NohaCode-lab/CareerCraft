@@ -51,10 +51,10 @@ const JobFilters: React.FC<JobFiltersProps> = ({ filters = defaultFilters, onCha
 
   return (
     <section className="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-lg backdrop-blur-sm">
-      <div className="mb-5 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+      <div className="mb-5 flex items-start justify-between gap-2">
         <div>
           <h2 className="text-lg font-semibold text-white">{t('jobFiltersTitle', language)}</h2>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-xs leading-relaxed text-slate-400">
             {t('jobFiltersDesc', language)}
           </p>
         </div>
@@ -62,9 +62,9 @@ const JobFilters: React.FC<JobFiltersProps> = ({ filters = defaultFilters, onCha
         <button
           type="button"
           onClick={onReset}
-          className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
+          className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
         >
-          <RotateCcw className="h-4 w-4" />
+          <RotateCcw className="h-3.5 w-3.5" />
           {t('reset', language)}
         </button>
       </div>
