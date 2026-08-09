@@ -35,10 +35,13 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     settings: 'Settings',
     settingsDesc: 'Customize your CareerCraft experience, manage preferences, and personalize your workspace.',
 
-    // Error Boundary
+    // Error Boundary & 404
     somethingWentWrong: 'Something went wrong',
     somethingWentWrongDesc: 'An unexpected error occurred while rendering this section. You can refresh the view to retry.',
     reloadSection: 'Reload Section',
+    pageNotFound: 'Page Not Found',
+    pageNotFoundDesc: 'The page you are looking for does not exist, may have been moved, or the URL is incorrect.',
+    backToDashboard: 'Back to Dashboard',
 
     // Common Actions & Buttons
     open: 'Open',
@@ -266,10 +269,13 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     settings: 'Einstellungen',
     settingsDesc: 'Passen Sie Ihr CareerCraft-Erlebnis an, verwalten Sie Einstellungen und personalisieren Sie Ihren Arbeitsbereich.',
 
-    // Error Boundary
+    // Error Boundary & 404
     somethingWentWrong: 'Etwas ist schiefgelaufen',
     somethingWentWrongDesc: 'Ein unerwarteter Fehler ist beim Laden aufgetreten. Bitte laden Sie den Bereich neu.',
     reloadSection: 'Seite neu laden',
+    pageNotFound: 'Seite nicht gefunden',
+    pageNotFoundDesc: 'Die von Ihnen gesuchte Seite existiert nicht oder die URL ist falsch.',
+    backToDashboard: 'Zurück zum Dashboard',
 
     // Common Actions & Buttons
     open: 'Öffnen',
@@ -497,10 +503,13 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     settings: 'الإعدادات',
     settingsDesc: 'خصص تجربتك في كاريير كرافت، وادر تفضيلاتك ومساحة عملك.',
 
-    // Error Boundary
+    // Error Boundary & 404
     somethingWentWrong: 'حدث خطأ غير متوقع',
     somethingWentWrongDesc: 'حدث خطأ أثناء تحميل هذا القسم. يمكنك إعادة التحديث للمحاولة مجدداً.',
     reloadSection: 'إعادة تحديث الصفحة',
+    pageNotFound: 'الصفحة غير موجودة',
+    pageNotFoundDesc: 'الصفحة التي تبحث عنها غير موجودة أو ربما تم نقلها أو الرابط غير صحيح.',
+    backToDashboard: 'العودة إلى لوحة التحكم',
 
     // Common Actions & Buttons
     open: 'فتح',

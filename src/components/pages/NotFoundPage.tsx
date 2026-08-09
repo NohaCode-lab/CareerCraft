@@ -1,29 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AlertTriangle, ArrowLeft } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, ArrowRight } from 'lucide-react';
+import useLanguage from '../../hooks/useLanguage';
+import { translations } from '../../config/translations';
 
 const NotFoundPage: React.FC = () => {
+  const { language, isRTL } = useLanguage();
+  const t = translations[language] || translations.en;
+  const ArrowIcon = isRTL ? ArrowRight : ArrowLeft;
+
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center rounded-3xl border border-white/10 bg-slate-900/80 p-8 text-center shadow-lg backdrop-blur-xl">
-      
+    <div className="flex min-h-[70vh] flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm transition-colors duration-200 dark:border-white/10 dark:bg-slate-900/80 dark:shadow-lg dark:backdrop-blur-xl">
       {/* Icon */}
-      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-3xl bg-red-500/10 text-red-400 shadow-inner shadow-red-500/10">
+      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-3xl bg-red-500/10 text-red-500 dark:text-red-400 shadow-inner shadow-red-500/10">
         <AlertTriangle size={30} />
       </div>
 
       {/* Badge */}
-      <span className="rounded-full border border-red-400/20 bg-red-500/10 px-4 py-1 text-sm font-medium text-red-300">
-        404 Error
+      <span className="rounded-full border border-red-400/20 bg-red-500/10 px-4 py-1 text-sm font-medium text-red-600 dark:text-red-300">
+        404
       </span>
 
       {/* Title */}
-      <h1 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-        Page not found
+      <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+        {t.pageNotFound || 'Page Not Found'}
       </h1>
 
       {/* Description */}
-      <p className="mt-3 max-w-md text-sm leading-6 text-slate-400 sm:text-base">
-        The page you are looking for does not exist, may have been moved, or the URL is incorrect.
+      <p className="mt-3 max-w-md text-sm leading-6 text-slate-600 dark:text-slate-400 sm:text-base">
+        {t.pageNotFoundDesc || 'The page you are looking for does not exist, may have been moved, or the URL is incorrect.'}
       </p>
 
       {/* Action */}
@@ -31,11 +36,11 @@ const NotFoundPage: React.FC = () => {
         to="/"
         className="group mt-6 inline-flex items-center gap-2 rounded-2xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-indigo-700 hover:gap-3 focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
       >
-        <ArrowLeft
+        <ArrowIcon
           size={16}
-          className="transition-transform duration-300 group-hover:-translate-x-1"
+          className={`transition-transform duration-300 ${isRTL ? 'group-hover:translate-x-1' : 'group-hover:-translate-x-1'}`}
         />
-        Back to Dashboard
+        {t.backToDashboard || 'Back to Dashboard'}
       </Link>
     </div>
   );

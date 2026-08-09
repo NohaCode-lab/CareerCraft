@@ -16,9 +16,9 @@ const JobList: React.FC<JobListProps> = ({ jobs = [], onSave, onApply, onSelect 
 
   if (!jobs.length) {
     return (
-      <section className="rounded-3xl border border-white/10 bg-slate-900/80 p-8 text-center shadow-lg backdrop-blur-sm">
-        <h3 className="text-lg font-semibold text-white">{t('noJobsFoundTitle', language)}</h3>
-        <p className="mt-2 text-sm text-slate-400">
+      <section className="rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm transition-colors duration-200 dark:border-white/10 dark:bg-slate-900/80 dark:shadow-lg dark:backdrop-blur-sm">
+        <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{t('noJobsFoundTitle', language)}</h3>
+        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
           {t('noJobsFoundDesc', language)}
         </p>
       </section>

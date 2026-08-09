@@ -13,7 +13,7 @@ interface State {
 
 const getCurrentLanguage = (): string => {
   try {
-    return localStorage.getItem('app_language') || 'en';
+    return localStorage.getItem('careercraft_language') || localStorage.getItem('app_language') || 'en';
   } catch {
     return 'en';
   }
@@ -43,16 +43,16 @@ class ErrorBoundary extends Component<Props, State> {
       const language = getCurrentLanguage();
 
       return (
-        <div className="flex min-h-[400px] w-full flex-col items-center justify-center rounded-3xl border border-rose-500/20 bg-slate-900/90 p-8 text-center backdrop-blur-xl shadow-2xl">
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-400 ring-1 ring-rose-500/20">
+        <div className="flex min-h-[400px] w-full flex-col items-center justify-center rounded-3xl border border-rose-200 bg-white p-8 text-center shadow-lg backdrop-blur-xl dark:border-rose-500/20 dark:bg-slate-900/90 dark:shadow-2xl">
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-500 dark:text-rose-400 ring-1 ring-rose-500/20">
             <AlertTriangle size={28} />
           </div>
 
-          <h3 className="text-xl font-bold text-white">
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white">
             {t('somethingWentWrong', language)}
           </h3>
 
-          <p className="mt-2 max-w-md text-sm leading-6 text-slate-400">
+          <p className="mt-2 max-w-md text-sm leading-6 text-slate-600 dark:text-slate-400">
             {t('somethingWentWrongDesc', language)}
           </p>
 
