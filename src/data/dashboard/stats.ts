@@ -3,11 +3,12 @@ import {
   Bookmark,
   Send,
   CalendarClock,
+  LucideIcon,
 } from 'lucide-react';
 
 import { APPLICATION_STATUSES } from '../applications/statuses';
 
-const countByStatus = (applications = [], status) => {
+const countByStatus = (applications: any[] = [], status: string) => {
   if (!Array.isArray(applications)) return 0;
 
   return applications.filter(
@@ -16,36 +17,44 @@ const countByStatus = (applications = [], status) => {
   ).length;
 };
 
-export const dashboardStatsConfig = [
+export interface DashboardStatItem {
+  id: string;
+  titleKey: string;
+  descKey: string;
+  getValue: (data: { jobs?: any[]; savedJobs?: any[]; applications?: any[] }) => number;
+  icon: LucideIcon;
+}
+
+export const dashboardStatsConfig: DashboardStatItem[] = [
   {
     id: 'available-jobs',
-    title: 'Available Jobs',
+    titleKey: 'availableJobsTitle',
+    descKey: 'availableJobsDesc',
     getValue: ({ jobs = [] }) => (Array.isArray(jobs) ? jobs.length : 0),
-    description: 'Jobs currently in your feed',
     icon: Briefcase,
   },
   {
     id: 'saved-jobs',
-    title: 'Saved Jobs',
+    titleKey: 'savedJobsStatTitle',
+    descKey: 'savedJobsStatDesc',
     getValue: ({ savedJobs = [] }) =>
       Array.isArray(savedJobs) ? savedJobs.length : 0,
-    description: 'Jobs you bookmarked',
     icon: Bookmark,
   },
   {
     id: 'applications',
-    title: 'Applications',
+    titleKey: 'applicationsStatTitle',
+    descKey: 'applicationsStatDesc',
     getValue: ({ applications = [] }) =>
       Array.isArray(applications) ? applications.length : 0,
-    description: 'Jobs you applied to',
     icon: Send,
   },
   {
     id: 'interviews',
-    title: 'Interviews',
+    titleKey: 'interviewsStatTitle',
+    descKey: 'interviewsStatDesc',
     getValue: ({ applications = [] }) =>
       countByStatus(applications, APPLICATION_STATUSES.INTERVIEW),
-    description: 'Interview stages',
     icon: CalendarClock,
   },
 ];

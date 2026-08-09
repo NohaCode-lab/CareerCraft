@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 import MainLayout from "./components/layout/MainLayout";
 import Loader from "./components/ui/Loader";
+import ErrorBoundary from "./components/ui/ErrorBoundary";
 
 import Dashboard from "./components/pages/Dashboard";
 import NotFoundPage from "./components/pages/NotFoundPage";
@@ -73,27 +74,33 @@ const appRoutes: AppRoute[] = [
 ];
 
 const renderWithLayout = (pageTitle: string, element: React.ReactNode) => {
-  return <MainLayout pageTitle={pageTitle}>{element}</MainLayout>;
+  return (
+    <MainLayout pageTitle={pageTitle}>
+      <ErrorBoundary>{element}</ErrorBoundary>
+    </MainLayout>
+  );
 };
 
 export const App: React.FC = () => {
   return (
-    <Suspense fallback={<Loader />}>
-      <Routes>
-        {appRoutes.map(({ path, pageTitle, element }) => (
-          <Route
-            key={path}
-            path={path}
-            element={renderWithLayout(pageTitle, element)}
-          />
-        ))}
+    <ErrorBoundary>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          {appRoutes.map(({ path, pageTitle, element }) => (
+            <Route
+              key={path}
+              path={path}
+              element={renderWithLayout(pageTitle, element)}
+            />
+          ))}
 
-        <Route
-          path="*"
-          element={renderWithLayout("Page Not Found", <NotFoundPage />)}
-        />
-      </Routes>
-    </Suspense>
+          <Route
+            path="*"
+            element={renderWithLayout("Page Not Found", <NotFoundPage />)}
+          />
+        </Routes>
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 

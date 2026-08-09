@@ -3,8 +3,11 @@ import StatCard from '../ui/StatCard';
 import useJobs from '../../hooks/useJobs';
 import useApplications from '../../hooks/useApplications';
 import { dashboardStatsConfig } from '../../data/dashboard/stats';
+import useLanguage from '../../hooks/useLanguage';
+import { t } from '../../utils/i18n';
 
 const DashboardStats: React.FC = () => {
+  const { language } = useLanguage();
   const { savedJobs = [], jobs = [] } = useJobs();
   const { applications = [] } = useApplications();
 
@@ -19,7 +22,7 @@ const DashboardStats: React.FC = () => {
       return [];
     }
 
-    return dashboardStatsConfig.map((item: any) => {
+    return dashboardStatsConfig.map((item) => {
       let value = '0';
 
       try {
@@ -28,7 +31,7 @@ const DashboardStats: React.FC = () => {
         if (rawValue === null || rawValue === undefined || rawValue === '') {
           value = '0';
         } else {
-          value = rawValue;
+          value = String(rawValue);
         }
       } catch {
         value = '0';
@@ -36,13 +39,13 @@ const DashboardStats: React.FC = () => {
 
       return {
         id: item.id,
-        title: item.title,
+        title: t(item.titleKey, language),
         value,
-        description: item.description,
+        description: t(item.descKey, language),
         icon: item.icon,
       };
     });
-  }, [applications, jobs, savedJobs]);
+  }, [applications, jobs, savedJobs, language]);
 
   if (!stats.length) {
     return null;
@@ -59,10 +62,10 @@ const DashboardStats: React.FC = () => {
             id="dashboard-stats-heading"
             className="text-lg font-semibold text-white"
           >
-            Overview
+            {t('overviewTitle', language)}
           </h2>
           <p className="mt-1 text-sm text-slate-400">
-            Track your job search activity and profile momentum in one place.
+            {t('overviewDesc', language)}
           </p>
         </div>
       </div>

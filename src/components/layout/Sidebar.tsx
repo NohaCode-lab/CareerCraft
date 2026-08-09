@@ -41,7 +41,7 @@ const Sidebar: React.FC = () => {
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 overflow-y-auto px-4 py-6">
+      <div className="flex-1 overflow-y-auto px-3 py-6">
         <nav className="flex flex-col gap-2" aria-label="Main navigation">
           {SIDEBAR_LINKS.map((item) => {
             const { id, path, label, icon: Icon } = item;
@@ -55,7 +55,7 @@ const Sidebar: React.FC = () => {
                 aria-label={translatedLabel}
                 className={({ isActive }) =>
                   [
-                    'group relative flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200',
+                    'group relative flex items-center gap-3 rounded-2xl px-3.5 py-3 text-xs font-medium transition-all duration-200 sm:text-sm',
                     'focus:outline-none focus:ring-2 focus:ring-indigo-400/40',
                     isActive
                       ? 'bg-indigo-500/15 text-white shadow-sm ring-1 ring-indigo-400/20'
@@ -75,7 +75,7 @@ const Sidebar: React.FC = () => {
 
                     <span
                       className={[
-                        'flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-200',
+                        'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all duration-200',
                         isActive
                           ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/20'
                           : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white',
@@ -84,7 +84,7 @@ const Sidebar: React.FC = () => {
                       <Icon className="h-5 w-5" />
                     </span>
 
-                    <span className="truncate">{translatedLabel}</span>
+                    <span className="line-clamp-2 leading-snug">{translatedLabel}</span>
                   </>
                 )}
               </NavLink>

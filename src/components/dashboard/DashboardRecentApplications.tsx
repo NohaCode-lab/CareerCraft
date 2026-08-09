@@ -6,23 +6,31 @@ import EmptyState from '../ui/EmptyState';
 import Badge from '../ui/Badge';
 import useApplications from '../../hooks/useApplications';
 import { ROUTES } from '../../config/routes';
+import useLanguage from '../../hooks/useLanguage';
+import { t } from '../../utils/i18n';
 
 const getApplicationTimestamp = (application: any): number => {
   return new Date(application.appliedAt || application.date || 0).getTime();
 };
 
-const formatApplicationDate = (value: any): string => {
+const formatApplicationDate = (value: any, lang: string): string => {
   if (!value) {
-    return 'No date';
+    return '';
   }
 
   const parsedDate = new Date(value);
 
   if (Number.isNaN(parsedDate.getTime())) {
-    return 'No date';
+    return '';
   }
 
-  return parsedDate.toLocaleDateString('en-US', {
+  const localeMap: Record<string, string> = {
+    en: 'en-US',
+    de: 'de-DE',
+    ar: 'ar-SA',
+  };
+
+  return parsedDate.toLocaleDateString(localeMap[lang] || 'en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -31,6 +39,7 @@ const formatApplicationDate = (value: any): string => {
 
 const DashboardRecentApplications: React.FC = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const { applications = [] } = useApplications();
 
   const recentApplications = useMemo(() => {
@@ -43,20 +52,20 @@ const DashboardRecentApplications: React.FC = () => {
     return (
       <Card
         className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg"
-        aria-label="Recent applications"
+        aria-label={t('recentApplicationsTitle', language)}
       >
         <div className="mb-4">
           <h2 className="text-xl font-semibold text-white">
-            Recent Applications
+            {t('recentApplicationsTitle', language)}
           </h2>
         </div>
 
         <EmptyState
-          title="No applications yet"
-          description="Start tracking your job applications to see them here."
+          title={t('noRecentApplications', language)}
+          description={t('recentApplicationsDesc', language)}
           action={
             <Button onClick={() => navigate(ROUTES.APPLICATIONS)}>
-              Go to Applications
+              {t('view', language)} {t('applications', language)}
             </Button>
           }
         />
@@ -67,15 +76,15 @@ const DashboardRecentApplications: React.FC = () => {
   return (
     <Card
       className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg"
-      aria-label="Recent applications"
+      aria-label={t('recentApplicationsTitle', language)}
     >
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-semibold text-white">
-            Recent Applications
+            {t('recentApplicationsTitle', language)}
           </h2>
           <p className="mt-1 text-sm text-slate-400">
-            Your latest tracked applications.
+            {t('recentApplicationsDesc', language)}
           </p>
         </div>
 
@@ -84,17 +93,18 @@ const DashboardRecentApplications: React.FC = () => {
           onClick={() => navigate(ROUTES.APPLICATIONS)}
           aria-label="View all applications"
         >
-          View All
+          {t('view', language)} {t('open', language)}
         </Button>
       </div>
 
       <div className="space-y-4">
         {recentApplications.map((application: any, index: number) => {
-          const title = application.role || application.title || 'Untitled Role';
-          const company = application.company || 'Unknown Company';
-          const status = application.status || 'Pending';
+          const title = application.role || application.title || 'Role';
+          const company = application.company || 'Company';
+          const status = application.status || 'Applied';
           const appliedDate = formatApplicationDate(
-            application.appliedAt || application.date
+            application.appliedAt || application.date,
+            language
           );
 
           return (
@@ -108,8 +118,8 @@ const DashboardRecentApplications: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-3">
-                <Badge>{status}</Badge>
-                <span className="text-xs text-slate-500">{appliedDate}</span>
+                <Badge>{t(status.toLowerCase(), language) || status}</Badge>
+                {appliedDate && <span className="text-xs text-slate-500">{appliedDate}</span>}
               </div>
             </div>
           );

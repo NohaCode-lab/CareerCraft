@@ -57,6 +57,29 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     search: 'Search',
     applyNow: 'Apply Now',
 
+    // Dashboard Overview & Stats
+    overviewTitle: 'Overview',
+    overviewDesc: 'Track your job search activity and profile momentum in one place.',
+    availableJobsTitle: 'Available Jobs',
+    availableJobsDesc: 'Jobs currently in your feed',
+    savedJobsStatTitle: 'Saved Jobs',
+    savedJobsStatDesc: 'Jobs you bookmarked',
+    applicationsStatTitle: 'Applications',
+    applicationsStatDesc: 'Jobs you applied to',
+    interviewsStatTitle: 'Interviews',
+    interviewsStatDesc: 'Interview stages',
+
+    // Dashboard Sub-Sections
+    quickActionsTitle: 'Quick Actions',
+    quickActionsDesc: 'Jump directly to the tools you use most.',
+    recentApplicationsTitle: 'Recent Applications',
+    recentApplicationsDesc: 'Track and manage your latest job applications.',
+    profileStrengthTitle: 'Profile Strength',
+    profileStrengthDesc: 'Optimize your CV and interview readiness score.',
+    interviewPrepPreviewTitle: 'Interview Prep Highlights',
+    savedJobsPreviewTitle: 'Saved Jobs Preview',
+    noRecentApplications: 'No applications recorded yet. Apply for jobs to track them here.',
+
     // Settings Page
     appearance: 'Appearance',
     appearanceDesc: 'Choose the theme that fits your workflow and visual preference.',
@@ -183,6 +206,29 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     search: 'Suchen',
     applyNow: 'Jetzt bewerben',
 
+    // Dashboard Overview & Stats
+    overviewTitle: 'Übersicht',
+    overviewDesc: 'Verfolgen Sie Ihre Jobsuche und Ihr Profilwachstum an einem Ort.',
+    availableJobsTitle: 'Verfügbare Jobs',
+    availableJobsDesc: 'Stellenangebote im aktuellen Feed',
+    savedJobsStatTitle: 'Gespeicherte Jobs',
+    savedJobsStatDesc: 'Von Ihnen gemerkte Angebote',
+    applicationsStatTitle: 'Bewerbungen',
+    applicationsStatDesc: 'Eingereichte Bewerbungen',
+    interviewsStatTitle: 'Interviews',
+    interviewsStatDesc: 'Vorstellungsgespräch-Phasen',
+
+    // Dashboard Sub-Sections
+    quickActionsTitle: 'Schnellaktionen',
+    quickActionsDesc: 'Nutzen Sie direkt die am häufigsten benötigten Werkzeuge.',
+    recentApplicationsTitle: 'Neueste Bewerbungen',
+    recentApplicationsDesc: 'Verwalten Sie Ihre aktuellen Bewerbungsprozesse.',
+    profileStrengthTitle: 'Profilstärke',
+    profileStrengthDesc: 'Optimieren Sie Ihren Lebenslauf und Ihre Interview-Vorbereitung.',
+    interviewPrepPreviewTitle: 'Interview-Vorbereitung Highlights',
+    savedJobsPreviewTitle: 'Vorschau gespeicherter Jobs',
+    noRecentApplications: 'Noch keine Bewerbungen erfasst. Bewerben Sie sich auf Jobs, um sie hier zu verfolgen.',
+
     // Settings Page
     appearance: 'Erscheinungsbild',
     appearanceDesc: 'Wählen Sie das Design, das zu Ihrem Arbeitsablauf passt.',
@@ -308,6 +354,29 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     downloadPdf: 'تحميل PDF',
     search: 'بحث',
     applyNow: 'قدّم الآن',
+
+    // Dashboard Overview & Stats
+    overviewTitle: 'نظرة عامة',
+    overviewDesc: 'تتبع نشاط بحثك عن عمل ونمو ملفك المهني في مكان واحد.',
+    availableJobsTitle: 'الوظائف المتاحة',
+    availableJobsDesc: 'الوظائف المتاحة حالياً في الموجز',
+    savedJobsStatTitle: 'الوظائف المحفوظة',
+    savedJobsStatDesc: 'الوظائف التي قمت بحفظها',
+    applicationsStatTitle: 'طلبات التوظيف',
+    applicationsStatDesc: 'الوظائف التي قدمت عليها',
+    interviewsStatTitle: 'المقابلات الوظيفية',
+    interviewsStatDesc: 'مراحل المقابلات النشطة',
+
+    // Dashboard Sub-Sections
+    quickActionsTitle: 'الإجراءات السريعة',
+    quickActionsDesc: 'الانتقال المباشر للأدوات الأكثر استخداماً.',
+    recentApplicationsTitle: 'أحدث طلبات التوظيف',
+    recentApplicationsDesc: 'إدارة وتتبع أحدث طلبات التوظيف الخاصة بك.',
+    profileStrengthTitle: 'قوة الملف المهني',
+    profileStrengthDesc: 'تحسين سيرتك الذاتية ومؤشر جاهزيتك للمقابلات.',
+    interviewPrepPreviewTitle: 'أبرز تدريبات المقابلات',
+    savedJobsPreviewTitle: 'معاينة الوظائف المحفوظة',
+    noRecentApplications: 'لا توجد طلبات مسجلة بعد. قدّم على الوظائف لتتبعها هنا.',
 
     // Settings Page
     appearance: 'المظهر والسمة',
