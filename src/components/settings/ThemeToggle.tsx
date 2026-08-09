@@ -36,10 +36,10 @@ const ThemeToggle: React.FC = () => {
       <button
         type="button"
         onClick={() => setTheme('light')}
-        className={`inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition ${
+        className={`inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 text-sm font-semibold transition ${
           theme === 'light'
-            ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-400/40'
-            : 'bg-white/5 text-slate-300 hover:bg-white/10'
+            ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 ring-1 ring-indigo-400/40'
+            : 'border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'
         }`}
       >
         <Sun size={16} />
@@ -49,10 +49,10 @@ const ThemeToggle: React.FC = () => {
       <button
         type="button"
         onClick={() => setTheme('dark')}
-        className={`inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition ${
+        className={`inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 text-sm font-semibold transition ${
           theme === 'dark'
-            ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-400/40'
-            : 'bg-white/5 text-slate-300 hover:bg-white/10'
+            ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 ring-1 ring-indigo-400/40'
+            : 'border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'
         }`}
       >
         <Moon size={16} />
