@@ -7,134 +7,93 @@ import {
   AIMessage,
 } from './providers/AIProvider.js';
 import { MockAIProvider } from './providers/MockAIProvider.js';
+import { OpenRouterProvider } from './providers/OpenRouterProvider.js';
+import { OllamaProvider } from './providers/OllamaProvider.js';
+import { AIRouter, AIRoutingDecision } from './routing/AIRouter.js';
 
-export { AIMessage, AIRequestContract, AIResponseContract };
+export { AIMessage, AIRequestContract, AIResponseContract, AIRoutingDecision };
 
 export class AIGatewayService {
   private config: AppConfig;
-  private primaryProvider: AIProvider;
+  private router: AIRouter;
+  private providerRegistry: Map<string, AIProvider>;
 
-  constructor(config: AppConfig, provider?: AIProvider) {
+  constructor(
+    config: AppConfig,
+    provider?: AIProvider,
+    router?: AIRouter
+  ) {
     this.config = config;
-    this.primaryProvider = provider || new MockAIProvider();
+    this.router = router || new AIRouter(config);
+    this.providerRegistry = new Map<string, AIProvider>();
+
+    const mock = provider || new MockAIProvider();
+    this.providerRegistry.set('mock', mock);
+    this.providerRegistry.set(
+      'openrouter',
+      new OpenRouterProvider({ apiKey: config.OPENROUTER_API_KEY })
+    );
+    this.providerRegistry.set(
+      'ollama',
+      new OllamaProvider({ baseUrl: config.OLLAMA_URL })
+    );
+  }
+
+  public getRouter(): AIRouter {
+    return this.router;
+  }
+
+  public getProvider(providerType: string): AIProvider {
+    return this.providerRegistry.get(providerType) || this.providerRegistry.get('mock')!;
   }
 
   public async executeChatCompletion(
     request: AIRequestContract,
     clientRequestId: string
   ): Promise<AIResponseContract> {
-    const modelAlias = request.modelAlias || 'career-fast';
-    const temperature = request.temperature ?? 0.7;
-    const maxTokens = request.maxTokens ?? 1000;
+    const decision = this.router.route(request);
+    const provider = this.getProvider(decision.providerType);
 
-    // Fast path for AI Mock Mode (used in offline dev / CI test runs)
-    if (this.config.AI_MOCK_MODE || this.config.NODE_ENV === 'test') {
-      return this.primaryProvider.generate(request, clientRequestId);
-    }
-
-    const payload = {
-      model: modelAlias,
-      messages: request.messages,
-      temperature,
-      max_tokens: maxTokens,
+    const enrichedRequest: AIRequestContract = {
+      ...request,
+      modelAlias: decision.modelAlias,
     };
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
-
     try {
-      const response = await fetch(`${this.config.LITELLM_URL}/chat/completions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.config.LITELLM_MASTER_KEY}`,
-          'x-request-id': clientRequestId,
-        },
-        body: JSON.stringify(payload),
-        signal: controller.signal,
-      });
+      const response = await provider.generate(enrichedRequest, clientRequestId);
 
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        await this.handleGatewayErrorStatus(response.status, response);
-      }
-
-      const data = (await response.json()) as {
-        id?: string;
-        model?: string;
-        choices?: Array<{
-          message?: { content?: string };
-          finish_reason?: string;
-        }>;
-        usage?: {
-          prompt_tokens?: number;
-          completion_tokens?: number;
-          total_tokens?: number;
-        };
-      };
-
-      const choice = data.choices?.[0];
-      const content = choice?.message?.content || '';
+      const providerLabel =
+        decision.providerType === 'mock'
+          ? decision.modelAlias === 'career-private'
+            ? 'Ollama (Mock)'
+            : 'OpenRouter (Mock)'
+          : `${decision.providerType} (${decision.concreteModel})`;
 
       return {
-        requestId: clientRequestId,
-        model: data.model || modelAlias,
-        content,
-        usage: {
-          promptTokens: data.usage?.prompt_tokens || 0,
-          completionTokens: data.usage?.completion_tokens || 0,
-          totalTokens: data.usage?.total_tokens || 0,
-        },
-        finishReason: choice?.finish_reason || 'stop',
+        ...response,
+        model: response.model || decision.modelAlias,
         providerMetadata: {
-          providerUsed: modelAlias.includes('private') ? 'Ollama' : 'OpenRouter',
+          ...response.providerMetadata,
+          providerUsed: providerLabel,
           fallbackOccurred: false,
         },
       };
     } catch (error: unknown) {
-      clearTimeout(timeoutId);
-
       if (error instanceof AppError) {
         throw error;
       }
 
-      if (error instanceof Error && error.name === 'AbortError') {
-        throw new AppError('AI Gateway request timed out', 504, 'GATEWAY_TIMEOUT');
-      }
-
-      // If gateway is unreachable in dev mode, gracefully fall back to mock provider completion
+      // In development mode, gracefully fall back to Mock provider
       if (this.config.NODE_ENV === 'development') {
-        return this.primaryProvider.generate(request, clientRequestId);
+        const mockProvider = this.getProvider('mock');
+        return mockProvider.generate(enrichedRequest, clientRequestId);
       }
 
-      throw new AppError('Failed to communicate with AI Gateway', 502, 'BAD_GATEWAY');
+      throw new AppError(
+        error instanceof Error ? error.message : 'AI Provider execution failed.',
+        502,
+        'BAD_GATEWAY'
+      );
     }
-  }
-
-  private async handleGatewayErrorStatus(status: number, response: Response): Promise<never> {
-    let errorText = '';
-    try {
-      errorText = await response.text();
-    } catch {
-      errorText = 'No response body';
-    }
-
-    if (status === 401) {
-      throw new AppError('AI Gateway authentication failure', 401, 'UNAUTHORIZED');
-    }
-    if (status === 403) {
-      throw new AppError('AI Gateway access denied', 403, 'FORBIDDEN');
-    }
-    if (status === 429) {
-      throw new AppError('AI rate limit exceeded. Please try again later.', 429, 'RATE_LIMIT_EXCEEDED');
-    }
-    if (status >= 500) {
-      throw new AppError('AI Provider service unavailable', 503, 'SERVICE_UNAVAILABLE', {
-        providerStatus: status,
-      });
-    }
-
-    throw new AppError(`AI Gateway error: ${errorText}`, status, 'GATEWAY_ERROR');
   }
 }

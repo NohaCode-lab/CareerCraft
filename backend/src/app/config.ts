@@ -13,13 +13,17 @@ export const configSchema = z.object({
   LITELLM_MASTER_KEY: z.string().default('sk-careercraft-dev-key'),
   OPENROUTER_API_KEY: z.string().optional(),
   OLLAMA_URL: z.string().default('http://127.0.0.1:11434'),
-  AI_MOCK_MODE: z.coerce.boolean().default(false),
+  AI_MOCK_MODE: z
+    .union([z.boolean(), z.string()])
+    .transform((val) => val === true || val === 'true')
+    .default(false),
 });
 
 export type AppConfig = z.infer<typeof configSchema>;
 
-export const loadConfig = (env: Record<string, string | undefined> = process.env): AppConfig => {
-  const result = configSchema.safeParse(env);
+export const loadConfig = (env: Record<string, string | undefined> = {}): AppConfig => {
+  const merged = { ...process.env, ...env };
+  const result = configSchema.safeParse(merged);
   if (!result.success) {
     console.error('❌ Invalid backend configuration:', result.error.format());
     throw new Error('Invalid backend configuration');

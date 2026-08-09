@@ -1,11 +1,11 @@
 import { FastifyInstance } from 'fastify';
-import { loadConfig } from '../app/config.js';
+import { loadConfig, AppConfig } from '../app/config.js';
 import { AIGatewayService } from '../services/ai-gateway.service.js';
 import { chatCompletionRequestSchema } from '../schemas/ai.schema.js';
 import { ValidationError } from '../errors/app-error.js';
 
-export async function aiRoutes(fastify: FastifyInstance) {
-  const config = loadConfig();
+export async function aiRoutes(fastify: FastifyInstance, options?: { config?: AppConfig }) {
+  const config = options?.config || loadConfig();
   const aiGatewayService = new AIGatewayService(config);
 
   fastify.post('/ai/chat', async (request, reply) => {

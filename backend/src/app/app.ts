@@ -49,8 +49,8 @@ export function buildApp(config: AppConfig): FastifyInstance {
 
   fastify.register(sensible);
 
-  // Register API v1 routes
-  fastify.register(apiV1Routes, { prefix: '/api/v1' });
+  // Register API v1 routes with application config
+  fastify.register(apiV1Routes, { prefix: '/api/v1', config });
 
   // Centralized Error Handler
   fastify.setErrorHandler((error: Error & { statusCode?: number; validation?: unknown; code?: string }, request, reply) => {
