@@ -18,8 +18,8 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose }) => {
     <>
       <div
         className={[
-          'fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-sm transition-opacity duration-300 xl:hidden',
-          isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0',
+          'fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-sm transition-all duration-300 xl:hidden',
+          isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0 invisible',
         ].join(' ')}
         onClick={onClose}
         aria-hidden="true"
@@ -27,13 +27,13 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose }) => {
 
       <aside
         className={[
-          'fixed top-0 z-50 flex h-screen w-72 flex-col border-white/10 bg-slate-950 text-white shadow-2xl transition-transform duration-300 xl:hidden',
+          'fixed top-0 z-50 flex h-screen w-72 flex-col border-white/10 bg-slate-950 text-white shadow-2xl transition-all duration-300 xl:hidden',
           isRTL ? 'right-0 border-l' : 'left-0 border-r',
           isOpen
-            ? 'translate-x-0'
+            ? 'translate-x-0 opacity-100 pointer-events-auto'
             : isRTL
-            ? 'translate-x-full'
-            : '-translate-x-full',
+            ? 'translate-x-full opacity-0 pointer-events-none invisible'
+            : '-translate-x-full opacity-0 pointer-events-none invisible',
         ].join(' ')}
         aria-hidden={!isOpen}
       >
