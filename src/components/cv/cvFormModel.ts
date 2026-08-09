@@ -1,4 +1,18 @@
-export const defaultCV = {
+export interface CVDataModel {
+  fullName: string;
+  title: string;
+  email: string;
+  phone: string;
+  location: string;
+  summary: string;
+  skills: string;
+  experience: any[];
+  education: any[];
+  languages: any[];
+  projects: any[];
+}
+
+export const defaultCV: CVDataModel = {
   fullName: '',
   title: '',
   email: '',
@@ -48,6 +62,6 @@ export const createProjectItem = () => ({
   link: '',
 });
 
-export const getSafeArray = (value) => {
+export const getSafeArray = (value: any): any[] => {
   return Array.isArray(value) ? value : [];
 };

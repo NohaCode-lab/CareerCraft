@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
-
 import useLocalStorage from './useLocalStorage';
-
 import {
   createEducationItem,
   createExperienceItem,
@@ -17,36 +15,42 @@ const useCVFormState = () => {
   const [cvData, setCvData] = useLocalStorage(CV_STORAGE_KEY, defaultCV);
 
   const safeCVData = useMemo(() => {
+    const raw = cvData && typeof cvData === 'object' ? cvData : {};
     return {
       ...defaultCV,
-      ...(cvData || {}),
-      experience: getSafeArray(cvData?.experience),
-      education: getSafeArray(cvData?.education),
-      languages: getSafeArray(cvData?.languages),
-      projects: getSafeArray(cvData?.projects),
+      ...raw,
+      fullName: typeof raw.fullName === 'string' ? raw.fullName : defaultCV.fullName || '',
+      title: typeof raw.title === 'string' ? raw.title : defaultCV.title || '',
+      email: typeof raw.email === 'string' ? raw.email : defaultCV.email || '',
+      phone: typeof raw.phone === 'string' ? raw.phone : defaultCV.phone || '',
+      location: typeof raw.location === 'string' ? raw.location : defaultCV.location || '',
+      summary: typeof raw.summary === 'string' ? raw.summary : defaultCV.summary || '',
+      skills: typeof raw.skills === 'string' ? raw.skills : defaultCV.skills || '',
+      experience: getSafeArray(raw.experience),
+      education: getSafeArray(raw.education),
+      languages: getSafeArray(raw.languages),
+      projects: getSafeArray(raw.projects),
     };
   }, [cvData]);
 
-  const isNameInvalid =
-    safeCVData.fullName.trim().length > 0 &&
-    safeCVData.fullName.trim().length < 3;
+  const fullNameStr = (safeCVData.fullName || '').trim();
+  const isNameInvalid = fullNameStr.length > 0 && fullNameStr.length < 3;
 
-  const isEmailInvalid =
-    safeCVData.email.trim().length > 0 &&
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safeCVData.email.trim());
+  const emailStr = (safeCVData.email || '').trim();
+  const isEmailInvalid = emailStr.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
 
-    setCvData((previousData) => ({
+    setCvData((previousData: any) => ({
       ...defaultCV,
       ...(previousData || {}),
       [name]: value,
     }));
   };
 
-  const handleListChange = (section, index, field, value) => {
-    setCvData((previousData) => {
+  const handleListChange = (section: string, index: number, field: string, value: string) => {
+    setCvData((previousData: any) => {
       const currentData = {
         ...defaultCV,
         ...(previousData || {}),
@@ -66,8 +70,8 @@ const useCVFormState = () => {
     });
   };
 
-  const addItem = (section) => {
-    const factories = {
+  const addItem = (section: string) => {
+    const factories: Record<string, () => any> = {
       experience: createExperienceItem,
       education: createEducationItem,
       languages: createLanguageItem,
@@ -80,7 +84,7 @@ const useCVFormState = () => {
       return;
     }
 
-    setCvData((previousData) => {
+    setCvData((previousData: any) => {
       const currentData = {
         ...defaultCV,
         ...(previousData || {}),
@@ -93,8 +97,8 @@ const useCVFormState = () => {
     });
   };
 
-  const removeItem = (section, index) => {
-    setCvData((previousData) => {
+  const removeItem = (section: string, index: number) => {
+    setCvData((previousData: any) => {
       const currentData = {
         ...defaultCV,
         ...(previousData || {}),

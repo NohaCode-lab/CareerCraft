@@ -1,27 +1,34 @@
 import { useEffect, useState } from 'react';
 
-const getInitialValue = (initialValue) => {
+const getInitialValue = <T>(initialValue: T | (() => T)): T => {
   return initialValue instanceof Function ? initialValue() : initialValue;
 };
 
-const useLocalStorage = (key, initialValue) => {
-  const [value, setValue] = useState(() => {
+const useLocalStorage = <T>(
+  key: string,
+  initialValue: T | (() => T)
+): [T, (newValue: T | ((val: T) => T)) => void, () => void] => {
+  const [value, setValue] = useState<T>(() => {
     const fallbackValue = getInitialValue(initialValue);
 
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : fallbackValue;
+      if (!item || item === 'undefined' || item === 'null') {
+        return fallbackValue;
+      }
+      const parsed = JSON.parse(item);
+      return parsed !== null && parsed !== undefined ? parsed : fallbackValue;
     } catch (error) {
       console.error(`Error reading localStorage key "${key}":`, error);
       return fallbackValue;
     }
   });
 
-  const setStoredValue = (newValue) => {
+  const setStoredValue = (newValue: T | ((val: T) => T)) => {
     try {
       setValue((currentValue) => {
         const valueToStore =
-          newValue instanceof Function ? newValue(currentValue) : newValue;
+          newValue instanceof Function ? (newValue as (val: T) => T)(currentValue) : newValue;
 
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
         return valueToStore;
@@ -43,12 +50,13 @@ const useLocalStorage = (key, initialValue) => {
   };
 
   useEffect(() => {
-    const handleStorageChange = (event) => {
+    const handleStorageChange = (event: StorageEvent) => {
       if (event.key !== key) return;
 
       try {
         const fallbackValue = getInitialValue(initialValue);
-        setValue(event.newValue ? JSON.parse(event.newValue) : fallbackValue);
+        const parsed = event.newValue && event.newValue !== 'undefined' ? JSON.parse(event.newValue) : fallbackValue;
+        setValue(parsed !== null && parsed !== undefined ? parsed : fallbackValue);
       } catch (error) {
         console.error(`Error syncing localStorage key "${key}":`, error);
       }
