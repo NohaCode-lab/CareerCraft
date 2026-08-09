@@ -100,7 +100,7 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     recentApplicationsTitle: 'Recent Applications',
     recentApplicationsDesc: 'Your latest tracked applications.',
     noRecentApplications: 'No applications recorded yet. Apply for jobs to track them here.',
-    
+
     // Profile Strength Component
     profileHealth: 'Profile Health',
     profileStrength: 'Profile Strength',
@@ -137,18 +137,26 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     noSavedJobsYet: 'No saved jobs yet',
     noSavedJobsDesc: 'Bookmark jobs you like in Job Search and they will appear here.',
 
-    // Settings Page
+    // Settings Page & Preferences Modals
     appearance: 'Appearance',
     appearanceDesc: 'Choose the theme that fits your workflow and visual preference.',
     themeLight: 'Light',
     themeDark: 'Dark',
     languageSection: 'Language',
     languageSectionDesc: 'Select your preferred language for the application interface.',
-    moreSettingsTitle: 'More settings coming soon',
-    moreSettingsDesc: 'Future updates will include notification preferences, CV defaults, export options, and additional personalization tools.',
+    moreSettingsTitle: 'More Settings & Preferences',
+    moreSettingsDesc: 'Configure notification alerts, CV template defaults, and export options for your workspace.',
     notificationsPref: 'Notification preferences',
     cvDefaults: 'CV defaults',
     exportOptions: 'Export options',
+    notificationAlerts: 'Email Job Match Alerts',
+    statusReminders: 'Application Status Reminders',
+    weeklyDigest: 'Weekly Career Digest',
+    defaultTemplate: 'Default Template',
+    atsOptimization: 'ATS Optimization Mode',
+    preferredFormat: 'Preferred Export Format',
+    savePreferences: 'Save & Apply Preferences',
+    preferencesSavedToast: 'Preferences saved successfully',
 
     // CV Builder
     summary: 'Professional Summary',
@@ -169,7 +177,8 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     evaluatingAnswer: 'Evaluating Answer...',
     mockInterview: 'AI Mock Interview',
     interviewReadiness: 'Interview Readiness Score',
-    
+
+    // Interview Categories & Drawer
     contextHeader: 'Candidate Resume & Job Description Context',
     resumeSummaryLabel: 'Candidate Resume Summary',
     targetJobDescLabel: 'Target Job Description',
@@ -341,18 +350,26 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     noSavedJobsYet: 'Noch keine gemerkten Stellen',
     noSavedJobsDesc: 'Merken Sie sich interessante Stellen in der Stellensuche, um sie hier schnell wiederzufinden.',
 
-    // Settings Page
+    // Settings Page & Preferences Modals
     appearance: 'Erscheinungsbild',
     appearanceDesc: 'Wählen Sie das Design, das zu Ihrem Arbeitsablauf passt.',
     themeLight: 'Hell',
     themeDark: 'Dunkel',
     languageSection: 'Sprache',
     languageSectionDesc: 'Wählen Sie Ihre bevorzugte Sprache für die Benutzeroberfläche.',
-    moreSettingsTitle: 'Weitere Einstellungen demnächst',
-    moreSettingsDesc: 'Zukünftige Updates beinhalten Benachrichtigungseinstellungen, Standard-Lebenslaufoptionen und Export-Tools.',
+    moreSettingsTitle: 'Weitere Einstellungen & Optionen',
+    moreSettingsDesc: 'Konfigurieren Sie Benachrichtigungen, Lebenslauf-Standards und Export-Optionen.',
     notificationsPref: 'Benachrichtigungseinstellungen',
     cvDefaults: 'Lebenslauf-Standards',
     exportOptions: 'Export-Optionen',
+    notificationAlerts: 'E-Mail-Stellenbenachrichtigungen',
+    statusReminders: 'Erinnerungen an Bewerbungsstatus',
+    weeklyDigest: 'Wöchentlicher Karriere-Bericht',
+    defaultTemplate: 'Standard-Vorlage',
+    atsOptimization: 'ATS-Optimierungsmodus',
+    preferredFormat: 'Bevorzugtes Exportformat',
+    savePreferences: 'Einstellungen speichern & anwenden',
+    preferencesSavedToast: 'Einstellungen erfolgreich gespeichert',
 
     // CV Builder
     summary: 'Profil & Zusammenfassung',
@@ -546,18 +563,26 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     noSavedJobsYet: 'لا توجد وظائف محفوظة بعد',
     noSavedJobsDesc: 'قم بحفظ الوظائف التي تعجبك في صفحة البحث عن وظائف لتظهر هنا.',
 
-    // Settings Page
+    // Settings Page & Preferences Modals
     appearance: 'المظهر والسمة',
     appearanceDesc: 'اختر السمة المرئية التي تناسب تفضيلاتك وسير عملك.',
     themeLight: 'فاتح',
     themeDark: 'داكن',
     languageSection: 'اللغة',
     languageSectionDesc: 'اختر لغتك المفضلة لواجهة التطبيق.',
-    moreSettingsTitle: 'إعدادات إضافية قريباً',
-    moreSettingsDesc: 'ستتضمن التحديثات القادمة تفضيلات الإشعارات، الخيارات الافتراضية للسيرة الذاتية، وأدوات التصدير.',
+    moreSettingsTitle: 'إعدادات وخيارات إضافية',
+    moreSettingsDesc: 'قم بتكوين تنبيهات الإشعارات وقوالب السيرة الذاتية وخيارات التصدير.',
     notificationsPref: 'تفضيلات الإشعارات',
     cvDefaults: 'افتراضيات السيرة الذاتية',
     exportOptions: 'خيارات التصدير',
+    notificationAlerts: 'تنبيهات مطابقة الوظائف البريدية',
+    statusReminders: 'تذكيرات حالة طلبات التوظيف',
+    weeklyDigest: 'التقرير المهني الأسبوعي',
+    defaultTemplate: 'القالب الافتراضي',
+    atsOptimization: 'وضع تحسين ATS',
+    preferredFormat: 'صيغة التصدير المفضلة',
+    savePreferences: 'حفظ وتطبيق التفضيلات',
+    preferencesSavedToast: 'تم حفظ التفضيلات بنجاح',
 
     // CV Builder
     summary: 'الملخص المهني',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, FileText, Settings, LucideIcon, Check, SlidersHorizontal, Download } from 'lucide-react';
+import { Bell, FileText, Settings, LucideIcon, Check, SlidersHorizontal, ShieldCheck, Mail, Sparkles, FileSpreadsheet } from 'lucide-react';
 import PageHeader from '../layout/PageHeader';
 import SettingsSection from '../settings/SettingsSection';
 import ThemeToggle from '../settings/ThemeToggle';
@@ -9,7 +9,7 @@ import { translations } from '../../config/translations';
 import useUI from '../../hooks/useUI';
 
 interface UpcomingSetting {
-  id: string;
+  id: 'notifications' | 'cv-defaults' | 'export-options';
   icon: LucideIcon;
   titleKey: 'notificationsPref' | 'cvDefaults' | 'exportOptions';
 }
@@ -32,16 +32,71 @@ const upcomingSettings: UpcomingSetting[] = [
   },
 ];
 
+interface UserPreferences {
+  emailAlerts: boolean;
+  statusReminders: boolean;
+  weeklyDigest: boolean;
+  defaultTemplate: string;
+  atsOptimization: boolean;
+  preferredFormat: string;
+}
+
+const DEFAULT_PREFERENCES: UserPreferences = {
+  emailAlerts: true,
+  statusReminders: true,
+  weeklyDigest: false,
+  defaultTemplate: 'european',
+  atsOptimization: true,
+  preferredFormat: 'pdf',
+};
+
+const getSavedPreferences = (): UserPreferences => {
+  try {
+    const saved = localStorage.getItem('careercraft_user_preferences');
+    return saved ? { ...DEFAULT_PREFERENCES, ...JSON.parse(saved) } : DEFAULT_PREFERENCES;
+  } catch {
+    return DEFAULT_PREFERENCES;
+  }
+};
+
 const SettingsPage: React.FC = () => {
   const { language } = useLanguage();
   const t = translations[language] || translations.en;
   const { showToast } = useUI();
 
   const [activeModal, setActiveModal] = useState<string | null>(null);
+  const [preferences, setPreferences] = useState<UserPreferences>(getSavedPreferences);
 
-  const handleCardClick = (id: string, title: string) => {
+  const handleCardClick = (id: string) => {
     setActiveModal(id);
-    showToast(`Configuring ${title}`, 'info');
+  };
+
+  const handleTogglePref = (key: keyof UserPreferences) => {
+    setPreferences((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
+
+  const handleSelectPref = (key: keyof UserPreferences, value: string) => {
+    setPreferences((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleSavePreferences = () => {
+    try {
+      localStorage.setItem('careercraft_user_preferences', JSON.stringify(preferences));
+      if (preferences.defaultTemplate) {
+        localStorage.setItem('cvTemplate', preferences.defaultTemplate);
+      }
+      showToast(t.preferencesSavedToast || 'Preferences saved successfully', 'success');
+    } catch {
+      showToast('Saved preferences locally', 'info');
+    } finally {
+      setActiveModal(null);
+    }
   };
 
   return (
@@ -66,13 +121,13 @@ const SettingsPage: React.FC = () => {
           <LanguageSwitcher />
         </SettingsSection>
 
-        <section className="rounded-3xl border border-white/10 bg-white/3 p-6 shadow-lg backdrop-blur-xl">
+        <section className="rounded-3xl border border-white/10 bg-slate-900/60 p-6 shadow-lg backdrop-blur-xl">
           <div className="mb-5">
             <h2 className="text-lg font-semibold text-white">
               {t.moreSettingsTitle}
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-slate-300">
               {t.moreSettingsDesc}
             </p>
           </div>
@@ -86,14 +141,20 @@ const SettingsPage: React.FC = () => {
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => handleCardClick(item.id, title)}
-                  className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-left text-sm text-slate-300 transition hover:border-indigo-400/30 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
+                  onClick={() => handleCardClick(item.id)}
+                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-4 text-left text-sm text-slate-300 transition hover:border-indigo-400/40 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
                 >
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-300 transition group-hover:bg-indigo-500/20 group-hover:text-indigo-200">
-                    <Icon size={16} />
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-300 transition group-hover:bg-indigo-500/20 group-hover:text-indigo-200">
+                      <Icon size={16} />
+                    </div>
+
+                    <span className="font-semibold">{title}</span>
                   </div>
 
-                  <span className="font-medium">{title}</span>
+                  <span className="rounded-full bg-indigo-500/10 px-2.5 py-0.5 text-xs font-semibold text-indigo-400 border border-indigo-500/20">
+                    Configure
+                  </span>
                 </button>
               );
             })}
@@ -101,12 +162,12 @@ const SettingsPage: React.FC = () => {
         </section>
 
         {activeModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm">
-            <div className="w-full max-w-md rounded-3xl border border-white/10 bg-slate-900 p-6 shadow-2xl">
-              <div className="mb-4 flex items-center justify-between">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
+            <div className="w-full max-w-lg rounded-3xl border border-white/10 bg-slate-900 p-6 shadow-2xl space-y-6">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div className="flex items-center gap-2 text-indigo-300">
                   <SlidersHorizontal size={20} />
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-lg font-bold text-white">
                     {activeModal === 'notifications'
                       ? t.notificationsPref
                       : activeModal === 'cv-defaults'
@@ -123,21 +184,136 @@ const SettingsPage: React.FC = () => {
                 </button>
               </div>
 
-              <p className="mb-6 text-sm text-slate-300">
-                Preferences updated and saved to your browser session.
-              </p>
+              {/* MODAL 1: NOTIFICATION PREFERENCES */}
+              {activeModal === 'notifications' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-slate-950 p-4">
+                    <div className="flex items-center gap-3">
+                      <Mail className="h-5 w-5 text-indigo-400" />
+                      <div>
+                        <p className="text-sm font-semibold text-white">{t.notificationAlerts || 'Email Job Match Alerts'}</p>
+                        <p className="text-xs text-slate-400">Receive alerts when new jobs match your skills</p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleTogglePref('emailAlerts')}
+                      className={`h-6 w-11 rounded-full transition ${preferences.emailAlerts ? 'bg-indigo-600' : 'bg-slate-700'}`}
+                    >
+                      <span className={`block h-5 w-5 rounded-full bg-white transition ${preferences.emailAlerts ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                    </button>
+                  </div>
 
-              <div className="flex justify-end">
+                  <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-slate-950 p-4">
+                    <div className="flex items-center gap-3">
+                      <Bell className="h-5 w-5 text-indigo-400" />
+                      <div>
+                        <p className="text-sm font-semibold text-white">{t.statusReminders || 'Application Status Reminders'}</p>
+                        <p className="text-xs text-slate-400">Follow-up reminders for active interviews</p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleTogglePref('statusReminders')}
+                      className={`h-6 w-11 rounded-full transition ${preferences.statusReminders ? 'bg-indigo-600' : 'bg-slate-700'}`}
+                    >
+                      <span className={`block h-5 w-5 rounded-full bg-white transition ${preferences.statusReminders ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* MODAL 2: CV DEFAULTS */}
+              {activeModal === 'cv-defaults' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold uppercase text-indigo-400 mb-2">{t.defaultTemplate || 'Default Template'}</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {['european', 'modern', 'minimal'].map((tpl) => (
+                        <button
+                          key={tpl}
+                          type="button"
+                          onClick={() => handleSelectPref('defaultTemplate', tpl)}
+                          className={`rounded-2xl border p-3 text-center text-xs font-semibold capitalize transition ${
+                            preferences.defaultTemplate === tpl
+                              ? 'border-indigo-500 bg-indigo-500/20 text-white'
+                              : 'border-white/10 bg-slate-950 text-slate-400 hover:bg-white/5'
+                          }`}
+                        >
+                          {tpl}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-slate-950 p-4">
+                    <div className="flex items-center gap-3">
+                      <ShieldCheck className="h-5 w-5 text-indigo-400" />
+                      <div>
+                        <p className="text-sm font-semibold text-white">{t.atsOptimization || 'ATS Optimization Mode'}</p>
+                        <p className="text-xs text-slate-400">Ensure CV layout passes machine scanners</p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleTogglePref('atsOptimization')}
+                      className={`h-6 w-11 rounded-full transition ${preferences.atsOptimization ? 'bg-indigo-600' : 'bg-slate-700'}`}
+                    >
+                      <span className={`block h-5 w-5 rounded-full bg-white transition ${preferences.atsOptimization ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* MODAL 3: EXPORT OPTIONS */}
+              {activeModal === 'export-options' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold uppercase text-indigo-400 mb-2">{t.preferredFormat || 'Preferred Export Format'}</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[
+                        { id: 'pdf', label: 'PDF Document', icon: FileText },
+                        { id: 'json', label: 'JSON Data', icon: Sparkles },
+                        { id: 'txt', label: 'Plain Text', icon: FileSpreadsheet },
+                      ].map((fmt) => {
+                        const Icon = fmt.icon;
+                        return (
+                          <button
+                            key={fmt.id}
+                            type="button"
+                            onClick={() => handleSelectPref('preferredFormat', fmt.id)}
+                            className={`flex flex-col items-center gap-2 rounded-2xl border p-3 text-center text-xs font-semibold transition ${
+                              preferences.preferredFormat === fmt.id
+                                ? 'border-indigo-500 bg-indigo-500/20 text-white'
+                                : 'border-white/10 bg-slate-950 text-slate-400 hover:bg-white/5'
+                            }`}
+                          >
+                            <Icon className="h-4 w-4" />
+                            {fmt.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
                 <button
                   type="button"
-                  onClick={() => {
-                    setActiveModal(null);
-                    showToast('Setting preferences saved', 'success');
-                  }}
-                  className="inline-flex items-center gap-2 rounded-2xl bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
+                  onClick={() => setActiveModal(null)}
+                  className="rounded-2xl bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/10"
+                >
+                  {t.cancel || 'Cancel'}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleSavePreferences}
+                  className="inline-flex items-center gap-2 rounded-2xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-500 shadow-lg shadow-indigo-600/30"
                 >
                   <Check size={16} />
-                  Save & Apply
+                  {t.savePreferences || 'Save & Apply Preferences'}
                 </button>
               </div>
             </div>
