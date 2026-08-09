@@ -2,10 +2,26 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/favicon.svg';
 import { SIDEBAR_LINKS } from '../../config/sidebarLinks';
+import useLanguage from '../../hooks/useLanguage';
+import { translations } from '../../config/translations';
 
 const Sidebar: React.FC = () => {
+  const { language, isRTL } = useLanguage();
+  const t = translations[language] || translations.en;
+
+  const translationKeyMap: Record<string, keyof typeof t> = {
+    dashboard: 'dashboard',
+    'cv-builder': 'cvBuilder',
+    'job-search': 'jobSearch',
+    'saved-jobs': 'savedJobs',
+    applications: 'applications',
+    'interview-prep': 'interviewPrep',
+    'ai-assistant': 'aiAssistant',
+    settings: 'settings',
+  };
+
   return (
-    <aside className="hidden min-h-screen w-72 shrink-0 border-r border-white/10 bg-slate-950 text-white xl:flex xl:flex-col">
+    <aside className="hidden min-h-screen w-72 shrink-0 border-r border-white/10 bg-slate-950 text-white ltr:border-r rtl:border-l rtl:border-r-0 xl:flex xl:flex-col">
       {/* Logo */}
       <div className="flex h-20 items-center gap-3 border-b border-white/10 px-6">
         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 shadow-sm ring-1 ring-white/10">
@@ -20,7 +36,7 @@ const Sidebar: React.FC = () => {
           <h1 className="text-lg font-bold tracking-tight text-white">
             CareerCraft
           </h1>
-          <p className="text-sm text-slate-400">AI Career Assistant</p>
+          <p className="text-sm text-slate-400">{t.aiCareerAssistant}</p>
         </div>
       </div>
 
@@ -29,12 +45,14 @@ const Sidebar: React.FC = () => {
         <nav className="flex flex-col gap-2" aria-label="Main navigation">
           {SIDEBAR_LINKS.map((item) => {
             const { id, path, label, icon: Icon } = item;
+            const tKey = translationKeyMap[id];
+            const translatedLabel = tKey && t[tKey] ? t[tKey] : label;
 
             return (
               <NavLink
                 key={id}
                 to={path}
-                aria-label={label}
+                aria-label={translatedLabel}
                 className={({ isActive }) =>
                   [
                     'group relative flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200',
@@ -49,7 +67,8 @@ const Sidebar: React.FC = () => {
                   <>
                     <span
                       className={[
-                        'absolute left-0 h-8 w-1 rounded-r-full transition-all duration-200',
+                        'absolute h-8 w-1 transition-all duration-200',
+                        isRTL ? 'right-0 rounded-l-full' : 'left-0 rounded-r-full',
                         isActive ? 'bg-indigo-400 opacity-100' : 'opacity-0',
                       ].join(' ')}
                     />
@@ -65,7 +84,7 @@ const Sidebar: React.FC = () => {
                       <Icon className="h-5 w-5" />
                     </span>
 
-                    <span className="truncate">{label}</span>
+                    <span className="truncate">{translatedLabel}</span>
                   </>
                 )}
               </NavLink>
@@ -78,11 +97,11 @@ const Sidebar: React.FC = () => {
       <div className="border-t border-white/10 px-4 py-4">
         <div className="rounded-3xl border border-white/10 bg-white/3 p-4 shadow-sm">
           <p className="text-sm font-semibold text-white">
-            Stay career-ready
+            {t.stayCareerReady}
           </p>
 
           <p className="mt-1 text-sm leading-6 text-slate-400">
-            Track applications, improve your CV, and prepare for interviews in one place.
+            {t.stayCareerReadyDesc}
           </p>
         </div>
       </div>

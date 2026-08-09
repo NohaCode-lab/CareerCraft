@@ -2,6 +2,8 @@ import React from 'react';
 import logo from '../../assets/favicon.svg';
 import { SIDEBAR_LINKS } from '../../config/sidebarLinks';
 import SidebarItem from './SidebarItem';
+import useLanguage from '../../hooks/useLanguage';
+import { translations } from '../../config/translations';
 
 interface MobileSidebarProps {
   isOpen: boolean;
@@ -9,6 +11,9 @@ interface MobileSidebarProps {
 }
 
 const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose }) => {
+  const { language, isRTL } = useLanguage();
+  const t = translations[language] || translations.en;
+
   return (
     <>
       <div
@@ -22,8 +27,13 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose }) => {
 
       <aside
         className={[
-          'fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-white/10 bg-slate-950 text-white shadow-2xl transition-transform duration-300 xl:hidden',
-          isOpen ? 'translate-x-0' : '-translate-x-full',
+          'fixed top-0 z-50 flex h-screen w-72 flex-col border-white/10 bg-slate-950 text-white shadow-2xl transition-transform duration-300 xl:hidden',
+          isRTL ? 'right-0 border-l' : 'left-0 border-r',
+          isOpen
+            ? 'translate-x-0'
+            : isRTL
+            ? 'translate-x-full'
+            : '-translate-x-full',
         ].join(' ')}
         aria-hidden={!isOpen}
       >
@@ -41,7 +51,7 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose }) => {
               <h1 className="text-lg font-bold tracking-tight text-white">
                 CareerCraft
               </h1>
-              <p className="text-sm text-slate-400">AI Career Assistant</p>
+              <p className="text-sm text-slate-400">{t.aiCareerAssistant}</p>
             </div>
           </div>
 
@@ -66,11 +76,11 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose }) => {
         <div className="border-t border-white/10 px-4 py-4">
           <div className="rounded-3xl border border-white/10 bg-white/3 p-4">
             <p className="text-sm font-semibold text-white">
-              Stay career-ready
+              {t.stayCareerReady}
             </p>
 
             <p className="mt-1 text-sm leading-6 text-slate-400">
-              Manage your career journey from one organized dashboard.
+              {t.stayCareerReadyDesc}
             </p>
           </div>
         </div>

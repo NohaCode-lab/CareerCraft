@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { LucideIcon } from 'lucide-react';
+import useLanguage from '../../hooks/useLanguage';
+import { translations } from '../../config/translations';
 
 export interface NavigationItem {
   id: string;
@@ -14,14 +16,30 @@ interface SidebarItemProps {
   onClick?: () => void;
 }
 
+const translationKeyMap: Record<string, string> = {
+  dashboard: 'dashboard',
+  'cv-builder': 'cvBuilder',
+  'job-search': 'jobSearch',
+  'saved-jobs': 'savedJobs',
+  applications: 'applications',
+  'interview-prep': 'interviewPrep',
+  'ai-assistant': 'aiAssistant',
+  settings: 'settings',
+};
+
 const SidebarItem: React.FC<SidebarItemProps> = ({ item, onClick }) => {
+  const { language, isRTL } = useLanguage();
+  const t = translations[language] || translations.en;
   const Icon = item.icon;
+
+  const tKey = translationKeyMap[item.id];
+  const translatedLabel = tKey && (t as any)[tKey] ? (t as any)[tKey] : item.label;
 
   return (
     <NavLink
       to={item.path}
       onClick={onClick}
-      aria-label={item.label}
+      aria-label={translatedLabel}
       className={({ isActive }) =>
         [
           'group relative flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200',
@@ -36,7 +54,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ item, onClick }) => {
         <>
           <span
             className={[
-              'absolute left-0 h-8 w-1 rounded-r-full transition-all duration-200',
+              'absolute h-8 w-1 transition-all duration-200',
+              isRTL ? 'right-0 rounded-l-full' : 'left-0 rounded-r-full',
               isActive ? 'bg-indigo-400 opacity-100' : 'opacity-0',
             ].join(' ')}
           />
@@ -52,7 +71,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ item, onClick }) => {
             <Icon className="h-5 w-5" />
           </span>
 
-          <span className="truncate">{item.label}</span>
+          <span className="truncate">{translatedLabel}</span>
         </>
       )}
     </NavLink>

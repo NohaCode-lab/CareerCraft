@@ -1,14 +1,20 @@
 import React from 'react';
+import useLanguage from '../../hooks/useLanguage';
 
-const getGreetingByHour = (hour: number): string => {
-  if (hour < 12) {
-    return 'Good morning';
+const getGreetingByHour = (hour: number, lang: string): string => {
+  if (lang === 'de') {
+    if (hour < 12) return 'Guten Morgen';
+    if (hour < 18) return 'Guten Tag';
+    return 'Guten Abend';
   }
 
-  if (hour < 18) {
-    return 'Good afternoon';
+  if (lang === 'ar') {
+    if (hour < 12) return 'صباح الخير';
+    return 'مساء الخير';
   }
 
+  if (hour < 12) return 'Good morning';
+  if (hour < 18) return 'Good afternoon';
   return 'Good evening';
 };
 
@@ -17,8 +23,29 @@ interface DashboardHeaderProps {
 }
 
 const DashboardHeader: React.FC<DashboardHeaderProps> = ({ userName = 'Noha' }) => {
+  const { language } = useLanguage();
   const currentHour = new Date().getHours();
-  const greeting = getGreetingByHour(currentHour);
+  const greeting = getGreetingByHour(currentHour, language);
+
+  const titles: Record<string, { welcome: string; description: string; tag: string }> = {
+    en: {
+      welcome: 'Welcome back to CareerCraft',
+      description: 'Track your applications, improve your CV, prepare for interviews, and stay focused on your next opportunity.',
+      tag: 'Career growth in progress',
+    },
+    de: {
+      welcome: 'Willkommen zurück bei CareerCraft',
+      description: 'Verfolgen Sie Bewerbungen, optimieren Sie Ihren Lebenslauf und bereiten Sie sich auf Vorstellungsgespräche vor.',
+      tag: 'Karrierewachstum aktiv',
+    },
+    ar: {
+      welcome: 'مرحباً بك مجدداً في كاريير كرافت',
+      description: 'تتبع طلبات التوظيف، حسّن سيرتك الذاتية، واستعد للمقابلات المهنية بكل ثقة.',
+      tag: 'النمو المهني في تقدم',
+    },
+  };
+
+  const currentContent = titles[language] || titles.en;
 
   return (
     <section
@@ -36,12 +63,11 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ userName = 'Noha' }) 
           </p>
 
           <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl xl:text-4xl">
-            Welcome back to CareerCraft
+            {currentContent.welcome}
           </h1>
 
           <p className="mt-3 text-sm leading-6 text-slate-400 md:text-base">
-            Track your applications, improve your CV, prepare for interviews,
-            and stay focused on your next opportunity.
+            {currentContent.description}
           </p>
         </div>
 
@@ -49,7 +75,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ userName = 'Noha' }) 
           className="self-start rounded-2xl border border-indigo-500/20 bg-indigo-500/10 px-4 py-2 text-sm font-medium text-indigo-200"
           role="status"
         >
-          Career growth in progress
+          {currentContent.tag}
         </div>
       </div>
     </section>

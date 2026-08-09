@@ -1,7 +1,15 @@
 import { useContext } from "react";
 import LanguageContext from "../context/language-context";
 
-const useLanguage = () => {
+export interface LanguageContextValue {
+  language: string;
+  setLanguage: (lang: string) => void;
+  toggleLanguage: () => void;
+  isRTL: boolean;
+  availableLanguages: string[];
+}
+
+const useLanguage = (): LanguageContextValue => {
   const context = useContext(LanguageContext);
 
   if (!context) {
@@ -12,13 +20,15 @@ const useLanguage = () => {
     language,
     setLanguage,
     toggleLanguage,
+    isRTL,
     availableLanguages,
-  } = context;
+  } = context as any;
 
   return {
     language,
     setLanguage,
     toggleLanguage,
+    isRTL,
     availableLanguages,
   };
 };
