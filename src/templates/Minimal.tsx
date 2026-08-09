@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import LanguageContext from '../context/LanguageContext';
+import React from 'react';
+import useLanguage from '../hooks/useLanguage';
 import { translations } from '../config/translations';
 
 const EMPTY_TEXT = '';
@@ -72,7 +72,7 @@ interface MinimalProps {
 }
 
 const Minimal: React.FC<MinimalProps> = ({ data = {} }) => {
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguage();
   const t = translations[language as keyof typeof translations] || translations.en;
   const isArabic = language === 'ar';
 
