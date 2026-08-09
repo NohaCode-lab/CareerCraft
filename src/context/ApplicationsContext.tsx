@@ -1,7 +1,32 @@
-import React, { useMemo, useState, useEffect } from "react";
-import ApplicationsContext from "./applications-context";
+import React, { createContext, useMemo, useState, useEffect } from "react";
 import * as storageService from "../services/storageService";
-import { Application } from "../hooks/useApplications";
+
+export interface Application {
+  id: string | number;
+  jobId?: string | number;
+  title: string;
+  company: string;
+  status: string;
+  createdAt?: string;
+  appliedAt?: string;
+  date?: string;
+  role?: string;
+  location?: string;
+  [key: string]: any;
+}
+
+export interface ApplicationsContextType {
+  applications: Application[];
+  groupedApplications: Record<string, Application[]>;
+  selectedApplication: Application | null;
+  addApplication: (job: any) => void;
+  updateApplication: (id: string | number, updates: Partial<Application>) => void;
+  removeApplication: (id: string | number) => void;
+  selectApplication: (app: Application | null) => void;
+  clearSelectedApplication: () => void;
+}
+
+export const ApplicationsContext = createContext<ApplicationsContextType | undefined>(undefined);
 
 const STORAGE_KEY = "career_applications";
 
@@ -13,7 +38,7 @@ interface ApplicationsProviderProps {
   children: React.ReactNode;
 }
 
-function ApplicationsProvider({ children }: ApplicationsProviderProps) {
+export function ApplicationsProvider({ children }: ApplicationsProviderProps) {
   const [applications, setApplications] = useState<Application[]>(getInitialApplications);
   const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
 
@@ -33,8 +58,8 @@ function ApplicationsProvider({ children }: ApplicationsProviderProps) {
         {
           id: String(Date.now()),
           jobId: job.id,
-          title: job.title,
-          company: job.company,
+          title: job.title || 'Untitled',
+          company: job.company || 'Company',
           status: "applied",
           createdAt: new Date().toISOString(),
         },
@@ -62,6 +87,7 @@ function ApplicationsProvider({ children }: ApplicationsProviderProps) {
 
   const groupedApplications = useMemo(() => {
     return {
+      wishlist: applications.filter((a) => a.status === "wishlist"),
       applied: applications.filter((a) => a.status === "applied"),
       reviewing: applications.filter((a) => a.status === "reviewing"),
       interview: applications.filter((a) => a.status === "interview"),
@@ -86,7 +112,7 @@ function ApplicationsProvider({ children }: ApplicationsProviderProps) {
   );
 
   return (
-    <ApplicationsContext.Provider value={value as any}>
+    <ApplicationsContext.Provider value={value}>
       {children}
     </ApplicationsContext.Provider>
   );

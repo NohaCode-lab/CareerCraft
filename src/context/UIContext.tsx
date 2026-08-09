@@ -1,16 +1,32 @@
-import React, { useCallback, useMemo, useState } from "react";
-import UIContext from "./ui-context";
+import React, { createContext, useCallback, useMemo, useState } from "react";
 
 export interface ToastState {
   message: string;
   type?: "success" | "error" | "info" | "warning";
 }
 
+export interface UIContextType {
+  isSidebarOpen: boolean;
+  openSidebar: () => void;
+  closeSidebar: () => void;
+  toggleSidebar: () => void;
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+  toast: ToastState | null;
+  showToast: (message: string, type?: ToastState["type"]) => void;
+  clearToast: () => void;
+}
+
+export const UIContext = createContext<UIContextType | undefined>(undefined);
+
 interface UIProviderProps {
   children: React.ReactNode;
 }
 
-function UIProvider({ children }: UIProviderProps) {
+export function UIProvider({ children }: UIProviderProps) {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -81,7 +97,7 @@ function UIProvider({ children }: UIProviderProps) {
     ]
   );
 
-  return <UIContext.Provider value={value as any}>{children}</UIContext.Provider>;
+  return <UIContext.Provider value={value}>{children}</UIContext.Provider>;
 }
 
 export default UIProvider;

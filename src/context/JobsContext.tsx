@@ -1,7 +1,36 @@
-import React, { useEffect, useMemo, useState } from "react";
-import JobsContext from "./jobs-context";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 import * as storageService from "../services/storageService";
-import { Job } from "../hooks/useJobs";
+
+export interface Job {
+  id: string | number;
+  title: string;
+  company: string;
+  location?: string;
+  workMode?: string;
+  employmentType?: string;
+  seniority?: string;
+  salaryRange?: any;
+  postedAt?: string;
+  source?: string;
+  isSaved?: boolean;
+  isApplied?: boolean;
+  [key: string]: any;
+}
+
+export interface JobsContextType {
+  jobs: Job[];
+  savedJobs: Job[];
+  appliedJobs: Job[];
+  selectedJob: Job | null;
+  addJob: (job: Job) => void;
+  saveJob: (id: string | number) => void;
+  unsaveJob: (id: string | number) => void;
+  applyJob: (id: string | number) => void;
+  selectJob: (job: Job | null) => void;
+  clearSelectedJob: () => void;
+}
+
+export const JobsContext = createContext<JobsContextType | undefined>(undefined);
 
 const STORAGE_KEY = "career_jobs";
 
@@ -13,7 +42,7 @@ interface JobsProviderProps {
   children: React.ReactNode;
 }
 
-function JobsProvider({ children }: JobsProviderProps) {
+export function JobsProvider({ children }: JobsProviderProps) {
   const [jobs, setJobs] = useState<Job[]>(getInitialJobs);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
 
@@ -83,7 +112,7 @@ function JobsProvider({ children }: JobsProviderProps) {
     [jobs, savedJobs, appliedJobs, selectedJob],
   );
 
-  return <JobsContext.Provider value={value as any}>{children}</JobsContext.Provider>;
+  return <JobsContext.Provider value={value}>{children}</JobsContext.Provider>;
 }
 
 export default JobsProvider;

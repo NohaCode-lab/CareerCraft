@@ -1,5 +1,4 @@
-import React, { useMemo, useState } from "react";
-import AuthContext from "./auth-context";
+import React, { createContext, useMemo, useState } from "react";
 import * as storageService from "../services/storageService";
 
 const STORAGE_KEY = "career_user";
@@ -12,6 +11,16 @@ export interface UserProfile {
   [key: string]: any;
 }
 
+export interface AuthContextType {
+  user: UserProfile | null;
+  isAuthenticated: boolean;
+  login: (userData: UserProfile) => void;
+  logout: () => void;
+  updateUser: (updates: Partial<UserProfile>) => void;
+}
+
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
 const getInitialUser = (): UserProfile | null => {
   return storageService.getItem<UserProfile | null>(STORAGE_KEY, null);
 };
@@ -20,7 +29,7 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProfile | null>(getInitialUser);
 
   const login = (userData: UserProfile) => {
@@ -58,7 +67,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     [user],
   );
 
-  return <AuthContext.Provider value={value as any}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export default AuthProvider;

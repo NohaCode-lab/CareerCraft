@@ -35,6 +35,11 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     settings: 'Settings',
     settingsDesc: 'Customize your CareerCraft experience, manage preferences, and personalize your workspace.',
 
+    // Error Boundary
+    somethingWentWrong: 'Something went wrong',
+    somethingWentWrongDesc: 'An unexpected error occurred while rendering this section. You can refresh the view to retry.',
+    reloadSection: 'Reload Section',
+
     // Common Actions & Buttons
     open: 'Open',
     view: 'View',
@@ -233,6 +238,11 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     aiAssistantDesc: 'Nutzen Sie KI-Tools, um Ihren Lebenslauf zu optimieren, Anschreiben zu erstellen und Karriereberatung zu erhalten.',
     settings: 'Einstellungen',
     settingsDesc: 'Passen Sie Ihr CareerCraft-Erlebnis an, verwalten Sie Einstellungen und personalisieren Sie Ihren Arbeitsbereich.',
+
+    // Error Boundary
+    somethingWentWrong: 'Etwas ist schiefgelaufen',
+    somethingWentWrongDesc: 'Ein unerwarteter Fehler ist beim Laden aufgetreten. Bitte laden Sie den Bereich neu.',
+    reloadSection: 'Seite neu laden',
 
     // Common Actions & Buttons
     open: 'Öffnen',
@@ -433,6 +443,11 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     aiAssistantDesc: 'استخدم أدوات الذكاء الاصطناعي لتحسين سيرتك الذاتية، إنشاء خطابات التغطية، والحصول على توجيه مهني مخصص.',
     settings: 'الإعدادات',
     settingsDesc: 'خصص تجربتك في كاريير كرافت، وادر تفضيلاتك ومساحة عملك.',
+
+    // Error Boundary
+    somethingWentWrong: 'حدث خطأ غير متوقع',
+    somethingWentWrongDesc: 'حدث خطأ أثناء تحميل هذا القسم. يمكنك إعادة التحديث للمحاولة مجدداً.',
+    reloadSection: 'إعادة تحديث الصفحة',
 
     // Common Actions & Buttons
     open: 'فتح',
