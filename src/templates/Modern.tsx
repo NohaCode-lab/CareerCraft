@@ -348,7 +348,7 @@ const Modern: React.FC<ModernProps> = ({ data = {} }) => {
       dir={isArabic ? 'rtl' : 'ltr'}
       className="mx-auto w-full max-w-[980px] overflow-hidden rounded-3xl border border-slate-200 bg-white text-slate-900 shadow-sm print:max-w-none print:rounded-none print:border-0 print:shadow-none"
     >
-      <header className="border-b bg-slate-900 px-10 py-10 text-white">
+      <header className="border-b bg-slate-900 px-4 py-6 sm:px-10 sm:py-10 text-white">
         {(fullName || headline) && (
           <div>
             {fullName && <h1 className="text-3xl font-bold">{fullName}</h1>}

@@ -329,7 +329,7 @@ const European: React.FC<EuropeanProps> = ({ data = {} }) => {
   return (
     <div
       dir={isArabic ? 'rtl' : 'ltr'}
-      className="mx-auto w-full max-w-[900px] bg-white px-10 py-10 text-slate-900 shadow-[0_25px_60px_-20px_rgba(15,23,42,0.25)] print:max-w-none print:px-8 print:py-8 print:shadow-none"
+      className="mx-auto w-full max-w-[900px] bg-white px-4 py-6 sm:px-10 sm:py-10 text-slate-900 shadow-[0_25px_60px_-20px_rgba(15,23,42,0.25)] print:max-w-none print:px-8 print:py-8 print:shadow-none"
     >
       <header className="border-b border-slate-300 pb-6">
         {(fullName || headline) && (

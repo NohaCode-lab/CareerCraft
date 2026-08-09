@@ -113,7 +113,7 @@ const Minimal: React.FC<MinimalProps> = ({ data = {} }) => {
   return (
     <div
       dir={isArabic ? 'rtl' : 'ltr'}
-      className="mx-auto w-full max-w-[850px] bg-white px-10 py-10 text-slate-900 shadow-sm print:max-w-none print:shadow-none"
+      className="mx-auto w-full max-w-[850px] bg-white px-4 py-6 sm:px-10 sm:py-10 text-slate-900 shadow-sm print:max-w-none print:shadow-none"
     >
       <header>
         {fullName && (
