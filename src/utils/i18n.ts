@@ -35,9 +35,10 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     settings: 'Settings',
     settingsDesc: 'Customize your CareerCraft experience, manage preferences, and personalize your workspace.',
 
-    // Common Actions
+    // Common Actions & Buttons
     open: 'Open',
     view: 'View',
+    viewAll: 'View All',
     apply: 'Apply',
     applied: 'Applied',
     save: 'Save',
@@ -56,6 +57,8 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     downloadPdf: 'Download PDF',
     search: 'Search',
     applyNow: 'Apply Now',
+    browseJobs: 'Browse Jobs',
+    startPractice: 'Start Practice',
 
     // Dashboard Overview & Stats
     overviewTitle: 'Overview',
@@ -73,12 +76,44 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     quickActionsTitle: 'Quick Actions',
     quickActionsDesc: 'Jump directly to the tools you use most.',
     recentApplicationsTitle: 'Recent Applications',
-    recentApplicationsDesc: 'Track and manage your latest job applications.',
-    profileStrengthTitle: 'Profile Strength',
-    profileStrengthDesc: 'Optimize your CV and interview readiness score.',
-    interviewPrepPreviewTitle: 'Interview Prep Highlights',
-    savedJobsPreviewTitle: 'Saved Jobs Preview',
+    recentApplicationsDesc: 'Your latest tracked applications.',
     noRecentApplications: 'No applications recorded yet. Apply for jobs to track them here.',
+    
+    // Profile Strength Component
+    profileHealth: 'Profile Health',
+    profileStrength: 'Profile Strength',
+    profileStrengthDesc: 'Complete your profile to improve recruiter readiness, AI suggestions, and CV quality.',
+    completionScore: 'Completion score',
+    sectionsCompleted: '{completed} of {total} profile sections completed',
+    needsImprovement: 'Needs Improvement',
+    good: 'Good',
+    strong: 'Strong',
+    recommendedNextImprovements: 'Recommended next improvements',
+    completingMissingSections: 'Completing the missing sections will make your profile more useful for CV building, job matching, and AI-powered recommendations.',
+    profileLooksStrong: 'Your profile looks strong',
+    profileLooksStrongDesc: 'Great job. Your profile has the core details needed for a more complete career workflow and better personalized insights.',
+    addName: 'Add Full name',
+    addEmail: 'Add Email address',
+    addTitle: 'Add Professional title',
+    addLocation: 'Add Location',
+    addSummary: 'Add Career summary',
+    addSkills: 'Add Skills',
+
+    // Interview Prep Preview Component
+    interviewPrepPreviewTitle: 'Stay ready for your next interview',
+    interviewPrepPreviewDesc: 'Review essential preparation tips for technical and behavioral interviews and practice with confidence.',
+    prepTip1Title: 'Strong Introduction',
+    prepTip1Desc: 'Practice a short, confident self-introduction that highlights your strengths clearly.',
+    prepTip2Title: 'STAR Examples',
+    prepTip2Desc: 'Prepare achievement stories using the STAR method for behavioral interview questions.',
+    prepTip3Title: 'Frontend Review',
+    prepTip3Desc: 'Refresh React, JavaScript, problem-solving, and core frontend concepts before interviews.',
+
+    // Saved Jobs Preview Component
+    savedJobsPreviewTitle: 'Saved Jobs',
+    savedJobsPreviewDesc: 'A quick look at your bookmarked roles.',
+    noSavedJobsYet: 'No saved jobs yet',
+    noSavedJobsDesc: 'Bookmark jobs you like in Job Search and they will appear here.',
 
     // Settings Page
     appearance: 'Appearance',
@@ -105,7 +140,6 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
 
     // Interview Module
     interviewPrepTitle: 'Prepare for Your Interview',
-    interviewPrepDesc: 'AI-powered interview question generator, personalized STAR answer coaching, mock interviews, and readiness scoring.',
     generateQuestions: 'Generate AI Questions',
     generatingQuestions: 'Generating Questions...',
     starAnswer: 'Personalized STAR Answer',
@@ -114,7 +148,6 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     mockInterview: 'AI Mock Interview',
     interviewReadiness: 'Interview Readiness Score',
     
-    // Interview Categories & Drawer
     contextHeader: 'Candidate Resume & Job Description Context',
     resumeSummaryLabel: 'Candidate Resume Summary',
     targetJobDescLabel: 'Target Job Description',
@@ -184,9 +217,10 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     settings: 'Einstellungen',
     settingsDesc: 'Passen Sie Ihr CareerCraft-Erlebnis an, verwalten Sie Einstellungen und personalisieren Sie Ihren Arbeitsbereich.',
 
-    // Common Actions
+    // Common Actions & Buttons
     open: 'Öffnen',
     view: 'Ansehen',
+    viewAll: 'Alle ansehen',
     apply: 'Bewerben',
     applied: 'Beworben',
     save: 'Speichern',
@@ -205,6 +239,8 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     downloadPdf: 'PDF herunterladen',
     search: 'Suchen',
     applyNow: 'Jetzt bewerben',
+    browseJobs: 'Jobs durchsuchen',
+    startPractice: 'Übung starten',
 
     // Dashboard Overview & Stats
     overviewTitle: 'Übersicht',
@@ -223,11 +259,43 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     quickActionsDesc: 'Nutzen Sie direkt die am häufigsten benötigten Werkzeuge.',
     recentApplicationsTitle: 'Neueste Bewerbungen',
     recentApplicationsDesc: 'Verwalten Sie Ihre aktuellen Bewerbungsprozesse.',
-    profileStrengthTitle: 'Profilstärke',
-    profileStrengthDesc: 'Optimieren Sie Ihren Lebenslauf und Ihre Interview-Vorbereitung.',
-    interviewPrepPreviewTitle: 'Interview-Vorbereitung Highlights',
-    savedJobsPreviewTitle: 'Vorschau gespeicherter Jobs',
     noRecentApplications: 'Noch keine Bewerbungen erfasst. Bewerben Sie sich auf Jobs, um sie hier zu verfolgen.',
+
+    // Profile Strength Component
+    profileHealth: 'Profil-Status',
+    profileStrength: 'Profilstärke',
+    profileStrengthDesc: 'Vervollständigen Sie Ihr Profil für bessere KI-Empfehlungen und höhere Bewerbungschancen.',
+    completionScore: 'Vollständigkeit',
+    sectionsCompleted: '{completed} von {total} Profil-Abschnitten ausgefüllt',
+    needsImprovement: 'Verbesserungsbedarf',
+    good: 'Gut',
+    strong: 'Stark',
+    recommendedNextImprovements: 'Empfohlene nächste Schritte',
+    completingMissingSections: 'Das Ausfüllen der fehlenden Abschnitte macht Ihr Profil nützlicher für Lebenslauf-Erstellung und Job-Matching.',
+    profileLooksStrong: 'Ihr Profil ist sehr stark',
+    profileLooksStrongDesc: 'Hervorragende Arbeit. Ihr Profil enthält alle wesentlichen Informationen für optimale Ergebnisse.',
+    addName: 'Vollständigen Namen hinzufügen',
+    addEmail: 'E-Mail-Adresse hinzufügen',
+    addTitle: 'Berufsbezeichnung hinzufügen',
+    addLocation: 'Wohnort hinzufügen',
+    addSummary: 'Zusammenfassung hinzufügen',
+    addSkills: 'Kenntnisse hinzufügen',
+
+    // Interview Prep Preview Component
+    interviewPrepPreviewTitle: 'Optimal vorbereitet fürs Vorstellungsgespräch',
+    interviewPrepPreviewDesc: 'Nutzen Sie essenzielle Vorbereitungstipps für technische und verhaltensorientierte Interviews.',
+    prepTip1Title: 'Überzeugende Selbstpräsentation',
+    prepTip1Desc: 'Üben Sie eine kurze, selbstbewusste Vorstellung Ihrer wichtigsten Stärken.',
+    prepTip2Title: 'STAR-Erfolgsbeispiele',
+    prepTip2Desc: 'Bereiten Sie konkrete Erfolgsbeispiele nach der STAR-Methode auf.',
+    prepTip3Title: 'Technisches Refresher-Quiz',
+    prepTip3Desc: 'Frischen Sie React, JavaScript und Kernkonzepte vor dem Vorstellungsgespräch auf.',
+
+    // Saved Jobs Preview Component
+    savedJobsPreviewTitle: 'Gespeicherte Jobs',
+    savedJobsPreviewDesc: 'Ihre gemerkten Stellenangebote auf einen Blick.',
+    noSavedJobsYet: 'Noch keine gemerkten Jobs',
+    noSavedJobsDesc: 'Merken Sie sich Jobs in der Jobsuche, um sie hier schnell wiederzufinden.',
 
     // Settings Page
     appearance: 'Erscheinungsbild',
@@ -254,7 +322,6 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
 
     // Interview Module
     interviewPrepTitle: 'Vorstellungsgespräch vorbereiten',
-    interviewPrepDesc: 'KI-gestützter Fragen-Generator, personalisiertes STAR-Coaching, Probeinterviews und Bereitschaftsbewertung.',
     generateQuestions: 'KI-Fragen generieren',
     generatingQuestions: 'Fragen werden generiert...',
     starAnswer: 'Personalisierte STAR-Antwort',
@@ -333,9 +400,10 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     settings: 'الإعدادات',
     settingsDesc: 'خصص تجربتك في كاريير كرافت، وادر تفضيلاتك ومساحة عملك.',
 
-    // Common Actions
+    // Common Actions & Buttons
     open: 'فتح',
     view: 'عرض',
+    viewAll: 'عرض الكل',
     apply: 'تقديم',
     applied: 'تم التقديم',
     save: 'حفظ',
@@ -354,6 +422,8 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     downloadPdf: 'تحميل PDF',
     search: 'بحث',
     applyNow: 'قدّم الآن',
+    browseJobs: 'تصفح الوظائف',
+    startPractice: 'بدء التدريب',
 
     // Dashboard Overview & Stats
     overviewTitle: 'نظرة عامة',
@@ -372,11 +442,43 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     quickActionsDesc: 'الانتقال المباشر للأدوات الأكثر استخداماً.',
     recentApplicationsTitle: 'أحدث طلبات التوظيف',
     recentApplicationsDesc: 'إدارة وتتبع أحدث طلبات التوظيف الخاصة بك.',
-    profileStrengthTitle: 'قوة الملف المهني',
-    profileStrengthDesc: 'تحسين سيرتك الذاتية ومؤشر جاهزيتك للمقابلات.',
-    interviewPrepPreviewTitle: 'أبرز تدريبات المقابلات',
-    savedJobsPreviewTitle: 'معاينة الوظائف المحفوظة',
     noRecentApplications: 'لا توجد طلبات مسجلة بعد. قدّم على الوظائف لتتبعها هنا.',
+
+    // Profile Strength Component
+    profileHealth: 'صحة الملف الشخصي',
+    profileStrength: 'قوة الملف المهني',
+    profileStrengthDesc: 'أكمل بيانات ملفك المهني لتحسين التوصيات وتجهيز سيرتك الذاتية لفرص أفضل.',
+    completionScore: 'نسبة الاكتفال',
+    sectionsCompleted: 'تم إكمال {completed} من أصل {total} أقسام في الملف المهني',
+    needsImprovement: 'يحتاج تحسين',
+    good: 'جيد',
+    strong: 'قوي جداً',
+    recommendedNextImprovements: 'الخطوات الموصى بها للتحسين',
+    completingMissingSections: 'إكمال الأقسام المتبقية سيجعل ملفك أكثر فائدة في إنشاء السيرة الذاتية ومطابقة الوظائف.',
+    profileLooksStrong: 'ملفك المهني مكتمل وقوي',
+    profileLooksStrongDesc: 'عمل رائع. يحتوي ملفك على التفاصيل الأساسية المطلوبة لتحقيق أفضل نتائج في التوظيف.',
+    addName: 'إضافة الاسم الكامل',
+    addEmail: 'إضافة البريد الإلكتروني',
+    addTitle: 'إضافة المسمى الوظيفي',
+    addLocation: 'إضافة الموقع الجغرافي',
+    addSummary: 'إضافة الملخص المهني',
+    addSkills: 'إضافة المهارات',
+
+    // Interview Prep Preview Component
+    interviewPrepPreviewTitle: 'استعد لمقابلتك الوظيفية القادمة',
+    interviewPrepPreviewDesc: 'استعرض النصائح والأسئلة الشائعة وتدرب بثقة تامة.',
+    prepTip1Title: 'المقدمة التعريفية القوية',
+    prepTip1Desc: 'تدرب على تقديم نفسك باختصار وبثقة مع إبراز نقاط قوتك.',
+    prepTip2Title: 'أمثلة نموذج STAR',
+    prepTip2Desc: 'جهّز قصص إنجازاتك باستخدام نموذج STAR للأسئلة السلوكية.',
+    prepTip3Title: 'المراجعة التقنية',
+    prepTip3Desc: 'راجع المفاهيم الأساسية وحل المشكلات التقنية قبل المقابلة.',
+
+    // Saved Jobs Preview Component
+    savedJobsPreviewTitle: 'الوظائف المحفوظة',
+    savedJobsPreviewDesc: 'نظرة سريعة على الوظائف التي قمت بحفظها.',
+    noSavedJobsYet: 'لا توجد وظائف محفوظة بعد',
+    noSavedJobsDesc: 'قم بحفظ الوظائف التي تعجبك في صفحة البحث عن وظائف لتظهر هنا.',
 
     // Settings Page
     appearance: 'المظهر والسمة',
@@ -403,7 +505,6 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
 
     // Interview Module
     interviewPrepTitle: 'التحضير للمقابلة الوظيفية',
-    interviewPrepDesc: 'مولد أسئلة المقابلات بالذكاء الاصطناعي، تدريب إجابات STAR المخصصة، المقابلات التجريبية، وتقييم الجاهزية.',
     generateQuestions: 'توليد أسئلة الذكاء الاصطناعي',
     generatingQuestions: 'جاري توليد الأسئلة...',
     starAnswer: 'إجابة STAR المخصصة',
@@ -412,7 +513,6 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     mockInterview: 'مقابلة تجريبية تفاعلية',
     interviewReadiness: 'مؤشر الجاهزية للمقابلة',
 
-    // Interview Categories & Drawer
     contextHeader: 'سياق السيرة الذاتية ووصف الوظيفة المستهدفة',
     resumeSummaryLabel: 'ملخص السيرة الذاتية للفيصل',
     targetJobDescLabel: 'وصف الوظيفة المستهدفة',

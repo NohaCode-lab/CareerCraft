@@ -4,35 +4,35 @@ import { ArrowRight, MessageSquareText } from 'lucide-react';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import { ROUTES } from '../../config/routes';
+import useLanguage from '../../hooks/useLanguage';
+import { t } from '../../utils/i18n';
 
 interface PrepTip {
   id: number;
-  title: string;
-  description: string;
+  titleKey: string;
+  descKey: string;
 }
 
 const DashboardInterviewPrepPreview: React.FC = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
 
   const tips: PrepTip[] = useMemo(
     () => [
       {
         id: 1,
-        title: 'Strong Introduction',
-        description:
-          'Practice a short, confident self-introduction that highlights your strengths clearly.',
+        titleKey: 'prepTip1Title',
+        descKey: 'prepTip1Desc',
       },
       {
         id: 2,
-        title: 'STAR Examples',
-        description:
-          'Prepare achievement stories using the STAR method for behavioral interview questions.',
+        titleKey: 'prepTip2Title',
+        descKey: 'prepTip2Desc',
       },
       {
         id: 3,
-        title: 'Frontend Review',
-        description:
-          'Refresh React, JavaScript, problem-solving, and core frontend concepts before interviews.',
+        titleKey: 'prepTip3Title',
+        descKey: 'prepTip3Desc',
       },
     ],
     []
@@ -45,7 +45,7 @@ const DashboardInterviewPrepPreview: React.FC = () => {
   return (
     <Card
       className="group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:border-indigo-400/30 hover:shadow-xl"
-      aria-label="Interview preparation preview"
+      aria-label={t('interviewPrepPreviewTitle', language)}
     >
       <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-indigo-500/10 via-transparent to-cyan-400/5 opacity-80" />
 
@@ -54,48 +54,41 @@ const DashboardInterviewPrepPreview: React.FC = () => {
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-indigo-400/20 bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-300">
               <MessageSquareText size={14} />
-              Interview Prep
+              {t('interviewPrep', language)}
             </div>
 
             <h2 className="text-xl font-semibold text-white">
-              Stay ready for your next interview
+              {t('interviewPrepPreviewTitle', language)}
             </h2>
 
             <p className="mt-2 max-w-md text-sm leading-6 text-slate-400">
-              Review essential preparation tips for technical and behavioral
-              interviews and practice with confidence.
+              {t('interviewPrepPreviewDesc', language)}
             </p>
           </div>
         </div>
 
         <div className="space-y-3">
-          {tips.length > 0 ? (
-            tips.map((tip) => (
-              <div
-                key={tip.id}
-                className="rounded-2xl border border-white/10 bg-slate-800/60 p-4 transition duration-300 hover:border-indigo-400/20 hover:bg-slate-800/80"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/15 text-xs font-semibold text-indigo-300">
-                    {tip.id}
-                  </div>
+          {tips.map((tip) => (
+            <div
+              key={tip.id}
+              className="rounded-2xl border border-white/10 bg-slate-800/60 p-4 transition duration-300 hover:border-indigo-400/20 hover:bg-slate-800/80"
+            >
+              <div className="flex items-start gap-3">
+                <div className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/15 text-xs font-semibold text-indigo-300">
+                  {tip.id}
+                </div>
 
-                  <div>
-                    <h3 className="text-sm font-semibold text-white">
-                      {tip.title}
-                    </h3>
-                    <p className="mt-1 text-sm leading-6 text-slate-400">
-                      {tip.description}
-                    </p>
-                  </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-white">
+                    {t(tip.titleKey, language)}
+                  </h3>
+                  <p className="mt-1 text-sm leading-6 text-slate-400">
+                    {t(tip.descKey, language)}
+                  </p>
                 </div>
               </div>
-            ))
-          ) : (
-            <div className="rounded-2xl border border-dashed border-white/10 bg-slate-800/40 p-4 text-sm text-slate-400">
-              No interview tips available right now.
             </div>
-          )}
+          ))}
         </div>
 
         <Button
@@ -103,8 +96,8 @@ const DashboardInterviewPrepPreview: React.FC = () => {
           onClick={handleNavigate}
           aria-label="Go to interview preparation page"
         >
-          Start Practice
-          <ArrowRight size={16} />
+          {t('startPractice', language)}
+          <ArrowRight size={16} className="rtl:rotate-180" />
         </Button>
       </div>
     </Card>

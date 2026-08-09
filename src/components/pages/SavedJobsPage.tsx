@@ -30,7 +30,7 @@ const SavedJobsPage: React.FC = () => {
         </div>
       ) : (
         <div className="rounded-3xl border border-dashed border-white/10 bg-slate-900/40 p-12 text-center text-slate-400">
-          No saved jobs yet. Browse jobs in Job Search and click Save.
+          {t('noSavedJobsDesc', language)}
         </div>
       )}
     </div>

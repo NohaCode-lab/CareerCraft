@@ -3,16 +3,19 @@ import { CheckCircle2, CircleAlert, Sparkles } from 'lucide-react';
 import Card from '../ui/Card';
 import ProgressBar from '../ui/ProgressBar';
 import useAuth from '../../hooks/useAuth';
+import useLanguage from '../../hooks/useLanguage';
+import { t } from '../../utils/i18n';
 
 interface ProfileCheck {
   key: string;
-  label: string;
+  labelKey: string;
   completed: boolean;
   weight: number;
 }
 
 const DashboardProfileStrength: React.FC = () => {
   const { user } = useAuth();
+  const { language } = useLanguage();
 
   const profileAnalysis = useMemo(() => {
     const profile = user || {};
@@ -20,37 +23,37 @@ const DashboardProfileStrength: React.FC = () => {
     const checks: ProfileCheck[] = [
       {
         key: 'name',
-        label: 'Full name',
+        labelKey: 'addName',
         completed: Boolean(profile.name?.trim()),
         weight: 15,
       },
       {
         key: 'email',
-        label: 'Email address',
+        labelKey: 'addEmail',
         completed: Boolean(profile.email?.trim()),
         weight: 15,
       },
       {
         key: 'title',
-        label: 'Professional title',
+        labelKey: 'addTitle',
         completed: Boolean(profile.title?.trim()),
         weight: 20,
       },
       {
         key: 'location',
-        label: 'Location',
+        labelKey: 'addLocation',
         completed: Boolean(profile.location?.trim()),
         weight: 10,
       },
       {
         key: 'summary',
-        label: 'Career summary',
+        labelKey: 'addSummary',
         completed: Boolean(profile.summary?.trim()),
         weight: 20,
       },
       {
         key: 'skills',
-        label: 'Skills',
+        labelKey: 'addSkills',
         completed: Array.isArray(profile.skills)
           ? profile.skills.length > 0
           : Boolean(profile.skills?.trim()),
@@ -64,67 +67,70 @@ const DashboardProfileStrength: React.FC = () => {
 
     const missingItems = checks.filter((item) => !item.completed);
 
-    let label = 'Needs Improvement';
     let toneClass = 'text-amber-300 bg-amber-500/10 border-amber-400/20';
+    let statusText = t('needsImprovement', language);
 
     if (score >= 85) {
-      label = 'Strong';
+      statusText = t('strong', language);
       toneClass = 'text-emerald-300 bg-emerald-500/10 border-emerald-400/20';
     } else if (score >= 55) {
-      label = 'Good';
+      statusText = t('good', language);
       toneClass = 'text-sky-300 bg-sky-500/10 border-sky-400/20';
     }
 
     return {
       score,
-      label,
+      statusText,
       toneClass,
       missingItems,
       completedItems: checks.filter((item) => item.completed).length,
       totalItems: checks.length,
     };
-  }, [user]);
+  }, [user, language]);
 
-  const { score, label, toneClass, missingItems, completedItems, totalItems } =
+  const { score, statusText, toneClass, missingItems, completedItems, totalItems } =
     profileAnalysis;
+
+  const formattedSectionsCompleted = t('sectionsCompleted', language)
+    .replace('{completed}', String(completedItems))
+    .replace('{total}', String(totalItems));
 
   return (
     <Card
       className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg backdrop-blur-sm"
-      aria-label="Profile strength"
+      aria-label={t('profileStrength', language)}
     >
       <div className="mb-5 flex items-start justify-between gap-4">
         <div>
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-300">
             <Sparkles size={14} />
-            Profile Health
+            {t('profileHealth', language)}
           </div>
 
-          <h2 className="text-xl font-semibold text-white">Profile Strength</h2>
+          <h2 className="text-xl font-semibold text-white">{t('profileStrength', language)}</h2>
           <p className="mt-1 text-sm leading-6 text-slate-400">
-            Complete your profile to improve recruiter readiness, AI suggestions,
-            and CV quality.
+            {t('profileStrengthDesc', language)}
           </p>
         </div>
 
         <div
           className={`inline-flex shrink-0 items-center rounded-full border px-3 py-1 text-xs font-semibold ${toneClass}`}
         >
-          {label}
+          {statusText}
         </div>
       </div>
 
       <div
         className="mb-4 flex items-center justify-between"
         role="status"
-        aria-label={`Profile strength is ${label} at ${score}%`}
+        aria-label={`Profile strength is ${statusText} at ${score}%`}
       >
         <div>
           <p className="text-sm font-medium text-slate-200">
-            Completion score
+            {t('completionScore', language)}
           </p>
           <p className="mt-1 text-xs text-slate-400">
-            {completedItems} of {totalItems} profile sections completed
+            {formattedSectionsCompleted}
           </p>
         </div>
 
@@ -139,7 +145,7 @@ const DashboardProfileStrength: React.FC = () => {
             <div className="mb-3 flex items-center gap-2">
               <CircleAlert size={16} className="text-amber-300" />
               <h3 className="text-sm font-semibold text-white">
-                Recommended next improvements
+                {t('recommendedNextImprovements', language)}
               </h3>
             </div>
 
@@ -149,14 +155,13 @@ const DashboardProfileStrength: React.FC = () => {
                   key={item.key}
                   className="rounded-full border border-white/10 bg-slate-900/70 px-3 py-1 text-xs text-slate-300"
                 >
-                  Add {item.label}
+                  {t(item.labelKey, language)}
                 </span>
               ))}
             </div>
 
             <p className="mt-3 text-sm leading-6 text-slate-400">
-              Completing the missing sections will make your profile more useful
-              for CV building, job matching, and AI-powered recommendations.
+              {t('completingMissingSections', language)}
             </p>
           </>
         ) : (
@@ -164,13 +169,12 @@ const DashboardProfileStrength: React.FC = () => {
             <div className="mb-3 flex items-center gap-2">
               <CheckCircle2 size={16} className="text-emerald-300" />
               <h3 className="text-sm font-semibold text-white">
-                Your profile looks strong
+                {t('profileLooksStrong', language)}
               </h3>
             </div>
 
             <p className="text-sm leading-6 text-slate-400">
-              Great job. Your profile has the core details needed for a more
-              complete career workflow and better personalized insights.
+              {t('profileLooksStrongDesc', language)}
             </p>
           </>
         )}
