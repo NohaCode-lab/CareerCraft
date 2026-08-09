@@ -1,41 +1,22 @@
 import { AppConfig } from '../app/config.js';
 import { AppError } from '../errors/app-error.js';
+import {
+  AIProvider,
+  AIRequestContract,
+  AIResponseContract,
+  AIMessage,
+} from './providers/AIProvider.js';
+import { MockAIProvider } from './providers/MockAIProvider.js';
 
-export interface AIMessage {
-  role: 'system' | 'user' | 'assistant';
-  content: string;
-}
-
-export interface AIRequestContract {
-  task: string;
-  modelAlias?: 'career-fast' | 'career-reasoning' | 'career-private';
-  messages: AIMessage[];
-  temperature?: number;
-  maxTokens?: number;
-  metadata?: Record<string, unknown>;
-}
-
-export interface AIResponseContract {
-  requestId: string;
-  model: string;
-  content: string;
-  usage: {
-    promptTokens: number;
-    completionTokens: number;
-    totalTokens: number;
-  };
-  finishReason: string;
-  providerMetadata?: {
-    providerUsed?: string;
-    fallbackOccurred?: boolean;
-  };
-}
+export { AIMessage, AIRequestContract, AIResponseContract };
 
 export class AIGatewayService {
   private config: AppConfig;
+  private primaryProvider: AIProvider;
 
-  constructor(config: AppConfig) {
+  constructor(config: AppConfig, provider?: AIProvider) {
     this.config = config;
+    this.primaryProvider = provider || new MockAIProvider();
   }
 
   public async executeChatCompletion(
@@ -48,7 +29,7 @@ export class AIGatewayService {
 
     // Fast path for AI Mock Mode (used in offline dev / CI test runs)
     if (this.config.AI_MOCK_MODE || this.config.NODE_ENV === 'test') {
-      return this.generateMockCompletion(modelAlias, request, clientRequestId);
+      return this.primaryProvider.generate(request, clientRequestId);
     }
 
     const payload = {
@@ -122,9 +103,9 @@ export class AIGatewayService {
         throw new AppError('AI Gateway request timed out', 504, 'GATEWAY_TIMEOUT');
       }
 
-      // If gateway is unreachable in dev mode, gracefully fall back to mock completion
+      // If gateway is unreachable in dev mode, gracefully fall back to mock provider completion
       if (this.config.NODE_ENV === 'development') {
-        return this.generateMockCompletion(modelAlias, request, clientRequestId);
+        return this.primaryProvider.generate(request, clientRequestId);
       }
 
       throw new AppError('Failed to communicate with AI Gateway', 502, 'BAD_GATEWAY');
@@ -155,30 +136,5 @@ export class AIGatewayService {
     }
 
     throw new AppError(`AI Gateway error: ${errorText}`, status, 'GATEWAY_ERROR');
-  }
-
-  private generateMockCompletion(
-    modelAlias: string,
-    request: AIRequestContract,
-    clientRequestId: string
-  ): AIResponseContract {
-    const userPrompt = request.messages.find((m) => m.role === 'user')?.content || '';
-    const mockContent = `[CareerCraft AI - ${modelAlias}] Normalized response for task "${request.task}". Prompt length: ${userPrompt.length} chars.`;
-
-    return {
-      requestId: clientRequestId,
-      model: modelAlias,
-      content: mockContent,
-      usage: {
-        promptTokens: Math.ceil(userPrompt.length / 4) + 20,
-        completionTokens: Math.ceil(mockContent.length / 4),
-        totalTokens: Math.ceil((userPrompt.length + mockContent.length) / 4) + 20,
-      },
-      finishReason: 'stop',
-      providerMetadata: {
-        providerUsed: modelAlias === 'career-private' ? 'Ollama (Mock)' : 'OpenRouter (Mock)',
-        fallbackOccurred: false,
-      },
-    };
   }
 }
