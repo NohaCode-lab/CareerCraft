@@ -8,7 +8,7 @@ describe('CareerCraft Internationalization & German Localization Suite', () => {
     expect(dePack.cvBuilder).toBe('Lebenslauf');
     expect(dePack.experience).toBe('Berufserfahrung');
     expect(dePack.education).toBe('Ausbildung & Studium');
-    expect(dePack.jobSearch).toBe('Jobsuche');
+    expect(dePack.jobSearch).toBe('Stellensuche');
     expect(dePack.applications).toBe('Bewerbungen');
     expect(dePack.settings).toBe('Einstellungen');
   });

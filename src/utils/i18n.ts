@@ -217,15 +217,15 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     stayCareerReadyDesc: 'Bewerbungen verfolgen, Lebenslauf optimieren und auf Vorstellungsgespräche vorbereiten.',
     searchDashboard: 'Dashboard durchsuchen...',
 
-    // Navigation & Page Descs
+    // Navigation & Page Descs (Formal Professional German: Stellensuche & Gespeicherte Stellen)
     dashboard: 'Dashboard',
     dashboardDesc: 'Willkommen zurück! Hier ist Ihr Karrierefortschritt und Ihre aktuellen Bewerbungen.',
     cvBuilder: 'Lebenslauf',
     cvBuilderDesc: 'Erstellen Sie einen ATS-optimierten Lebenslauf mit Live-Vorschau und Direkt-Export.',
-    jobSearch: 'Jobsuche',
-    jobSearchDesc: 'Entdecken Sie Top-Stellenangebote, die zu Ihren Fähigkeiten und Karrierezielen passen.',
-    savedJobs: 'Gespeicherte Jobs',
-    savedJobsDesc: 'Überprüfen und verwalten Sie Ihre gespeicherten Stellenangebote.',
+    jobSearch: 'Stellensuche',
+    jobSearchDesc: 'Entdecken Sie passende Stellenangebote für Ihre Fähigkeiten und Karriereziele.',
+    savedJobs: 'Gespeicherte Stellen',
+    savedJobsDesc: 'Verwalten und organisieren Sie Ihre gemerkten Stellenangebote.',
     applications: 'Bewerbungen',
     applicationsDesc: 'Verfolgen Sie den Status Ihrer Bewerbungen und Vorstellungsgespräche an einem Ort.',
     interviewPrep: 'Vorstellungsgespräch vorbereiten',
@@ -256,32 +256,32 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     downloadPdf: 'PDF herunterladen',
     search: 'Suchen',
     applyNow: 'Jetzt bewerben',
-    browseJobs: 'Jobs durchsuchen',
+    browseJobs: 'Stellenangebote durchsuchen',
     startPractice: 'Übung starten',
 
     // Job Filters & Job Search
-    jobFiltersTitle: 'Filter',
+    jobFiltersTitle: 'Stellen-Filter',
     jobFiltersDesc: 'Finden Sie passende Stellenangebote schneller.',
-    searchByTitleCompanyLocation: 'Nach Titel, Firma oder Ort suchen',
+    searchByTitleCompanyLocation: 'Nach Berufsbezeichnung, Unternehmen oder Ort suchen',
     country: 'Land',
     allCountries: 'Alle Länder',
     seniority: 'Erfahrungsstufe',
     allLevels: 'Alle Stufen',
     workMode: 'Arbeitsmodell',
-    allWorkModes: 'Alle Modelle',
+    allWorkModes: 'Alle Arbeitsmodelle',
     employmentType: 'Anstellungsart',
-    allTypes: 'Alle Arten',
-    savedOnly: 'Nur gespeicherte',
-    appliedOnly: 'Nur beworbene',
-    noJobsFoundTitle: 'Keine Jobs gefunden',
+    allTypes: 'Alle Anstellungsarten',
+    savedOnly: 'Nur gemerkte Stellen',
+    appliedOnly: 'Nur beworbene Stellen',
+    noJobsFoundTitle: 'Keine Stellenangebote gefunden',
     noJobsFoundDesc: 'Versuchen Sie, Ihre Filter oder Suchbegriffe anzupassen.',
 
     // Dashboard Overview & Stats
     overviewTitle: 'Übersicht',
     overviewDesc: 'Verfolgen Sie Ihre Jobsuche und Ihr Profilwachstum an einem Ort.',
-    availableJobsTitle: 'Verfügbare Jobs',
-    availableJobsDesc: 'Stellenangebote im aktuellen Feed',
-    savedJobsStatTitle: 'Gespeicherte Jobs',
+    availableJobsTitle: 'Verfügbare Stellen',
+    availableJobsDesc: 'Aktuelle Stellenangebote in Ihrem Feed',
+    savedJobsStatTitle: 'Gespeicherte Stellen',
     savedJobsStatDesc: 'Von Ihnen gemerkte Angebote',
     applicationsStatTitle: 'Bewerbungen',
     applicationsStatDesc: 'Eingereichte Bewerbungen',
@@ -293,7 +293,7 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     quickActionsDesc: 'Nutzen Sie direkt die am häufigsten benötigten Werkzeuge.',
     recentApplicationsTitle: 'Neueste Bewerbungen',
     recentApplicationsDesc: 'Verwalten Sie Ihre aktuellen Bewerbungsprozesse.',
-    noRecentApplications: 'Noch keine Bewerbungen erfasst. Bewerben Sie sich auf Jobs, um sie hier zu verfolgen.',
+    noRecentApplications: 'Noch keine Bewerbungen erfasst. Bewerben Sie sich auf Stellen, um sie hier zu verfolgen.',
 
     // Profile Strength Component
     profileHealth: 'Profil-Status',
@@ -305,7 +305,7 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     good: 'Gut',
     strong: 'Stark',
     recommendedNextImprovements: 'Empfohlene nächste Schritte',
-    completingMissingSections: 'Das Ausfüllen der fehlenden Abschnitte macht Ihr Profil nützlicher für Lebenslauf-Erstellung und Job-Matching.',
+    completingMissingSections: 'Das Ausfüllen der fehlenden Abschnitte macht Ihr Profil nützlicher für Lebenslauf-Erstellung und Stellen-Matching.',
     profileLooksStrong: 'Ihr Profil ist sehr stark',
     profileLooksStrongDesc: 'Hervorragende Arbeit. Ihr Profil enthält alle wesentlichen Informationen für optimale Ergebnisse.',
     addName: 'Vollständigen Namen hinzufügen',
@@ -326,10 +326,10 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     prepTip3Desc: 'Frischen Sie React, JavaScript und Kernkonzepte vor dem Vorstellungsgespräch auf.',
 
     // Saved Jobs Preview Component
-    savedJobsPreviewTitle: 'Gespeicherte Jobs',
+    savedJobsPreviewTitle: 'Gespeicherte Stellen',
     savedJobsPreviewDesc: 'Ihre gemerkten Stellenangebote auf einen Blick.',
-    noSavedJobsYet: 'Noch keine gemerkten Jobs',
-    noSavedJobsDesc: 'Merken Sie sich Jobs in der Jobsuche, um sie hier schnell wiederzufinden.',
+    noSavedJobsYet: 'Noch keine gemerkten Stellen',
+    noSavedJobsDesc: 'Merken Sie sich interessante Stellen in der Stellensuche, um sie hier schnell wiederzufinden.',
 
     // Settings Page
     appearance: 'Erscheinungsbild',
@@ -564,6 +564,7 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     mockInterview: 'مقابلة تجريبية تفاعلية',
     interviewReadiness: 'مؤشر الجاهزية للمقابلة',
 
+    // Interview Categories & Drawer
     contextHeader: 'سياق السيرة الذاتية ووصف الوظيفة المستهدفة',
     resumeSummaryLabel: 'ملخص السيرة الذاتية للفيصل',
     targetJobDescLabel: 'وصف الوظيفة المستهدفة',
