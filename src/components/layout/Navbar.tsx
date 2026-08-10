@@ -17,6 +17,21 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'Dashboard', onMenuClick }) => 
   const t = translations[language] || translations.en;
   const { showToast } = useUI();
 
+  const routeTitleMap: Record<string, string> = {
+    'Dashboard': 'dashboard',
+    'CV Builder': 'cvBuilder',
+    'Job Search': 'jobSearch',
+    'Saved Jobs': 'savedJobs',
+    'Applications': 'applications',
+    'Interview Prep': 'interviewPrep',
+    'AI Assistant': 'aiAssistant',
+    'Settings': 'settings',
+    'Page Not Found': 'pageNotFound',
+  };
+
+  const tKey = routeTitleMap[title];
+  const translatedTitle = tKey && t[tKey] ? t[tKey] : title;
+
   const [searchQuery, setSearchQuery] = useState('');
   const [showNotifications, setShowNotifications] = useState(false);
 
@@ -49,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'Dashboard', onMenuClick }) => 
             CareerCraft
           </p>
           <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-white truncate">
-            {title}
+            {translatedTitle}
           </h2>
         </div>
       </div>
@@ -75,7 +90,7 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'Dashboard', onMenuClick }) => 
             type="button"
             onClick={handleNotificationClick}
             className="relative inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-slate-100 text-slate-700 transition hover:bg-slate-200 hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
-            aria-label="Notifications"
+            aria-label={t.notifications || 'Notifications'}
           >
             <Bell className="h-5 w-5" />
             <span className="absolute right-3 top-3 h-2.5 w-2.5 rounded-full bg-indigo-500 ring-2 ring-white dark:ring-slate-950" />
@@ -84,7 +99,7 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'Dashboard', onMenuClick }) => 
           {showNotifications && (
             <div className="absolute right-0 top-14 z-50 w-72 sm:w-80 rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900 ltr:right-0 rtl:left-0 rtl:right-auto">
               <div className="mb-3 flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-2">
-                <span className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</span>
+                <span className="text-sm font-semibold text-slate-900 dark:text-white">{t.notifications || 'Notifications'}</span>
                 <button
                   type="button"
                   onClick={() => setShowNotifications(false)}
@@ -98,16 +113,16 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'Dashboard', onMenuClick }) => 
                 <div className="flex items-start gap-2 rounded-xl bg-slate-100 dark:bg-slate-800/60 p-2.5">
                   <Check size={14} className="mt-0.5 shrink-0 text-emerald-500 dark:text-emerald-400" />
                   <div>
-                    <p className="font-medium text-slate-900 dark:text-white">System Status Normal</p>
-                    <p className="mt-0.5 text-slate-500 dark:text-slate-400">All microservices and LiteLLM gateway active.</p>
+                    <p className="font-medium text-slate-900 dark:text-white">{t.systemStatusNormal || 'System Status Normal'}</p>
+                    <p className="mt-0.5 text-slate-500 dark:text-slate-400">{t.systemStatusDesc || 'All microservices and AI gateway active.'}</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-2 rounded-xl bg-slate-100 dark:bg-slate-800/60 p-2.5">
                   <Bell size={14} className="mt-0.5 shrink-0 text-indigo-500 dark:text-indigo-400" />
                   <div>
-                    <p className="font-medium text-slate-900 dark:text-white">Interview Prep Ready</p>
-                    <p className="mt-0.5 text-slate-500 dark:text-slate-400">Practice STAR stories and behavioral questions.</p>
+                    <p className="font-medium text-slate-900 dark:text-white">{t.interviewPrepReady || 'Interview Prep Ready'}</p>
+                    <p className="mt-0.5 text-slate-500 dark:text-slate-400">{t.practiceStarDesc || 'Practice STAR stories and behavioral questions.'}</p>
                   </div>
                 </div>
               </div>

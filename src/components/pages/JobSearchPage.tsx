@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import PageHeader from '../layout/PageHeader';
 import JobList from '../jobs/JobList';
 import JobFilters, { JobFilterState } from '../jobs/JobFilters';
@@ -19,6 +20,7 @@ const initialFilters: JobFilterState = {
 
 const JobSearchPage: React.FC = () => {
   const { language } = useLanguage();
+  const [searchParams] = useSearchParams();
   const {
     jobs = [],
     savedJobs = [],
@@ -28,7 +30,17 @@ const JobSearchPage: React.FC = () => {
     selectJob,
   } = useJobs();
 
-  const [filters, setFilters] = useState<JobFilterState>(initialFilters);
+  const [filters, setFilters] = useState<JobFilterState>(() => {
+    const initialQuery = searchParams.get('q') || '';
+    return { ...initialFilters, search: initialQuery };
+  });
+
+  useEffect(() => {
+    const urlQuery = searchParams.get('q');
+    if (urlQuery !== null) {
+      setFilters((prev) => ({ ...prev, search: urlQuery }));
+    }
+  }, [searchParams]);
 
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
@@ -99,8 +111,8 @@ const JobSearchPage: React.FC = () => {
 
         <section className="space-y-4 xl:col-span-3" aria-label="Saved jobs">
           <div>
-            <h2 className="text-lg font-semibold text-white">{t('savedJobs', language)}</h2>
-            <p className="mt-1 text-sm text-slate-400">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{t('savedJobs', language)}</h2>
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
               {t('savedJobsPreviewDesc', language)}
             </p>
           </div>
@@ -117,7 +129,7 @@ const JobSearchPage: React.FC = () => {
                 />
               ))
             ) : (
-              <div className="rounded-2xl border border-dashed border-white/10 bg-slate-900/40 p-4 text-sm text-slate-400">
+              <div className="rounded-2xl border border-dashed border-slate-300 bg-white/60 p-4 text-sm text-slate-500 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-slate-900/40 dark:text-slate-400">
                 {t('noSavedJobsYet', language)}
               </div>
             )}

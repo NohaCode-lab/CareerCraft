@@ -36,6 +36,11 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     settingsDesc: 'Customize your CareerCraft experience, manage preferences, and personalize your workspace.',
 
     // Error Boundary & 404
+    notifications: 'Notifications',
+    systemStatusNormal: 'System Status Normal',
+    systemStatusDesc: 'All microservices and AI gateway active.',
+    interviewPrepReady: 'Interview Prep Ready',
+    practiceStarDesc: 'Practice STAR stories and behavioral questions.',
     somethingWentWrong: 'Something went wrong',
     somethingWentWrongDesc: 'An unexpected error occurred while rendering this section. You can try again or return to the dashboard.',
     reloadSection: 'Reload Section',
@@ -271,6 +276,11 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     settingsDesc: 'Passen Sie Ihr CareerCraft-Erlebnis an, verwalten Sie Einstellungen und personalisieren Sie Ihren Arbeitsbereich.',
 
     // Error Boundary & 404
+    notifications: 'Benachrichtigungen',
+    systemStatusNormal: 'Systemstatus normal',
+    systemStatusDesc: 'Alle Mikrodienste und das KI-Gateway sind aktiv.',
+    interviewPrepReady: 'Interview-Vorbereitung bereit',
+    practiceStarDesc: 'Üben Sie STAR-Erfolgsbeispiele und Verhaltensfragen.',
     somethingWentWrong: 'Etwas ist schiefgelaufen',
     somethingWentWrongDesc: 'Ein unerwarteter Fehler ist beim Laden aufgetreten. Sie können es erneut versuchen oder zum Dashboard zurückkehren.',
     reloadSection: 'Seite neu laden',
@@ -506,6 +516,11 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     settingsDesc: 'خصص تجربتك في كاريير كرافت، وادر تفضيلاتك ومساحة عملك.',
 
     // Error Boundary & 404
+    notifications: 'الإشعارات',
+    systemStatusNormal: 'حالة النظام طبيعية',
+    systemStatusDesc: 'جميع الخدمات المصغرة وبوابة الذكاء الاصطناعي نشطة.',
+    interviewPrepReady: 'التحضير للمقابلة جاهز',
+    practiceStarDesc: 'تدرب على قصص STAR والأسئلة السلوكية.',
     somethingWentWrong: 'حدث خطأ غير متوقع',
     somethingWentWrongDesc: 'حدث خطأ أثناء تحميل هذا القسم. يمكنك المحاولة مجدداً أو العودة إلى لوحة التحكم.',
     reloadSection: 'إعادة تحديث الصفحة',
