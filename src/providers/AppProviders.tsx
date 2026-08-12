@@ -1,13 +1,15 @@
 import React, { createElement } from 'react';
 
-import AuthProvider from '../context/AuthContext';
-import ApplicationsProvider from '../context/ApplicationsContext';
-import JobsProvider from '../context/JobsContext';
-import LanguageProvider from '../context/LanguageContext';
-import UIProvider from '../context/UIContext';
+import AuthProvider from '../context/AuthContext.tsx';
+import ApplicationsProvider from '../context/ApplicationsContext.tsx';
+import JobsProvider from '../context/JobsContext.tsx';
+import LanguageProvider from '../context/LanguageContext.tsx';
+import UIProvider from '../context/UIContext.tsx';
+import ThemeProvider from '../context/ThemeContext.tsx';
 
 const providers: React.ComponentType<{ children: React.ReactNode }>[] = [
   AuthProvider,
+  ThemeProvider,
   LanguageProvider,
   UIProvider,
   JobsProvider,

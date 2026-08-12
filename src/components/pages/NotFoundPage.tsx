@@ -2,11 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AlertTriangle, ArrowLeft, ArrowRight } from 'lucide-react';
 import useLanguage from '../../hooks/useLanguage';
-import { translations } from '../../config/translations';
+import { t } from '../../utils/i18n';
 
 const NotFoundPage: React.FC = () => {
   const { language, isRTL } = useLanguage();
-  const t = translations[language] || translations.en;
   const ArrowIcon = isRTL ? ArrowRight : ArrowLeft;
 
   return (
@@ -23,12 +22,12 @@ const NotFoundPage: React.FC = () => {
 
       {/* Title */}
       <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
-        {t.pageNotFound || 'Page Not Found'}
+        {t('pageNotFound', language)}
       </h1>
 
       {/* Description */}
       <p className="mt-3 max-w-md text-sm leading-6 text-slate-600 dark:text-slate-400 sm:text-base">
-        {t.pageNotFoundDesc || 'The page you are looking for does not exist, may have been moved, or the URL is incorrect.'}
+        {t('pageNotFoundDesc', language)}
       </p>
 
       {/* Action */}
@@ -40,7 +39,7 @@ const NotFoundPage: React.FC = () => {
           size={16}
           className={`transition-transform duration-300 ${isRTL ? 'group-hover:translate-x-1' : 'group-hover:-translate-x-1'}`}
         />
-        {t.backToDashboard || 'Back to Dashboard'}
+        {t('backToDashboard', language)}
       </Link>
     </div>
   );

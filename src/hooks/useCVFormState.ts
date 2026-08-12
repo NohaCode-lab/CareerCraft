@@ -8,14 +8,16 @@ import {
   defaultCV,
   getSafeArray,
 } from '../components/cv/cvFormModel';
+import { STORAGE_KEYS } from '../utils/constants';
+import { CVData } from '../types';
 
-const CV_STORAGE_KEY = 'cvData';
+const CV_STORAGE_KEY = STORAGE_KEYS.CV_DATA;
 
 const useCVFormState = () => {
-  const [cvData, setCvData] = useLocalStorage(CV_STORAGE_KEY, defaultCV);
+  const [cvData, setCvData] = useLocalStorage<CVData>(CV_STORAGE_KEY, defaultCV as CVData);
 
   const safeCVData = useMemo(() => {
-    const raw = cvData && typeof cvData === 'object' ? cvData : {};
+    const raw = (cvData && typeof cvData === 'object' ? cvData : {}) as Record<string, unknown>;
     return {
       ...defaultCV,
       ...raw,
@@ -30,7 +32,7 @@ const useCVFormState = () => {
       education: getSafeArray(raw.education),
       languages: getSafeArray(raw.languages),
       projects: getSafeArray(raw.projects),
-    };
+    } as CVData;
   }, [cvData]);
 
   const fullNameStr = (safeCVData.fullName || '').trim();
@@ -42,21 +44,20 @@ const useCVFormState = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
 
-    setCvData((previousData: any) => ({
-      ...defaultCV,
-      ...(previousData || {}),
+    setCvData((previousData: CVData) => ({
+      ...(previousData || defaultCV),
       [name]: value,
     }));
   };
 
-  const handleListChange = (section: string, index: number, field: string, value: string) => {
-    setCvData((previousData: any) => {
+  const handleListChange = (section: keyof CVData, index: number, field: string, value: string) => {
+    setCvData((previousData: CVData) => {
       const currentData = {
-        ...defaultCV,
-        ...(previousData || {}),
+        ...(previousData || defaultCV),
       };
 
-      const updatedItems = [...getSafeArray(currentData[section])];
+      const rawItems = currentData[section];
+      const updatedItems = [...getSafeArray(rawItems)] as Record<string, unknown>[];
 
       updatedItems[index] = {
         ...(updatedItems[index] || {}),
@@ -66,12 +67,12 @@ const useCVFormState = () => {
       return {
         ...currentData,
         [section]: updatedItems,
-      };
+      } as CVData;
     });
   };
 
   const addItem = (section: string) => {
-    const factories: Record<string, () => any> = {
+    const factories: Record<string, () => unknown> = {
       experience: createExperienceItem,
       education: createEducationItem,
       languages: createLanguageItem,
@@ -84,32 +85,35 @@ const useCVFormState = () => {
       return;
     }
 
-    setCvData((previousData: any) => {
+    setCvData((previousData: CVData) => {
       const currentData = {
-        ...defaultCV,
-        ...(previousData || {}),
+        ...(previousData || defaultCV),
       };
+
+      const key = section as keyof CVData;
+      const rawItems = currentData[key];
 
       return {
         ...currentData,
-        [section]: [...getSafeArray(currentData[section]), createItem()],
-      };
+        [section]: [...getSafeArray(rawItems), createItem()],
+      } as CVData;
     });
   };
 
-  const removeItem = (section: string, index: number) => {
-    setCvData((previousData: any) => {
+  const removeItem = (section: keyof CVData, index: number) => {
+    setCvData((previousData: CVData) => {
       const currentData = {
-        ...defaultCV,
-        ...(previousData || {}),
+        ...(previousData || defaultCV),
       };
+
+      const rawItems = currentData[section];
 
       return {
         ...currentData,
-        [section]: getSafeArray(currentData[section]).filter(
+        [section]: getSafeArray(rawItems).filter(
           (_, itemIndex) => itemIndex !== index
         ),
-      };
+      } as CVData;
     });
   };
 

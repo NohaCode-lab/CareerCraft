@@ -4,10 +4,10 @@ import { Job } from "../../hooks/useJobs";
 import useLanguage from "../../hooks/useLanguage";
 import { t } from "../../utils/i18n";
 
-const formatSalary = (salaryRange: any) => {
-  if (!salaryRange) return "";
+const formatSalary = (salaryRange: unknown) => {
+  if (!salaryRange || typeof salaryRange !== 'object') return typeof salaryRange === 'string' ? salaryRange : '';
 
-  const { min, max, currency } = salaryRange;
+  const { min, max, currency = '$' } = salaryRange as { min?: number; max?: number; currency?: string };
 
   if (min && max) return `${min.toLocaleString()} - ${max.toLocaleString()} ${currency}`;
   if (min) return `From ${min.toLocaleString()} ${currency}`;

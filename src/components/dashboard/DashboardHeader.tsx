@@ -49,24 +49,24 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ userName = 'Noha' }) 
 
   return (
     <section
-      className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900 p-6 shadow-xl md:p-8"
+      className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-xl md:p-8 dark:border-white/10 dark:bg-slate-900"
       aria-label="Dashboard overview"
     >
-      <div className="absolute inset-0 bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 opacity-90" />
+      <div className="absolute inset-0 bg-linear-to-br from-indigo-500/5 via-transparent to-cyan-500/5 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 opacity-90" />
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.18),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(16,185,129,0.12),transparent_30%)]" />
 
       <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div className="max-w-2xl">
-          <p className="mb-2 text-sm font-medium text-slate-300">
+          <p className="mb-2 text-sm font-medium text-slate-600 dark:text-slate-300">
             {greeting}, {userName}
           </p>
 
-          <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl xl:text-4xl">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white md:text-3xl xl:text-4xl">
             {currentContent.welcome}
           </h1>
 
-          <p className="mt-3 text-sm leading-6 text-slate-400 md:text-base">
+          <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400 md:text-base">
             {currentContent.description}
           </p>
         </div>

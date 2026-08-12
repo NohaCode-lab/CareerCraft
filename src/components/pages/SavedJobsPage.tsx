@@ -1,6 +1,7 @@
 import React from 'react';
 import PageHeader from '../layout/PageHeader';
 import SavedJobCard from '../jobs/SavedJobCard';
+import EmptyState from '../ui/EmptyState';
 import useJobs from '../../hooks/useJobs';
 import useLanguage from '../../hooks/useLanguage';
 import { t } from '../../utils/i18n';
@@ -29,9 +30,10 @@ const SavedJobsPage: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className="rounded-3xl border border-dashed border-white/10 bg-slate-900/40 p-12 text-center text-slate-400">
-          {t('noSavedJobsDesc', language)}
-        </div>
+        <EmptyState
+          title={t('noSavedJobsYet', language)}
+          description={t('noSavedJobsDesc', language)}
+        />
       )}
     </div>
   );

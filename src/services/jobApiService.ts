@@ -1,4 +1,5 @@
-import mockJobs, { Job } from '../data/jobs/mockJobs';
+import { mockJobs } from '../data/jobs/mockJobs';
+import { Job } from '../types';
 
 export interface JobFilters {
   query?: string;

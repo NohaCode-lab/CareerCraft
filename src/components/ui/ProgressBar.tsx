@@ -42,8 +42,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     <div className={['w-full', className].join(' ')}>
       {showLabel && (
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-sm font-medium text-slate-300">{label}</span>
-          <span className="text-sm font-semibold text-white">
+          <span className="text-sm font-medium text-theme-secondary">{label}</span>
+          <span className="text-sm font-semibold text-theme-primary">
             {safeValue}%
           </span>
         </div>
@@ -51,7 +51,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
       <div
         className={[
-          'w-full overflow-hidden rounded-full bg-slate-800',
+          'w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800',
           sizeClass,
         ].join(' ')}
         role="progressbar"

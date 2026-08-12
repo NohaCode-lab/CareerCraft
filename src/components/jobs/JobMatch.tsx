@@ -90,7 +90,7 @@ const JobMatch: React.FC<JobMatchProps> = ({ filters = defaultFilters, onChange,
               className={selectClassName}
             >
               <option value="">All countries</option>
-              {jobFilters.countries.map((country: any) => (
+              {jobFilters.countries.map((country) => (
                 <option key={country.code} value={country.code}>
                   {country.label}
                 </option>
@@ -110,7 +110,7 @@ const JobMatch: React.FC<JobMatchProps> = ({ filters = defaultFilters, onChange,
               className={selectClassName}
             >
               <option value="">All levels</option>
-              {jobFilters.seniorityLevels.map((level: any) => (
+              {jobFilters.seniorityLevels.map((level) => (
                 <option key={level.id} value={level.label}>
                   {level.label}
                 </option>
@@ -130,7 +130,7 @@ const JobMatch: React.FC<JobMatchProps> = ({ filters = defaultFilters, onChange,
               className={selectClassName}
             >
               <option value="">All work modes</option>
-              {jobFilters.workModes.map((mode: any) => (
+              {jobFilters.workModes.map((mode) => (
                 <option key={mode.id} value={mode.id}>
                   {mode.label}
                 </option>
@@ -150,7 +150,7 @@ const JobMatch: React.FC<JobMatchProps> = ({ filters = defaultFilters, onChange,
               className={selectClassName}
             >
               <option value="">All types</option>
-              {jobTypes.map((type: any) => (
+              {jobTypes.map((type) => (
                 <option key={type.id} value={type.label}>
                   {type.label}
                 </option>

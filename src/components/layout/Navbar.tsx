@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, Menu, Search, User, Check, X } from 'lucide-react';
+import { Bell, Menu, Search, User, Check, X, Sun, Moon, Globe } from 'lucide-react';
 import useLanguage from '../../hooks/useLanguage';
-import { translations } from '../../config/translations';
+import { getTranslationPack } from '../../config/translations';
 import { ROUTES } from '../../config/routes';
 import useUI from '../../hooks/useUI';
+import useTheme from '../../hooks/useTheme';
 
 interface NavbarProps {
   title?: string;
@@ -13,9 +14,10 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ title = 'Dashboard', onMenuClick }) => {
   const navigate = useNavigate();
-  const { language } = useLanguage();
-  const t = translations[language] || translations.en;
+  const { language, setLanguage } = useLanguage();
+  const t = getTranslationPack(language);
   const { showToast } = useUI();
+  const { theme, toggleTheme } = useTheme();
 
   const routeTitleMap: Record<string, string> = {
     'Dashboard': 'dashboard',
@@ -34,6 +36,15 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'Dashboard', onMenuClick }) => 
 
   const [searchQuery, setSearchQuery] = useState('');
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showLangMenu, setShowLangMenu] = useState(false);
+
+  const languages = [
+    { code: 'en', label: '🇬🇧 EN', name: 'English' },
+    { code: 'de', label: '🇩🇪 DE', name: 'Deutsch' },
+    { code: 'ar', label: '🇸🇦 AR', name: 'العربية' },
+  ];
+
+  const currentLangLabel = languages.find((l) => l.code === language)?.label || 'EN';
 
   const handleSearchSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -45,6 +56,12 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'Dashboard', onMenuClick }) => 
 
   const handleNotificationClick = () => {
     setShowNotifications((prev) => !prev);
+    setShowLangMenu(false);
+  };
+
+  const handleLangMenuClick = () => {
+    setShowLangMenu((prev) => !prev);
+    setShowNotifications(false);
   };
 
   return (
@@ -85,6 +102,59 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'Dashboard', onMenuClick }) => 
           </label>
         </form>
 
+        {/* Language Selector Dropdown */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={handleLangMenuClick}
+            className="inline-flex h-11 items-center gap-1.5 rounded-2xl border border-slate-200 bg-slate-100 px-3 text-xs font-semibold text-slate-700 transition hover:bg-slate-200 hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
+            aria-label="Select application language"
+            title="Language"
+          >
+            <Globe className="h-4 w-4 text-indigo-500 dark:text-indigo-400" />
+            <span>{currentLangLabel}</span>
+          </button>
+
+          {showLangMenu && (
+            <div className="absolute right-0 top-14 z-50 w-40 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900 ltr:right-0 rtl:left-0 rtl:right-auto">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  type="button"
+                  onClick={() => {
+                    setLanguage(lang.code);
+                    setShowLangMenu(false);
+                  }}
+                  className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold transition ${
+                    language === lang.code
+                      ? 'bg-indigo-600 text-white'
+                      : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10'
+                  }`}
+                >
+                  <span>{lang.label}</span>
+                  <span className="text-[10px] opacity-75">{lang.name}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Theme Toggle Button */}
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-slate-100 text-slate-700 transition hover:bg-slate-200 hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
+          aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+        >
+          {theme === 'dark' ? (
+            <Sun className="h-5 w-5 text-amber-400" />
+          ) : (
+            <Moon className="h-5 w-5 text-indigo-600" />
+          )}
+        </button>
+
+        {/* Notifications Button */}
         <div className="relative">
           <button
             type="button"

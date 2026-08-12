@@ -9,16 +9,18 @@ import { ROUTES } from '../../config/routes';
 import useLanguage from '../../hooks/useLanguage';
 import { t } from '../../utils/i18n';
 
-const getApplicationTimestamp = (application: any): number => {
-  return new Date(application.appliedAt || application.date || 0).getTime();
+import { Application } from '../../types';
+
+const getApplicationTimestamp = (application: Application): number => {
+  return new Date(application.appliedAt || application.date || application.createdAt || 0).getTime();
 };
 
-const formatApplicationDate = (value: any, lang: string): string => {
+const formatApplicationDate = (value: unknown, lang: string): string => {
   if (!value) {
     return '';
   }
 
-  const parsedDate = new Date(value);
+  const parsedDate = new Date(value as string | number | Date);
 
   if (Number.isNaN(parsedDate.getTime())) {
     return '';
@@ -51,11 +53,11 @@ const DashboardRecentApplications: React.FC = () => {
   if (!recentApplications.length) {
     return (
       <Card
-        className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg"
+        className="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg dark:border-white/10 dark:bg-slate-900/80"
         aria-label={t('recentApplicationsTitle', language)}
       >
         <div className="mb-4">
-          <h2 className="text-xl font-semibold text-white">
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
             {t('recentApplicationsTitle', language)}
           </h2>
         </div>
@@ -75,15 +77,15 @@ const DashboardRecentApplications: React.FC = () => {
 
   return (
     <Card
-      className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg"
+      className="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg dark:border-white/10 dark:bg-slate-900/80"
       aria-label={t('recentApplicationsTitle', language)}
     >
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-semibold text-white">
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
             {t('recentApplicationsTitle', language)}
           </h2>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
             {t('recentApplicationsDesc', language)}
           </p>
         </div>
@@ -98,7 +100,7 @@ const DashboardRecentApplications: React.FC = () => {
       </div>
 
       <div className="space-y-4">
-        {recentApplications.map((application: any, index: number) => {
+        {recentApplications.map((application: Application, index: number) => {
           const title = application.role || application.title || 'Role';
           const company = application.company || 'Company';
           const status = application.status || 'Applied';
@@ -110,16 +112,16 @@ const DashboardRecentApplications: React.FC = () => {
           return (
             <div
               key={application.id || `${title}-${company}-${index}`}
-              className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-slate-800/60 p-4 md:flex-row md:items-center md:justify-between"
+              className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 md:flex-row md:items-center md:justify-between dark:border-white/10 dark:bg-slate-800/60"
             >
               <div>
-                <h3 className="text-base font-semibold text-white">{title}</h3>
-                <p className="mt-1 text-sm text-slate-400">{company}</p>
+                <h3 className="text-base font-semibold text-slate-900 dark:text-white">{title}</h3>
+                <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{company}</p>
               </div>
 
               <div className="flex items-center gap-3">
                 <Badge>{t(status.toLowerCase(), language) || status}</Badge>
-                {appliedDate && <span className="text-xs text-slate-500">{appliedDate}</span>}
+                {appliedDate && <span className="text-xs text-slate-500 dark:text-slate-400">{appliedDate}</span>}
               </div>
             </div>
           );

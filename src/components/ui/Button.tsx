@@ -31,15 +31,15 @@ const Button: React.FC<ButtonProps> = ({
 
   const variantClasses: Record<ButtonVariant, string> = {
     primary:
-      'bg-indigo-600 text-white shadow-lg shadow-indigo-950/20 hover:bg-indigo-700',
+      'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-700',
     secondary:
-      'border border-white/10 bg-slate-800/70 text-slate-200 hover:bg-slate-800',
+      'border border-theme bg-surface text-theme-primary hover:bg-slate-100 dark:hover:bg-slate-800',
     outline:
-      'border border-white/10 bg-transparent text-slate-200 hover:bg-white/5',
+      'border border-theme bg-transparent text-theme-primary hover:bg-slate-100 dark:hover:bg-white/5',
     ghost:
-      'bg-transparent text-slate-300 hover:bg-white/5 hover:text-white',
+      'bg-transparent text-theme-secondary hover:bg-slate-100 hover:text-theme-primary dark:hover:bg-white/5',
     danger:
-      'bg-red-600 text-white shadow-lg shadow-red-950/20 hover:bg-red-700',
+      'bg-red-600 text-white shadow-lg shadow-red-600/20 hover:bg-red-700',
   };
 
   const sizeClasses: Record<ButtonSize, string> = {

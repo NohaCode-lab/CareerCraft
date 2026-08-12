@@ -1,5 +1,7 @@
 import React, { memo } from "react";
 import CVFormEmptySection from "./CVFormEmptySection";
+import useLanguage from "../../hooks/useLanguage";
+import { getTranslationPack } from "../../config/translations";
 import {
   addButtonClasses,
   inputClasses,
@@ -13,8 +15,10 @@ export interface ExperienceItem {
   role?: string;
   company?: string;
   duration?: string;
+  startDate?: string;
+  endDate?: string;
+  location?: string;
   description?: string;
-  [key: string]: any;
 }
 
 interface CVFormExperienceSectionProps {
@@ -30,12 +34,15 @@ const CVFormExperienceSection: React.FC<CVFormExperienceSectionProps> = ({
   onRemove,
   onFieldChange,
 }) => {
+  const { language } = useLanguage();
+  const t = getTranslationPack(language);
+
   return (
     <div className="mt-8">
       <div className="mb-4 flex items-center justify-between gap-4">
-        <h3 className="text-lg font-semibold text-slate-900">Experience</h3>
+        <h3 className="text-lg font-semibold text-slate-900">{t.experience}</h3>
         <button type="button" onClick={onAdd} className={addButtonClasses}>
-          Add Experience
+          {t.addExperience}
         </button>
       </div>
 
@@ -45,23 +52,23 @@ const CVFormExperienceSection: React.FC<CVFormExperienceSectionProps> = ({
             <div key={item.id || index} className={sectionCardClasses}>
               <div className="mb-4 flex items-center justify-between gap-4">
                 <p className="text-sm font-semibold text-slate-800">
-                  Experience #{index + 1}
+                  {t.experience} #{index + 1}
                 </p>
                 <button
                   type="button"
                   onClick={() => onRemove(index)}
                   className={removeButtonClasses}
                 >
-                  Remove
+                  {t.delete || 'Remove'}
                 </button>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <label className={labelClasses}>Role</label>
+                  <label className={labelClasses}>{t.roleLabel}</label>
                   <input
                     type="text"
-                    placeholder="Front-End Developer"
+                    placeholder={t.jobTitlePlaceholder}
                     value={item.role || ""}
                     onChange={(event) =>
                       onFieldChange(index, "role", event.target.value)
@@ -71,10 +78,10 @@ const CVFormExperienceSection: React.FC<CVFormExperienceSectionProps> = ({
                 </div>
 
                 <div>
-                  <label className={labelClasses}>Company</label>
+                  <label className={labelClasses}>{t.companyLabel}</label>
                   <input
                     type="text"
-                    placeholder="Company Name"
+                    placeholder={t.companyNameLabel}
                     value={item.company || ""}
                     onChange={(event) =>
                       onFieldChange(index, "company", event.target.value)
@@ -84,7 +91,7 @@ const CVFormExperienceSection: React.FC<CVFormExperienceSectionProps> = ({
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className={labelClasses}>Duration</label>
+                  <label className={labelClasses}>{t.durationLabel}</label>
                   <input
                     type="text"
                     placeholder="Jan 2024 - Present"
@@ -97,10 +104,10 @@ const CVFormExperienceSection: React.FC<CVFormExperienceSectionProps> = ({
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className={labelClasses}>Description</label>
+                  <label className={labelClasses}>{t.descriptionLabel}</label>
                   <textarea
                     rows={4}
-                    placeholder="Describe your responsibilities and achievements."
+                    placeholder={t.experienceDescriptionPlaceholder}
                     value={item.description || ""}
                     onChange={(event) =>
                       onFieldChange(index, "description", event.target.value)
@@ -114,8 +121,8 @@ const CVFormExperienceSection: React.FC<CVFormExperienceSectionProps> = ({
         </div>
       ) : (
         <CVFormEmptySection
-          title="No experience added yet."
-          description='Click "Add Experience" to start building your career story.'
+          title={t.noExperienceTitle}
+          description={t.noExperienceDesc}
         />
       )}
     </div>

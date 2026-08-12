@@ -1,37 +1,15 @@
-import React, { createContext, useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import * as storageService from "../services/storageService";
+import { STORAGE_KEYS } from "../utils/constants";
+import { Application, ApplicationsContext, ApplicationsContextType } from "./ApplicationsContext";
+import { Job } from "../types";
 
-export interface Application {
-  id: string | number;
-  jobId?: string | number;
-  title: string;
-  company: string;
-  status: string;
-  createdAt?: string;
-  appliedAt?: string;
-  date?: string;
-  role?: string;
-  location?: string;
-  [key: string]: any;
-}
+export type { Application, ApplicationsContextType };
 
-export interface ApplicationsContextType {
-  applications: Application[];
-  groupedApplications: Record<string, Application[]>;
-  selectedApplication: Application | null;
-  addApplication: (job: any) => void;
-  updateApplication: (id: string | number, updates: Partial<Application>) => void;
-  removeApplication: (id: string | number) => void;
-  selectApplication: (app: Application | null) => void;
-  clearSelectedApplication: () => void;
-}
-
-export const ApplicationsContext = createContext<ApplicationsContextType | undefined>(undefined);
-
-const STORAGE_KEY = "career_applications";
+const STORAGE_KEY = STORAGE_KEYS.APPLICATIONS;
 
 const getInitialApplications = (): Application[] => {
-  return storageService.getItem<Application[]>(STORAGE_KEY, []);
+  return storageService.getItem<Application[]>(STORAGE_KEY, []) ?? [];
 };
 
 interface ApplicationsProviderProps {
@@ -46,7 +24,7 @@ export function ApplicationsProvider({ children }: ApplicationsProviderProps) {
     storageService.setItem(STORAGE_KEY, applications);
   }, [applications]);
 
-  const addApplication = (job: any) => {
+  const addApplication = (job: Job) => {
     if (!job) return;
 
     setApplications((prev) => {

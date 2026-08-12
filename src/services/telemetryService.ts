@@ -1,4 +1,3 @@
-import { apiClient } from './apiClient';
 
 export interface TelemetryHealthReport {
   status: string;

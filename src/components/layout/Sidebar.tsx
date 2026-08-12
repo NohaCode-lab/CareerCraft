@@ -3,13 +3,13 @@ import { NavLink } from 'react-router-dom';
 import logo from '../../assets/favicon.svg';
 import { SIDEBAR_LINKS } from '../../config/sidebarLinks';
 import useLanguage from '../../hooks/useLanguage';
-import { translations } from '../../config/translations';
+import { getTranslationPack } from '../../config/translations';
 
 const Sidebar: React.FC = () => {
   const { language, isRTL } = useLanguage();
-  const t = translations[language] || translations.en;
+  const t = getTranslationPack(language);
 
-  const translationKeyMap: Record<string, keyof typeof t> = {
+  const translationKeyMap: Record<string, string> = {
     dashboard: 'dashboard',
     'cv-builder': 'cvBuilder',
     'job-search': 'jobSearch',

@@ -30,12 +30,12 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       ].join(' ')}
     >
       <div className={['flex flex-col gap-1', alignment].join(' ')}>
-        <h2 className="text-xl font-semibold text-white">
+        <h2 className="text-xl font-semibold text-theme-primary">
           {title}
         </h2>
 
         {description && (
-          <p className="text-sm text-slate-400 max-w-xl">
+          <p className="text-sm text-theme-secondary max-w-xl">
             {description}
           </p>
         )}

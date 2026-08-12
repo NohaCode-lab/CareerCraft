@@ -1,7 +1,10 @@
 import { useContext } from 'react';
-import { JobsContext } from '../context/JobsContext';
+import { JobsContext, JobsContextType } from '../context/JobsContext';
+import { Job } from '../types';
 
-const useJobs = () => {
+export type { Job, JobsContextType };
+
+export const useJobs = (): JobsContextType => {
   const context = useContext(JobsContext);
 
   if (!context) {
@@ -19,31 +22,7 @@ const useJobs = () => {
     };
   }
 
-  const {
-    jobs = [],
-    savedJobs = [],
-    appliedJobs = [],
-    selectedJob = null,
-    addJob,
-    saveJob,
-    unsaveJob,
-    applyJob,
-    selectJob,
-    clearSelectedJob,
-  } = context;
-
-  return {
-    jobs,
-    savedJobs,
-    appliedJobs,
-    selectedJob,
-    addJob,
-    saveJob,
-    unsaveJob,
-    applyJob,
-    selectJob,
-    clearSelectedJob,
-  };
+  return context;
 };
 
 export default useJobs;

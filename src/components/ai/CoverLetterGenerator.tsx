@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { FileText, Sparkles, Wand2 } from 'lucide-react';
 import AIResponseCard from './AIResponseCard';
 import useLanguage from '../../hooks/useLanguage';
-import { translations } from '../../config/translations';
+import { getTranslationPack } from '../../config/translations';
 
 interface CoverLetterFormData {
   fullName: string;
@@ -23,7 +23,7 @@ const initialFormData: CoverLetterFormData = {
 
 const CoverLetterGenerator: React.FC = () => {
   const { language } = useLanguage();
-  const t = translations[language] || translations.en;
+  const t = getTranslationPack(language);
 
   const [formData, setFormData] = useState<CoverLetterFormData>(initialFormData);
   const [generatedLetter, setGeneratedLetter] = useState('');

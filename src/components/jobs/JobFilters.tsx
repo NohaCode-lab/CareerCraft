@@ -104,7 +104,7 @@ const JobFilters: React.FC<JobFiltersProps> = ({ filters = defaultFilters, onCha
                 className={selectClassName}
               >
                 <option value="" className="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-200">{t('allCountries', language)}</option>
-                {jobFilters.countries.map((country: any) => (
+                {jobFilters.countries.map((country) => (
                   <option key={country.code} value={country.code} className="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-200">
                     {country.label}
                   </option>
@@ -127,7 +127,7 @@ const JobFilters: React.FC<JobFiltersProps> = ({ filters = defaultFilters, onCha
                 className={selectClassName}
               >
                 <option value="" className="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-200">{t('allLevels', language)}</option>
-                {jobFilters.seniorityLevels.map((level: any) => (
+                {jobFilters.seniorityLevels.map((level) => (
                   <option key={level.id} value={level.label} className="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-200">
                     {level.label}
                   </option>
@@ -150,7 +150,7 @@ const JobFilters: React.FC<JobFiltersProps> = ({ filters = defaultFilters, onCha
                 className={selectClassName}
               >
                 <option value="" className="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-200">{t('allWorkModes', language)}</option>
-                {jobFilters.workModes.map((mode: any) => (
+                {jobFilters.workModes.map((mode) => (
                   <option key={mode.id} value={mode.id} className="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-200">
                     {mode.label}
                   </option>
@@ -173,7 +173,7 @@ const JobFilters: React.FC<JobFiltersProps> = ({ filters = defaultFilters, onCha
                 className={selectClassName}
               >
                 <option value="" className="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-200">{t('allTypes', language)}</option>
-                {jobTypes.map((type: any) => (
+                {jobTypes.map((type) => (
                   <option key={type.id} value={type.label} className="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-200">
                     {type.label}
                   </option>

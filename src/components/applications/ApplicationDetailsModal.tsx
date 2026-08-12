@@ -27,11 +27,11 @@ const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = ({ isOpe
     jobType,
     employmentType,
     salary,
-  } = application as any;
+  } = (application as unknown as Record<string, unknown>) || {};
 
-  const displayTitle = title || jobTitle || role || "Untitled Role";
-  const displayDate = appliedDate || appliedAt || createdAt;
-  const displayJobType = jobType || employmentType || "Not specified";
+  const displayTitle = (title || jobTitle || role || "Untitled Role") as string;
+  const displayDate = (appliedDate || appliedAt || createdAt) as string | number | Date | undefined;
+  const displayJobType = (jobType || employmentType || "Not specified") as string;
 
   return (
     <div
@@ -48,11 +48,11 @@ const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = ({ isOpe
               {displayTitle}
             </h2>
             <p className="mt-1 text-sm text-slate-600">
-              {company || "Unknown Company"}
+              {(company as string) || "Unknown Company"}
             </p>
           </div>
 
-          <StatusBadge status={status} />
+          <StatusBadge status={typeof status === 'string' ? status : undefined} />
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -61,7 +61,7 @@ const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = ({ isOpe
               Location
             </p>
             <p className="mt-2 text-sm text-slate-800">
-              {location || "Not specified"}
+              {(location as string) || "Not specified"}
             </p>
           </div>
 
@@ -88,7 +88,7 @@ const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = ({ isOpe
               Salary
             </p>
             <p className="mt-2 text-sm text-slate-800">
-              {salary || "Not specified"}
+              {(salary as string) || "Not specified"}
             </p>
           </div>
         </div>
@@ -98,7 +98,7 @@ const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = ({ isOpe
             Notes
           </p>
           <p className="mt-2 whitespace-pre-line text-sm leading-6 text-slate-700">
-            {notes || "No notes available for this application."}
+            {(notes as string) || "No notes available for this application."}
           </p>
         </div>
 

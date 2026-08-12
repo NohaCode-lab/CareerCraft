@@ -1,7 +1,10 @@
 import { useContext } from 'react';
-import { ApplicationsContext } from '../context/ApplicationsContext';
+import { ApplicationsContext, ApplicationsContextType } from '../context/ApplicationsContext';
+import { Application } from '../types';
 
-const useApplications = () => {
+export type { Application, ApplicationsContextType };
+
+export const useApplications = (): ApplicationsContextType => {
   const context = useContext(ApplicationsContext);
 
   if (!context) {
@@ -10,6 +13,7 @@ const useApplications = () => {
       groupedApplications: {
         wishlist: [],
         applied: [],
+        reviewing: [],
         interview: [],
         offer: [],
         rejected: [],
@@ -23,33 +27,7 @@ const useApplications = () => {
     };
   }
 
-  const {
-    applications = [],
-    groupedApplications = {
-      wishlist: [],
-      applied: [],
-      interview: [],
-      offer: [],
-      rejected: [],
-    },
-    addApplication,
-    updateApplication,
-    removeApplication,
-    selectApplication,
-    selectedApplication,
-    clearSelectedApplication,
-  } = context;
-
-  return {
-    applications,
-    groupedApplications,
-    selectedApplication,
-    addApplication,
-    updateApplication,
-    removeApplication,
-    selectApplication,
-    clearSelectedApplication,
-  };
+  return context;
 };
 
 export default useApplications;

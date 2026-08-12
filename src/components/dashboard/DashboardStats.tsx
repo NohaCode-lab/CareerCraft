@@ -28,7 +28,7 @@ const DashboardStats: React.FC = () => {
       try {
         const rawValue = item.getValue?.(sourceData);
 
-        if (rawValue === null || rawValue === undefined || rawValue === '') {
+        if (rawValue === null || rawValue === undefined) {
           value = '0';
         } else {
           value = String(rawValue);
@@ -60,11 +60,11 @@ const DashboardStats: React.FC = () => {
         <div>
           <h2
             id="dashboard-stats-heading"
-            className="text-lg font-semibold text-white"
+            className="text-lg font-semibold text-slate-900 dark:text-white"
           >
             {t('overviewTitle', language)}
           </h2>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
             {t('overviewDesc', language)}
           </p>
         </div>

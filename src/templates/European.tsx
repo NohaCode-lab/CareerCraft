@@ -1,22 +1,23 @@
 import React from 'react';
 import useLanguage from '../hooks/useLanguage';
 import { translations } from '../config/translations';
+import { CVData, CVExperience, CVEducation, CVProject, CVLanguage, CVCertification } from '../types';
 
 const EMPTY_TEXT = '';
 
-const getSafeArray = (value: any) => {
-  return Array.isArray(value) ? value.filter(Boolean) : [];
+const getSafeArray = <T,>(value: T[] | unknown): T[] => {
+  return Array.isArray(value) ? (value.filter(Boolean) as T[]) : [];
 };
 
-const getSafeText = (value: any) => {
+const getSafeText = (value: unknown): string => {
   return typeof value === 'string' ? value.trim() : EMPTY_TEXT;
 };
 
-const isEmail = (value: any) => {
+const isEmail = (value: unknown): boolean => {
   return typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 };
 
-const isUrl = (value: any) => {
+const isUrl = (value: unknown): boolean => {
   return typeof value === 'string' && /^https?:\/\//i.test(value);
 };
 
@@ -26,7 +27,7 @@ const getContactHref = (item: string) => {
   return null;
 };
 
-const formatDateRange = ({ startDate, endDate, duration, year }: any) => {
+const formatDateRange = ({ startDate, endDate, duration, year }: { startDate?: string; endDate?: string; duration?: string; year?: string }) => {
   if (getSafeText(duration)) return getSafeText(duration);
   if (getSafeText(year)) return getSafeText(year);
 
@@ -37,7 +38,7 @@ const formatDateRange = ({ startDate, endDate, duration, year }: any) => {
   return start || end || EMPTY_TEXT;
 };
 
-const normalizeSkills = (skills: any): string[] => {
+const normalizeSkills = (skills: string[] | string | unknown): string[] => {
   if (typeof skills === 'string') {
     return skills
       .split(',')
@@ -59,7 +60,7 @@ const SectionHeading: React.FC<{ children: React.ReactNode }> = ({ children }) =
   );
 };
 
-const BulletList: React.FC<{ items?: any[] }> = ({ items = [] }) => {
+const BulletList: React.FC<{ items?: unknown[] }> = ({ items = [] }) => {
   const safeItems = getSafeArray(items)
     .map((item) => getSafeText(String(item)))
     .filter(Boolean);
@@ -75,17 +76,18 @@ const BulletList: React.FC<{ items?: any[] }> = ({ items = [] }) => {
   );
 };
 
-const ExperienceItem: React.FC<{ item: any }> = ({ item }) => {
-  const title = getSafeText(item.role) || getSafeText(item.title);
-  const company = getSafeText(item.company);
-  const location = getSafeText(item.location);
-  const description = getSafeText(item.description);
-  const highlights = getSafeArray(item.highlights);
+const ExperienceItem: React.FC<{ item: CVExperience | Record<string, unknown> }> = ({ item }) => {
+  const exp = item as Record<string, string>;
+  const title = getSafeText(exp.role) || getSafeText(exp.title);
+  const company = getSafeText(exp.company);
+  const location = getSafeText(exp.location);
+  const description = getSafeText(exp.description);
+  const highlights = getSafeArray(exp.highlights || exp.bullets);
 
   const dateRange = formatDateRange({
-    startDate: item.startDate,
-    endDate: item.endDate,
-    duration: item.duration,
+    startDate: exp.startDate,
+    endDate: exp.endDate,
+    duration: exp.duration,
   });
 
   if (!title && !company && !description && highlights.length === 0) {
@@ -129,17 +131,18 @@ const ExperienceItem: React.FC<{ item: any }> = ({ item }) => {
   );
 };
 
-const EducationItem: React.FC<{ item: any }> = ({ item }) => {
-  const degree = getSafeText(item.degree);
-  const institution = getSafeText(item.school) || getSafeText(item.institution);
-  const location = getSafeText(item.location);
-  const description = getSafeText(item.description);
+const EducationItem: React.FC<{ item: CVEducation | Record<string, unknown> }> = ({ item }) => {
+  const edu = item as Record<string, string>;
+  const degree = getSafeText(edu.degree);
+  const institution = getSafeText(edu.school) || getSafeText(edu.institution);
+  const location = getSafeText(edu.location);
+  const description = getSafeText(edu.description || edu.details);
 
   const dateRange = formatDateRange({
-    startDate: item.startDate,
-    endDate: item.endDate,
-    duration: item.duration,
-    year: item.year,
+    startDate: edu.startDate,
+    endDate: edu.endDate,
+    duration: edu.duration,
+    year: edu.year,
   });
 
   if (!degree && !institution && !description) {
@@ -181,12 +184,12 @@ const EducationItem: React.FC<{ item: any }> = ({ item }) => {
   );
 };
 
-const ProjectItem: React.FC<{ item: any }> = ({ item }) => {
-  const title = getSafeText(item.name) || getSafeText(item.title);
+const ProjectItem: React.FC<{ item: CVProject | Record<string, unknown> }> = ({ item }) => {
+  const title = getSafeText(item.name) || getSafeText((item as Record<string, unknown>).title);
   const link = getSafeText(item.link);
-  const technologies = getSafeText(item.technologies);
+  const technologies = getSafeText((item as Record<string, unknown>).technologies);
   const description = getSafeText(item.description);
-  const highlights = getSafeArray(item.highlights);
+  const highlights = getSafeArray((item as Record<string, unknown>).highlights || item.bullets);
 
   if (!title && !description && highlights.length === 0) {
     return null;
@@ -227,7 +230,7 @@ const ProjectItem: React.FC<{ item: any }> = ({ item }) => {
   );
 };
 
-const CertificationItem: React.FC<{ item: any }> = ({ item }) => {
+const CertificationItem: React.FC<{ item: CVCertification | string | Record<string, unknown> }> = ({ item }) => {
   if (typeof item === 'string') {
     const certification = getSafeText(item);
 
@@ -236,9 +239,9 @@ const CertificationItem: React.FC<{ item: any }> = ({ item }) => {
     return <p className="text-sm leading-6 text-slate-700">{certification}</p>;
   }
 
-  const title = getSafeText(item.title);
-  const issuer = getSafeText(item.issuer);
-  const date = getSafeText(item.date);
+  const title = getSafeText((item as Record<string, unknown>).title || (item as CVCertification).name);
+  const issuer = getSafeText((item as CVCertification).issuer);
+  const date = getSafeText((item as CVCertification).date);
 
   if (!title && !issuer && !date) return null;
 
@@ -255,7 +258,7 @@ const CertificationItem: React.FC<{ item: any }> = ({ item }) => {
   );
 };
 
-const LanguageItem: React.FC<{ item: any }> = ({ item }) => {
+const LanguageItem: React.FC<{ item: CVLanguage | string | Record<string, unknown> }> = ({ item }) => {
   if (typeof item === 'string') {
     const language = getSafeText(item);
 
@@ -264,8 +267,8 @@ const LanguageItem: React.FC<{ item: any }> = ({ item }) => {
     return <p className="text-sm leading-6 text-slate-700">{language}</p>;
   }
 
-  const name = getSafeText(item.name);
-  const level = getSafeText(item.level);
+  const name = getSafeText((item as CVLanguage).language || (item as Record<string, unknown>).name);
+  const level = getSafeText((item as CVLanguage).proficiency || (item as Record<string, unknown>).level);
 
   if (!name && !level) return null;
 
@@ -279,7 +282,7 @@ const LanguageItem: React.FC<{ item: any }> = ({ item }) => {
 };
 
 interface EuropeanProps {
-  data?: any;
+  data?: CVData | Record<string, unknown>;
 }
 
 const European: React.FC<EuropeanProps> = ({ data = {} }) => {
@@ -287,18 +290,20 @@ const European: React.FC<EuropeanProps> = ({ data = {} }) => {
   const t = translations[language as keyof typeof translations] || translations.en;
   const isArabic = language === 'ar';
 
+  const cv = (data || {}) as Record<string, unknown>;
+
   const personalInfo = {
-    fullName: getSafeText(data.fullName),
-    name: getSafeText(data.name),
-    jobTitle: getSafeText(data.title),
-    headline: getSafeText(data.headline),
-    email: getSafeText(data.email),
-    phone: getSafeText(data.phone),
-    location: getSafeText(data.location),
-    linkedin: getSafeText(data.linkedin),
-    website: getSafeText(data.website),
-    github: getSafeText(data.github),
-    ...(data.personalInfo || {}),
+    fullName: getSafeText(cv.fullName),
+    name: getSafeText(cv.name),
+    jobTitle: getSafeText(cv.title),
+    headline: getSafeText(cv.headline),
+    email: getSafeText(cv.email),
+    phone: getSafeText(cv.phone),
+    location: getSafeText(cv.location),
+    linkedin: getSafeText(cv.linkedin),
+    website: getSafeText(cv.website),
+    github: getSafeText(cv.github),
+    ...((cv.personalInfo as Record<string, unknown>) || {}),
   };
 
   const fullName =
@@ -307,12 +312,12 @@ const European: React.FC<EuropeanProps> = ({ data = {} }) => {
   const headline =
     getSafeText(personalInfo.headline) || getSafeText(personalInfo.jobTitle);
 
-  const summary = getSafeText(data.summary);
-  const experience = getSafeArray(data.experience);
-  const education = getSafeArray(data.education);
-  const projects = getSafeArray(data.projects);
-  const languages = getSafeArray(data.languages);
-  const certifications = getSafeArray(data.certifications);
+  const summary = getSafeText(cv.summary);
+  const experience = getSafeArray<CVExperience | Record<string, unknown>>(cv.experience);
+  const education = getSafeArray<CVEducation | Record<string, unknown>>(cv.education);
+  const projects = getSafeArray<CVProject | Record<string, unknown>>(cv.projects);
+  const languages = getSafeArray<CVLanguage | string | Record<string, unknown>>(cv.languages);
+  const certifications = getSafeArray<CVCertification | string | Record<string, unknown>>(cv.certifications);
   const skills = normalizeSkills(data.skills);
 
   const contactItems = [
@@ -393,12 +398,15 @@ const European: React.FC<EuropeanProps> = ({ data = {} }) => {
         <section className="mt-7">
           <SectionHeading>{t.experience}</SectionHeading>
           <div className="mt-5 space-y-6">
-            {experience.map((item: any, index: number) => (
-              <ExperienceItem
-                key={item.id ?? `${item.role || item.title || item.company || 'experience'}-${index}`}
-                item={item}
-              />
-            ))}
+            {experience.map((item, index: number) => {
+              const rec = item as Record<string, string>;
+              return (
+                <ExperienceItem
+                  key={String(rec.id || `${rec.role || rec.title || rec.company || 'experience'}-${index}`)}
+                  item={item}
+                />
+              );
+            })}
           </div>
         </section>
       )}
@@ -407,12 +415,15 @@ const European: React.FC<EuropeanProps> = ({ data = {} }) => {
         <section className="mt-7">
           <SectionHeading>{t.education}</SectionHeading>
           <div className="mt-5 space-y-6">
-            {education.map((item: any, index: number) => (
-              <EducationItem
-                key={item.id ?? `${item.degree || item.school || item.institution || 'education'}-${index}`}
-                item={item}
-              />
-            ))}
+            {education.map((item, index: number) => {
+              const rec = item as Record<string, string>;
+              return (
+                <EducationItem
+                  key={String(rec.id || `${rec.degree || rec.school || rec.institution || 'education'}-${index}`)}
+                  item={item}
+                />
+              );
+            })}
           </div>
         </section>
       )}
@@ -421,12 +432,15 @@ const European: React.FC<EuropeanProps> = ({ data = {} }) => {
         <section className="mt-7">
           <SectionHeading>{t.projects}</SectionHeading>
           <div className="mt-5 space-y-6">
-            {projects.map((item: any, index: number) => (
-              <ProjectItem
-                key={item.id ?? `${item.name || item.title || 'project'}-${index}`}
-                item={item}
-              />
-            ))}
+            {projects.map((item, index: number) => {
+              const rec = item as Record<string, string>;
+              return (
+                <ProjectItem
+                  key={String(rec.id || `${rec.name || rec.title || 'project'}-${index}`)}
+                  item={item}
+                />
+              );
+            })}
           </div>
         </section>
       )}
@@ -454,14 +468,12 @@ const European: React.FC<EuropeanProps> = ({ data = {} }) => {
                 </h3>
 
                 <div className="mt-3 space-y-2">
-                  {languages.map((item: any, index: number) => (
+                  {languages.map((item, index: number) => (
                     <LanguageItem
                       key={
-                        typeof item === 'object' && item?.id
-                          ? item.id
-                          : `language-${index}-${
-                              typeof item === 'string' ? item : item.name || 'item'
-                            }`
+                        typeof item === 'object' && item && 'id' in item && item.id
+                          ? String(item.id)
+                          : `language-${index}`
                       }
                       item={item}
                     />
@@ -477,14 +489,12 @@ const European: React.FC<EuropeanProps> = ({ data = {} }) => {
                 </h3>
 
                 <div className="mt-3 space-y-3">
-                  {certifications.map((item: any, index: number) => (
+                  {certifications.map((item, index: number) => (
                     <CertificationItem
                       key={
-                        typeof item === 'object' && item?.id
-                          ? item.id
-                          : `certification-${index}-${
-                              typeof item === 'string' ? item : item.title || 'item'
-                            }`
+                        typeof item === 'object' && item && 'id' in item && item.id
+                          ? String(item.id)
+                          : `certification-${index}`
                       }
                       item={item}
                     />

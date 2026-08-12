@@ -1,3 +1,5 @@
+import { CVEducation, CVExperience, CVLanguage, CVProject } from "../../types";
+
 export interface CVDataModel {
   fullName: string;
   title: string;
@@ -6,10 +8,10 @@ export interface CVDataModel {
   location: string;
   summary: string;
   skills: string;
-  experience: any[];
-  education: any[];
-  languages: any[];
-  projects: any[];
+  experience: CVExperience[];
+  education: CVEducation[];
+  languages: CVLanguage[];
+  projects: CVProject[];
 }
 
 export const defaultCV: CVDataModel = {
@@ -34,7 +36,7 @@ const createId = () => {
   return `${Date.now()}-${Math.random()}`;
 };
 
-export const createExperienceItem = () => ({
+export const createExperienceItem = (): CVExperience => ({
   id: createId(),
   role: '',
   company: '',
@@ -42,26 +44,26 @@ export const createExperienceItem = () => ({
   description: '',
 });
 
-export const createEducationItem = () => ({
+export const createEducationItem = (): CVEducation => ({
   id: createId(),
   degree: '',
-  school: '',
+  institution: '',
   year: '',
 });
 
-export const createLanguageItem = () => ({
+export const createLanguageItem = (): CVLanguage => ({
   id: createId(),
-  name: '',
-  level: '',
+  language: '',
+  proficiency: '',
 });
 
-export const createProjectItem = () => ({
+export const createProjectItem = (): CVProject => ({
   id: createId(),
-  title: '',
+  name: '',
   description: '',
   link: '',
 });
 
-export const getSafeArray = (value: any): any[] => {
-  return Array.isArray(value) ? value : [];
+export const getSafeArray = <T,>(value: T[] | unknown): T[] => {
+  return Array.isArray(value) ? (value as T[]) : [];
 };

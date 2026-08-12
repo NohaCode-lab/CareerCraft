@@ -4,6 +4,121 @@ export type ProviderType = 'OpenRouter' | 'Ollama' | 'DirectOpenAI';
 export type ModelTier = 'High-Reasoning' | 'Fast-Local' | 'Balanced';
 export type GuardrailStatus = 'PASSED' | 'FLAGGED' | 'REJECTED';
 
+export interface SalaryRange {
+  min: number;
+  max: number;
+  currency: string;
+}
+
+export interface Job {
+  id: string | number;
+  title: string;
+  company: string;
+  location?: string;
+  country?: string;
+  remote?: boolean;
+  workMode?: string;
+  employmentType?: string;
+  seniority?: string;
+  salaryRange?: SalaryRange | string;
+  skills?: string[];
+  matchScore?: number;
+  visaSponsorship?: boolean;
+  featured?: boolean;
+  postedAt?: string;
+  postedBy?: string;
+  applyUrl?: string;
+  source?: string;
+  sourceName?: string;
+  description?: string;
+  requirements?: string[];
+  isSaved?: boolean;
+  isApplied?: boolean;
+}
+
+export interface Application {
+  id: string | number;
+  jobId?: string | number;
+  title: string;
+  company: string;
+  status: string;
+  createdAt?: string;
+  appliedAt?: string;
+  date?: string;
+  role?: string;
+  location?: string;
+  notes?: string;
+  salary?: string;
+}
+
+export interface CVExperience {
+  id?: string;
+  company: string;
+  role: string;
+  location?: string;
+  startDate?: string;
+  endDate?: string;
+  duration?: string;
+  year?: string;
+  description?: string;
+  bullets?: string[];
+}
+
+export interface CVEducation {
+  id?: string;
+  institution: string;
+  degree: string;
+  field?: string;
+  year?: string;
+  startDate?: string;
+  endDate?: string;
+  grade?: string;
+  details?: string;
+}
+
+export interface CVProject {
+  id?: string;
+  name: string;
+  role?: string;
+  description?: string;
+  bullets?: string[];
+  technologies?: string[];
+  link?: string;
+  github?: string;
+}
+
+export interface CVLanguage {
+  id?: string;
+  language: string;
+  proficiency: string;
+}
+
+export interface CVCertification {
+  id?: string;
+  name: string;
+  issuer: string;
+  date?: string;
+  link?: string;
+}
+
+export interface CVData {
+  fullName?: string;
+  email?: string;
+  phone?: string;
+  location?: string;
+  website?: string;
+  linkedin?: string;
+  github?: string;
+  title?: string;
+  summary?: string;
+  skills?: string[] | string;
+  experience?: CVExperience[];
+  education?: CVEducation[];
+  projects?: CVProject[];
+  languages?: CVLanguage[];
+  certifications?: CVCertification[];
+}
+
 export interface AIGatewayProviderStatus {
   provider: ProviderType;
   name: string;

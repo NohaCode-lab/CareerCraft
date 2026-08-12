@@ -26,7 +26,7 @@ const StatCard: React.FC<StatCardProps> = ({
   return (
     <div
       className={[
-        'group rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-lg shadow-black/20 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-indigo-400/30 hover:shadow-xl',
+        'group rounded-3xl border border-theme bg-surface p-5 shadow-lg shadow-slate-200/50 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-indigo-400/30 hover:shadow-xl dark:shadow-black/20',
         className,
       ].join(' ')}
       aria-label={`${displayTitle || 'Statistic'}: ${value}`}
@@ -36,18 +36,18 @@ const StatCard: React.FC<StatCardProps> = ({
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           {/* Title */}
-          <p className="text-sm font-medium text-slate-400">
+          <p className="text-sm font-medium text-theme-secondary">
             {displayTitle}
           </p>
 
           {/* Value */}
-          <p className="mt-3 text-3xl font-bold tracking-tight text-white">
+          <p className="mt-3 text-3xl font-bold tracking-tight text-theme-primary">
             {value}
           </p>
 
           {/* Description */}
           {displayDescription && (
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-theme-muted">
               {displayDescription}
             </p>
           )}
@@ -55,7 +55,7 @@ const StatCard: React.FC<StatCardProps> = ({
 
         {/* Icon */}
         {Icon && (
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-indigo-400/20 bg-indigo-500/10 text-indigo-300 transition duration-300 group-hover:scale-105 group-hover:bg-indigo-500/15">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-indigo-200 bg-indigo-50 text-indigo-600 transition duration-300 group-hover:scale-105 dark:border-indigo-400/20 dark:bg-indigo-500/10 dark:text-indigo-300">
             <Icon className="h-6 w-6" />
           </div>
         )}

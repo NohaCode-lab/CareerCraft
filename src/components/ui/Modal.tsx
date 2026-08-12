@@ -46,15 +46,15 @@ const Modal: React.FC<ModalProps> = ({
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className={[
-              'w-full rounded-3xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/30',
+              'w-full rounded-3xl border border-theme bg-surface text-theme-primary shadow-2xl shadow-slate-900/10 dark:shadow-black/30',
               sizeClass,
             ].join(' ')}
             onClick={(event: React.MouseEvent) => event.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
+            <div className="flex items-center justify-between border-b border-theme px-6 py-4">
               <h2
                 id="modal-title"
-                className="text-lg font-semibold text-white"
+                className="text-lg font-semibold text-theme-primary"
               >
                 {title}
               </h2>
@@ -62,14 +62,14 @@ const Modal: React.FC<ModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-xl p-2 text-slate-400 transition hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+                className="rounded-xl p-2 text-theme-secondary transition hover:bg-slate-100 hover:text-theme-primary dark:hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
                 aria-label="Close modal"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <div className="px-6 py-5 text-slate-300">
+            <div className="px-6 py-5 text-theme-secondary">
               {children}
             </div>
           </MotionDiv>

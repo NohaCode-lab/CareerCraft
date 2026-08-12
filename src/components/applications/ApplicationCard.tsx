@@ -18,10 +18,10 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, onClick 
     status,
     appliedDate,
     appliedAt,
-  } = application as any;
+  } = (application as unknown as Record<string, unknown>) || {};
 
-  const displayTitle = jobTitle || role || application.title || 'Untitled Role';
-  const displayDate = appliedDate || appliedAt || application.createdAt;
+  const displayTitle = (jobTitle || role || application.title || 'Untitled Role') as string;
+  const displayDate = (appliedDate || appliedAt || application.createdAt || '') as string | number | Date;
 
   return (
     <div
@@ -36,21 +36,21 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, onClick 
           </h3>
 
           <p className="mt-1 text-sm text-slate-600">
-            {company || 'Unknown Company'}
+            {(company as string) || 'Unknown Company'}
           </p>
         </div>
 
-        <StatusBadge status={status} />
+        <StatusBadge status={typeof status === 'string' ? status : undefined} />
       </div>
 
       {/* Body */}
       <div className="mt-3 space-y-1 text-xs text-slate-500">
-        {location && <p>{location}</p>}
+        {typeof location === 'string' && <p>{location}</p>}
 
-        {displayDate && (
+        {Boolean(displayDate) && (
           <p>
             Applied:{' '}
-            {new Date(displayDate).toLocaleDateString()}
+            {new Date(displayDate as string | number | Date).toLocaleDateString()}
           </p>
         )}
       </div>

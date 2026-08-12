@@ -10,10 +10,12 @@ import {
 
 export interface ProjectItem {
   id?: string;
+  name?: string;
   title?: string;
   description?: string;
   link?: string;
-  [key: string]: any;
+  technologies?: string[];
+  bullets?: string[];
 }
 
 interface CVFormProjectsSectionProps {

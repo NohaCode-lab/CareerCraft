@@ -1,4 +1,6 @@
 import React from 'react';
+import useLanguage from '../../hooks/useLanguage';
+import { getTranslationPack } from '../../config/translations';
 import {
   errorTextClasses,
   getInputClasses,
@@ -29,18 +31,21 @@ const CVFormProfileSection: React.FC<CVFormProfileSectionProps> = ({
   isEmailInvalid = false,
   onChange,
 }) => {
+  const { language } = useLanguage();
+  const t = getTranslationPack(language);
+
   return (
     <>
       <div className="grid gap-4 md:grid-cols-2">
         <div>
           <label htmlFor="fullName" className={labelClasses}>
-            Full Name
+            {t.fullNameLabel}
           </label>
           <input
             id="fullName"
             type="text"
             name="fullName"
-            placeholder="Enter your full name"
+            placeholder={t.fullNamePlaceholder}
             value={fullName}
             onChange={onChange}
             className={getInputClasses(isNameInvalid)}
@@ -48,20 +53,20 @@ const CVFormProfileSection: React.FC<CVFormProfileSectionProps> = ({
           />
           {isNameInvalid && (
             <p className={errorTextClasses}>
-              Name must be at least 3 characters.
+              {t.nameLengthError}
             </p>
           )}
         </div>
 
         <div>
           <label htmlFor="title" className={labelClasses}>
-            Job Title
+            {t.jobTitleLabel}
           </label>
           <input
             id="title"
             type="text"
             name="title"
-            placeholder="Front-End Developer"
+            placeholder={t.jobTitlePlaceholder}
             value={title}
             onChange={onChange}
             className={inputClasses}
@@ -71,32 +76,32 @@ const CVFormProfileSection: React.FC<CVFormProfileSectionProps> = ({
 
         <div>
           <label htmlFor="email" className={labelClasses}>
-            Email
+            {t.emailLabel}
           </label>
           <input
             id="email"
             type="email"
             name="email"
-            placeholder="name@example.com"
+            placeholder={t.emailPlaceholder}
             value={email}
             onChange={onChange}
             className={getInputClasses(isEmailInvalid)}
             autoComplete="email"
           />
           {isEmailInvalid && (
-            <p className={errorTextClasses}>Enter a valid email address.</p>
+            <p className={errorTextClasses}>{t.emailInvalidError}</p>
           )}
         </div>
 
         <div>
           <label htmlFor="phone" className={labelClasses}>
-            Phone
+            {t.phoneLabel}
           </label>
           <input
             id="phone"
             type="tel"
             name="phone"
-            placeholder="+20 100 000 0000"
+            placeholder={t.phonePlaceholder}
             value={phone}
             onChange={onChange}
             className={inputClasses}
@@ -106,13 +111,13 @@ const CVFormProfileSection: React.FC<CVFormProfileSectionProps> = ({
 
         <div className="md:col-span-2">
           <label htmlFor="location" className={labelClasses}>
-            Location
+            {t.locationLabel}
           </label>
           <input
             id="location"
             type="text"
             name="location"
-            placeholder="Cairo, Egypt"
+            placeholder={t.locationPlaceholder}
             value={location}
             onChange={onChange}
             className={inputClasses}
@@ -123,12 +128,12 @@ const CVFormProfileSection: React.FC<CVFormProfileSectionProps> = ({
 
       <div className="mt-4">
         <label htmlFor="summary" className={labelClasses}>
-          Professional Summary
+          {t.summaryLabel}
         </label>
         <textarea
           id="summary"
           name="summary"
-          placeholder="Write a short professional summary that highlights your strengths, experience, and career focus."
+          placeholder={t.summaryPlaceholder}
           value={summary}
           onChange={onChange}
           rows={4}

@@ -32,14 +32,14 @@ const Loader: React.FC<LoaderProps> = ({
     >
       <div
         className={[
-          'animate-spin rounded-full border-slate-700 border-t-indigo-400',
+          'animate-spin rounded-full border-theme border-t-indigo-500',
           sizeClass,
         ].join(' ')}
         aria-hidden="true"
       />
 
       {text && (
-        <p className="text-sm font-medium text-slate-400">
+        <p className="text-sm font-medium text-theme-muted">
           {text}
         </p>
       )}

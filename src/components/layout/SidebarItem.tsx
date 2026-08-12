@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { LucideIcon } from 'lucide-react';
 import useLanguage from '../../hooks/useLanguage';
-import { translations } from '../../config/translations';
+import { t } from '../../utils/i18n';
 
 export interface NavigationItem {
   id: string;
@@ -29,11 +29,10 @@ const translationKeyMap: Record<string, string> = {
 
 const SidebarItem: React.FC<SidebarItemProps> = ({ item, onClick }) => {
   const { language, isRTL } = useLanguage();
-  const t = translations[language] || translations.en;
   const Icon = item.icon;
 
   const tKey = translationKeyMap[item.id];
-  const translatedLabel = tKey && (t as any)[tKey] ? (t as any)[tKey] : item.label;
+  const translatedLabel = tKey ? t(tKey, language) : item.label;
 
   return (
     <NavLink

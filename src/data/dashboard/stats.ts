@@ -7,8 +7,9 @@ import {
 } from 'lucide-react';
 
 import { APPLICATION_STATUSES } from '../applications/statuses';
+import { Application, Job } from '../../types';
 
-const countByStatus = (applications: any[] = [], status: string) => {
+const countByStatus = (applications: Application[] = [], status: string) => {
   if (!Array.isArray(applications)) return 0;
 
   return applications.filter(
@@ -21,7 +22,7 @@ export interface DashboardStatItem {
   id: string;
   titleKey: string;
   descKey: string;
-  getValue: (data: { jobs?: any[]; savedJobs?: any[]; applications?: any[] }) => number;
+  getValue: (data: { jobs?: Job[]; savedJobs?: Job[]; applications?: Application[] }) => number;
   icon: LucideIcon;
 }
 

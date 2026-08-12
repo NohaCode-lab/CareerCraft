@@ -41,6 +41,9 @@ jobs:
       - name: Install Root Dependencies
         run: npm ci
 
+      - name: Security Vulnerability Dependency Audit Gate
+        run: npm audit --audit-level=high
+
       - name: Run ESLint Static Analysis
         run: npm run lint
 

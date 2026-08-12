@@ -11,6 +11,7 @@ export const configSchema = z.object({
   // AI Gateway Configuration
   LITELLM_URL: z.string().default('http://127.0.0.1:4001'),
   LITELLM_MASTER_KEY: z.string().default('sk-careercraft-dev-key'),
+  INTERNAL_SERVICE_TOKEN: z.string().default('sk-careercraft-internal-token'),
   OPENROUTER_API_KEY: z.string().optional(),
   OLLAMA_URL: z.string().default('http://127.0.0.1:11434'),
   AI_MOCK_MODE: z
@@ -28,5 +29,11 @@ export const loadConfig = (env: Record<string, string | undefined> = {}): AppCon
     console.error('❌ Invalid backend configuration:', result.error.format());
     throw new Error('Invalid backend configuration');
   }
+
+  if (result.data.NODE_ENV === 'production' && (merged.INTERNAL_SERVICE_TOKEN === '' || merged.INTERNAL_SERVICE_TOKEN === 'CHANGEME')) {
+    console.error('❌ Insecure production configuration: INTERNAL_SERVICE_TOKEN must be explicitly set to a non-empty token in production mode.');
+    throw new Error('Insecure production configuration: INTERNAL_SERVICE_TOKEN must be set');
+  }
+
   return result.data;
 };

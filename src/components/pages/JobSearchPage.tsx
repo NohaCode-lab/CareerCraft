@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PageHeader from '../layout/PageHeader';
 import JobList from '../jobs/JobList';
@@ -35,16 +35,12 @@ const JobSearchPage: React.FC = () => {
     return { ...initialFilters, search: initialQuery };
   });
 
-  useEffect(() => {
-    const urlQuery = searchParams.get('q');
-    if (urlQuery !== null) {
-      setFilters((prev) => ({ ...prev, search: urlQuery }));
-    }
-  }, [searchParams]);
+  const urlQuery = searchParams.get('q');
+  const activeSearch = urlQuery !== null ? urlQuery : filters.search;
 
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
-      const searchValue = (filters.search || '').toLowerCase().trim();
+      const searchValue = (activeSearch || '').toLowerCase().trim();
 
       const matchesSearch =
         !searchValue ||
@@ -78,7 +74,7 @@ const JobSearchPage: React.FC = () => {
         matchesApplied
       );
     });
-  }, [jobs, filters]);
+  }, [jobs, filters, activeSearch]);
 
   const resetFilters = () => {
     setFilters(initialFilters);

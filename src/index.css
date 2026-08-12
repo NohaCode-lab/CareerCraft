@@ -1,25 +1,29 @@
-
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *));
+
 :root {
-  --color-primary: #4f46e5;
-  --color-primary-dark: #4338ca;
-  --color-secondary: #10b981;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-navy: #0f172a;
+  --color-ai: #0d9488;
+
+  --color-success: #059669;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
 
   --color-background: #f8fafc;
   --color-surface: #ffffff;
-
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #64748b;
-
+  --color-surface-elevated: #ffffff;
   --color-border: #e2e8f0;
 
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
-  --color-info: #0ea5e9;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-focus: #2563eb;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
@@ -27,6 +31,28 @@
   --radius-xl: 1.5rem;
 
   --shadow-soft: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="dark"],
+.dark {
+  --color-primary: #3b82f6;
+  --color-primary-hover: #1d4ed8;
+  --color-ai: #2dd4bf;
+
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+
+  --color-background: #020617;
+  --color-surface: #0f172a;
+  --color-surface-elevated: #1e293b;
+  --color-border: #334155;
+
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+
+  --color-focus: #3b82f6;
 }
 
 @layer base {
@@ -39,7 +65,7 @@
   }
 
   body {
-    @apply m-0 min-h-screen bg-slate-50 text-slate-900 antialiased;
+    @apply m-0 min-h-screen bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100;
     font-family: var(--font-sans);
   }
 
@@ -62,6 +88,11 @@
     @apply cursor-pointer;
   }
 
+  /* Accessible focus indicators */
+  :focus-visible {
+    @apply outline-none ring-2 ring-indigo-500/80 ring-offset-2 dark:ring-indigo-400 dark:ring-offset-slate-950;
+  }
+
   a {
     @apply no-underline text-inherit;
   }
@@ -69,7 +100,7 @@
 
 @layer components {
   .app-shell {
-    @apply min-h-screen bg-slate-50 text-slate-900;
+    @apply min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100;
   }
 
   .page-container {
@@ -77,15 +108,47 @@
   }
 
   .card-base {
-    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+    @apply rounded-2xl border shadow-sm transition-colors duration-200 dark:shadow-lg dark:backdrop-blur-sm;
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
   }
 
   .section-title {
-    @apply text-xl font-semibold text-slate-900;
+    @apply text-xl font-semibold;
+    color: var(--color-text-primary);
   }
 
   .section-subtitle {
-    @apply text-sm text-slate-500;
+    @apply text-sm;
+    color: var(--color-text-secondary);
+  }
+
+  .ai-accent-card {
+    @apply border border-teal-500/30 bg-teal-500/5 dark:border-teal-400/20 dark:bg-teal-950/20;
   }
 }
- 
+
+@layer utilities {
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+  .bg-surface-elevated {
+    background-color: var(--color-surface-elevated);
+  }
+  .bg-app-bg {
+    background-color: var(--color-background);
+  }
+  .border-theme {
+    border-color: var(--color-border);
+  }
+  .text-theme-primary {
+    color: var(--color-text-primary);
+  }
+  .text-theme-secondary {
+    color: var(--color-text-secondary);
+  }
+  .text-theme-muted {
+    color: var(--color-text-muted);
+  }
+}

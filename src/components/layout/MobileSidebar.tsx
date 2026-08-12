@@ -3,7 +3,7 @@ import logo from '../../assets/favicon.svg';
 import { SIDEBAR_LINKS } from '../../config/sidebarLinks';
 import SidebarItem from './SidebarItem';
 import useLanguage from '../../hooks/useLanguage';
-import { translations } from '../../config/translations';
+import { getTranslationPack } from '../../config/translations';
 
 interface MobileSidebarProps {
   isOpen: boolean;
@@ -12,7 +12,7 @@ interface MobileSidebarProps {
 
 const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose }) => {
   const { language, isRTL } = useLanguage();
-  const t = translations[language] || translations.en;
+  const t = getTranslationPack(language);
 
   return (
     <>

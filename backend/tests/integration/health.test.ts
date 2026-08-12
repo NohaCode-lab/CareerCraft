@@ -72,4 +72,13 @@ describe('Backend API Foundation Integration Tests', () => {
 
     expect(response.statusCode).toBe(404);
   });
+
+  it('fails closed when NODE_ENV is production and INTERNAL_SERVICE_TOKEN is empty or CHANGEME', () => {
+    expect(() => {
+      loadConfig({
+        NODE_ENV: 'production',
+        INTERNAL_SERVICE_TOKEN: '',
+      });
+    }).toThrow('Insecure production configuration');
+  });
 });

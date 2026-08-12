@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Loader2, SendHorizonal, Sparkles } from 'lucide-react';
+import useLanguage from '../../hooks/useLanguage';
+import { getTranslationPack } from '../../config/translations';
 
 interface PromptInputProps {
   onSubmit: (prompt: string) => void;
@@ -12,6 +14,9 @@ const PromptInput: React.FC<PromptInputProps> = ({
   placeholder = 'Ask AI anything...',
   disabled = false,
 }) => {
+  const { language } = useLanguage();
+  const t = getTranslationPack(language);
+
   const [input, setInput] = useState('');
 
   const trimmedInput = input.trim();
@@ -34,7 +39,7 @@ const PromptInput: React.FC<PromptInputProps> = ({
       <form onSubmit={handleSubmit} className="space-y-3">
         <div className="flex items-center gap-2 text-xs font-medium text-violet-300">
           <Sparkles size={14} />
-          AI Prompt
+          {t.aiPromptHeader || 'AI Prompt'}
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
@@ -43,7 +48,7 @@ const PromptInput: React.FC<PromptInputProps> = ({
               htmlFor="ai-prompt-input"
               className="mb-2 block text-sm font-medium text-slate-200"
             >
-              Your prompt
+              {t.yourPromptLabel || 'Your prompt'}
             </label>
 
             <input
@@ -65,19 +70,19 @@ const PromptInput: React.FC<PromptInputProps> = ({
             {disabled ? (
               <>
                 <Loader2 size={16} className="animate-spin" />
-                Sending...
+                {t.sendingStatus || 'Sending...'}
               </>
             ) : (
               <>
                 <SendHorizonal size={16} />
-                Send
+                {t.sendButton || 'Send'}
               </>
             )}
           </button>
         </div>
 
         <p className="text-xs leading-5 text-slate-500">
-          Ask for CV improvements, ATS suggestions, interview answers, or career guidance.
+          {t.aiPromptHelpText || 'Ask for CV improvements, ATS suggestions, interview answers, or career guidance.'}
         </p>
       </form>
     </section>

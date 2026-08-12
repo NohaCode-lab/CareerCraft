@@ -27,7 +27,7 @@ describe('ErrorBoundary Core Unit Test Suite', () => {
     const testError = new Error('Component crashed');
     const errorInfo = { componentStack: 'at ChildComponent (src/Child.tsx:10)' };
 
-    boundary.componentDidCatch(testError, errorInfo as any);
+    boundary.componentDidCatch(testError, errorInfo as unknown as React.ErrorInfo);
 
     expect(consoleSpy).toHaveBeenCalledWith('[CareerCraft ErrorBoundary]', testError, errorInfo);
   });

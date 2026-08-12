@@ -11,12 +11,12 @@ interface BadgeProps {
 }
 
 const badgeVariants: Record<BadgeVariant, string> = {
-  default: 'border border-white/10 bg-slate-800/70 text-slate-300',
-  success: 'border border-emerald-400/20 bg-emerald-500/10 text-emerald-300',
-  warning: 'border border-amber-400/20 bg-amber-500/10 text-amber-300',
-  danger: 'border border-red-400/20 bg-red-500/10 text-red-300',
-  info: 'border border-sky-400/20 bg-sky-500/10 text-sky-300',
-  violet: 'border border-violet-400/20 bg-violet-500/10 text-violet-300',
+  default: 'border border-theme bg-surface text-theme-secondary',
+  success: 'border border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-500/10 dark:text-emerald-300',
+  warning: 'border border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-400/20 dark:bg-amber-500/10 dark:text-amber-300',
+  danger: 'border border-red-200 bg-red-50 text-red-700 dark:border-red-400/20 dark:bg-red-500/10 dark:text-red-300',
+  info: 'border border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-400/20 dark:bg-sky-500/10 dark:text-sky-300',
+  violet: 'border border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-400/20 dark:bg-violet-500/10 dark:text-violet-300',
 };
 
 const badgeSizes: Record<BadgeSize, string> = {

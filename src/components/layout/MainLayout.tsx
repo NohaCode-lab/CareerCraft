@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MobileSidebar from './MobileSidebar';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
+import ScrollToTop from '../ui/ScrollToTop';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -40,6 +41,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, pageTitle = 'Dashboar
           </main>
         </div>
       </div>
+
+      <ScrollToTop />
     </div>
   );
 };

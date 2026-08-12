@@ -1,26 +1,7 @@
-import React, { createContext, useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
+import { ToastState, UIContext, UIContextType } from "./UIContext";
 
-export interface ToastState {
-  message: string;
-  type?: "success" | "error" | "info" | "warning";
-}
-
-export interface UIContextType {
-  isSidebarOpen: boolean;
-  openSidebar: () => void;
-  closeSidebar: () => void;
-  toggleSidebar: () => void;
-  isModalOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
-  toast: ToastState | null;
-  showToast: (message: string, type?: ToastState["type"]) => void;
-  clearToast: () => void;
-}
-
-export const UIContext = createContext<UIContextType | undefined>(undefined);
+export type { ToastState, UIContextType };
 
 interface UIProviderProps {
   children: React.ReactNode;

@@ -1,16 +1,17 @@
 import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext, AuthContextType, UserProfile } from '../context/AuthContext';
 
-const defaultUser = {
+export type { UserProfile, AuthContextType };
+
+const defaultUser: UserProfile = {
   name: 'Noha',
   email: 'noha@careercraft.io',
   title: 'Full Stack Engineer',
   location: 'Berlin, Germany',
-  summary: 'Passionate software developer building intelligent career tools.',
-  skills: ['React', 'TypeScript', 'TailwindCSS', 'Node.js', 'Python'],
+  role: 'Developer',
 };
 
-const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
 
   if (!context) {

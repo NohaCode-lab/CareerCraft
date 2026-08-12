@@ -11,8 +11,9 @@ import {
 export interface LanguageItem {
   id?: string;
   name?: string;
+  language?: string;
   level?: string;
-  [key: string]: any;
+  proficiency?: string;
 }
 
 interface CVFormLanguagesSectionProps {

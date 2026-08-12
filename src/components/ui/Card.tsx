@@ -9,9 +9,9 @@ interface CardProps {
 }
 
 const cardVariants: Record<CardVariant, string> = {
-  default: 'border border-white/10 bg-slate-900/70 backdrop-blur',
-  solid: 'border border-white/10 bg-slate-900',
-  outline: 'border border-white/10 bg-transparent',
+  default: 'border border-theme bg-surface text-theme-primary backdrop-blur',
+  solid: 'border border-theme bg-surface-elevated text-theme-primary',
+  outline: 'border border-theme bg-transparent text-theme-primary',
 };
 
 const Card: React.FC<CardProps> = ({
@@ -22,7 +22,7 @@ const Card: React.FC<CardProps> = ({
   return (
     <div
       className={[
-        'rounded-3xl p-6 shadow-lg shadow-black/20 transition',
+        'rounded-3xl p-6 shadow-lg shadow-slate-200/50 dark:shadow-black/20 transition',
         cardVariants[variant] || cardVariants.default,
         className,
       ].join(' ')}

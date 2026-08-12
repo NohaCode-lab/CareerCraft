@@ -1,25 +1,27 @@
 import React from 'react';
 import useLanguage from '../hooks/useLanguage';
 import { translations } from '../config/translations';
+import { CVData, CVExperience, CVEducation, CVProject, CVLanguage, CVCertification } from '../types';
 
 const EMPTY_TEXT = '';
 
-const getSafeArray = (value: any) => Array.isArray(value) ? value.filter(Boolean) : [];
+const getSafeArray = <T,>(value: T[] | unknown): T[] =>
+  Array.isArray(value) ? (value.filter(Boolean) as T[]) : [];
 
-const getSafeText = (value: any) =>
+const getSafeText = (value: unknown): string =>
   typeof value === 'string' ? value.trim() : EMPTY_TEXT;
 
-const normalizeSkills = (skills: any): string[] => {
+const normalizeSkills = (skills: string[] | string | unknown): string[] => {
   if (typeof skills === 'string') {
-    return skills.split(',').map(s => s.trim()).filter(Boolean);
+    return skills.split(',').map((s) => s.trim()).filter(Boolean);
   }
-  return getSafeArray(skills);
+  return getSafeArray(skills).map(String);
 };
 
-const isEmail = (value: any) =>
+const isEmail = (value: unknown): boolean =>
   typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
-const isUrl = (value: any) =>
+const isUrl = (value: unknown): boolean =>
   typeof value === 'string' && /^https?:\/\//i.test(value);
 
 const getContactHref = (item: string) => {
@@ -34,8 +36,8 @@ const SectionHeading: React.FC<{ children: React.ReactNode }> = ({ children }) =
   </h2>
 );
 
-const BulletList: React.FC<{ items?: any[] }> = ({ items }) => {
-  const safeItems = getSafeArray(items);
+const BulletList: React.FC<{ items?: unknown[] }> = ({ items }) => {
+  const safeItems = getSafeArray(items).map((item) => String(item));
 
   if (!safeItems.length) return null;
 
@@ -68,7 +70,7 @@ const ContactItem: React.FC<{ item: string }> = ({ item }) => {
 };
 
 interface MinimalProps {
-  data?: any;
+  data?: CVData | Record<string, unknown>;
 }
 
 const Minimal: React.FC<MinimalProps> = ({ data = {} }) => {
@@ -76,30 +78,32 @@ const Minimal: React.FC<MinimalProps> = ({ data = {} }) => {
   const t = translations[language as keyof typeof translations] || translations.en;
   const isArabic = language === 'ar';
 
+  const rawData = data as Record<string, unknown>;
+
   const personalInfo = {
     fullName: getSafeText(data.fullName),
-    name: getSafeText(data.name),
+    name: getSafeText(rawData.name),
     jobTitle: getSafeText(data.title),
-    headline: getSafeText(data.headline),
+    headline: getSafeText(rawData.headline),
     email: getSafeText(data.email),
     phone: getSafeText(data.phone),
     location: getSafeText(data.location),
     linkedin: getSafeText(data.linkedin),
     website: getSafeText(data.website),
     github: getSafeText(data.github),
-    ...(data.personalInfo || {}),
+    ...((rawData.personalInfo as Record<string, unknown>) || {}),
   };
 
   const fullName = personalInfo.fullName || personalInfo.name;
   const headline = personalInfo.headline || personalInfo.jobTitle;
 
   const summary = getSafeText(data.summary);
-  const experience = getSafeArray(data.experience);
-  const education = getSafeArray(data.education);
-  const projects = getSafeArray(data.projects);
+  const experience = getSafeArray<CVExperience | Record<string, unknown>>(data.experience);
+  const education = getSafeArray<CVEducation | Record<string, unknown>>(data.education);
+  const projects = getSafeArray<CVProject | Record<string, unknown>>(data.projects);
   const skills = normalizeSkills(data.skills);
-  const languages = getSafeArray(data.languages);
-  const certifications = getSafeArray(data.certifications);
+  const languages = getSafeArray<CVLanguage | string | Record<string, unknown>>(data.languages);
+  const certifications = getSafeArray<CVCertification | string | Record<string, unknown>>(data.certifications);
 
   const contactItems = [
     personalInfo.email,
@@ -142,37 +146,46 @@ const Minimal: React.FC<MinimalProps> = ({ data = {} }) => {
       {experience.length > 0 && (
         <section className="mt-6">
           <SectionHeading>{t.experience}</SectionHeading>
-          {experience.map((item: any, i: number) => (
-            <div key={i} className="mt-4">
-              <p className="font-semibold">{item.role || item.title}</p>
-              <p className="text-sm text-slate-600">{item.company}</p>
-              <BulletList items={item.highlights} />
-            </div>
-          ))}
+          {experience.map((item, i: number) => {
+            const rec = item as Record<string, unknown>;
+            return (
+              <div key={i} className="mt-4">
+                <p className="font-semibold">{getSafeText(rec.role) || getSafeText(rec.title)}</p>
+                <p className="text-sm text-slate-600">{getSafeText(rec.company)}</p>
+                <BulletList items={getSafeArray(rec.highlights || rec.bullets)} />
+              </div>
+            );
+          })}
         </section>
       )}
 
       {education.length > 0 && (
         <section className="mt-6">
           <SectionHeading>{t.education}</SectionHeading>
-          {education.map((item: any, i: number) => (
-            <div key={i} className="mt-4">
-              <p className="font-semibold">{item.degree}</p>
-              <p className="text-sm text-slate-600">{item.school}</p>
-            </div>
-          ))}
+          {education.map((item, i: number) => {
+            const rec = item as Record<string, unknown>;
+            return (
+              <div key={i} className="mt-4">
+                <p className="font-semibold">{getSafeText(rec.degree)}</p>
+                <p className="text-sm text-slate-600">{getSafeText(rec.school) || getSafeText(rec.institution)}</p>
+              </div>
+            );
+          })}
         </section>
       )}
 
       {projects.length > 0 && (
         <section className="mt-6">
           <SectionHeading>{t.projects}</SectionHeading>
-          {projects.map((item: any, i: number) => (
-            <div key={i} className="mt-4">
-              <p className="font-semibold">{item.name}</p>
-              <BulletList items={item.highlights} />
-            </div>
-          ))}
+          {projects.map((item, i: number) => {
+            const rec = item as Record<string, unknown>;
+            return (
+              <div key={i} className="mt-4">
+                <p className="font-semibold">{getSafeText(rec.name) || getSafeText(rec.title)}</p>
+                <BulletList items={getSafeArray(rec.highlights || rec.bullets)} />
+              </div>
+            );
+          })}
         </section>
       )}
 
@@ -186,16 +199,16 @@ const Minimal: React.FC<MinimalProps> = ({ data = {} }) => {
 
           {languages.length > 0 && (
             <div className="mt-3">
-              {languages.map((l: any, i: number) => (
-                <p key={i}>{typeof l === 'string' ? l : l.name}</p>
+              {languages.map((l, i: number) => (
+                <p key={i}>{typeof l === 'string' ? l : getSafeText((l as Record<string, string>).language) || getSafeText((l as Record<string, string>).name)}</p>
               ))}
             </div>
           )}
 
           {certifications.length > 0 && (
             <div className="mt-3">
-              {certifications.map((c: any, i: number) => (
-                <p key={i}>{typeof c === 'string' ? c : c.title}</p>
+              {certifications.map((c, i: number) => (
+                <p key={i}>{typeof c === 'string' ? c : getSafeText((c as Record<string, string>).name) || getSafeText((c as Record<string, string>).title)}</p>
               ))}
             </div>
           )}

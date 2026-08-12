@@ -150,7 +150,7 @@ export class AIWorkflowService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Internal-Service-Token': 'sk-careercraft-internal-token',
+          'X-Internal-Service-Token': this.config.INTERNAL_SERVICE_TOKEN || 'sk-careercraft-internal-token',
           'x-request-id': clientRequestId,
         },
         body: JSON.stringify(payload),

@@ -1,25 +1,11 @@
-import React, { createContext, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import * as storageService from "../services/storageService";
+import { STORAGE_KEYS } from "../utils/constants";
+import { AuthContext, AuthContextType, UserProfile } from "./AuthContext";
 
-const STORAGE_KEY = "career_user";
+export type { UserProfile, AuthContextType };
 
-export interface UserProfile {
-  id?: string;
-  name?: string;
-  email?: string;
-  role?: string;
-  [key: string]: any;
-}
-
-export interface AuthContextType {
-  user: UserProfile | null;
-  isAuthenticated: boolean;
-  login: (userData: UserProfile) => void;
-  logout: () => void;
-  updateUser: (updates: Partial<UserProfile>) => void;
-}
-
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const STORAGE_KEY = STORAGE_KEYS.USER;
 
 const getInitialUser = (): UserProfile | null => {
   return storageService.getItem<UserProfile | null>(STORAGE_KEY, null);

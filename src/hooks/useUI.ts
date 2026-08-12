@@ -1,7 +1,9 @@
 import { useContext } from 'react';
-import { UIContext } from '../context/UIContext';
+import { UIContext, UIContextType } from '../context/UIContext';
 
-const useUI = () => {
+export type { UIContextType };
+
+export const useUI = (): UIContextType => {
   const context = useContext(UIContext);
 
   if (!context) {
@@ -21,35 +23,7 @@ const useUI = () => {
     };
   }
 
-  const {
-    isSidebarOpen = false,
-    openSidebar,
-    closeSidebar,
-    toggleSidebar,
-    isModalOpen = false,
-    openModal,
-    closeModal,
-    loading = false,
-    setLoading,
-    toast = null,
-    showToast,
-    clearToast,
-  } = context;
-
-  return {
-    isSidebarOpen,
-    openSidebar,
-    closeSidebar,
-    toggleSidebar,
-    isModalOpen,
-    openModal,
-    closeModal,
-    loading,
-    setLoading,
-    toast,
-    showToast,
-    clearToast,
-  };
+  return context;
 };
 
 export default useUI;

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Bell, FileText, Settings, LucideIcon, Check, SlidersHorizontal, ShieldCheck, Mail, Sparkles, FileSpreadsheet } from 'lucide-react';
+import { Bell, FileText, Settings, LucideIcon, Check, ShieldCheck, Mail, Sparkles, FileSpreadsheet } from 'lucide-react';
 import PageHeader from '../layout/PageHeader';
 import SettingsSection from '../settings/SettingsSection';
 import ThemeToggle from '../settings/ThemeToggle';
 import LanguageSwitcher from '../settings/LanguageSwitcher';
 import useLanguage from '../../hooks/useLanguage';
-import { translations } from '../../config/translations';
+import { getTranslationPack } from '../../config/translations';
 import useUI from '../../hooks/useUI';
 
 interface UpcomingSetting {
@@ -33,7 +33,7 @@ const upcomingSettings: UpcomingSetting[] = [
 ];
 
 interface UserPreferences {
-  emailAlerts: boolean;
+  notificationAlerts: boolean;
   statusReminders: boolean;
   weeklyDigest: boolean;
   defaultTemplate: string;
@@ -42,12 +42,12 @@ interface UserPreferences {
 }
 
 const DEFAULT_PREFERENCES: UserPreferences = {
-  emailAlerts: true,
+  notificationAlerts: true,
   statusReminders: true,
   weeklyDigest: false,
-  defaultTemplate: 'european',
+  defaultTemplate: 'European',
   atsOptimization: true,
-  preferredFormat: 'pdf',
+  preferredFormat: 'PDF',
 };
 
 const getSavedPreferences = (): UserPreferences => {
@@ -61,7 +61,7 @@ const getSavedPreferences = (): UserPreferences => {
 
 const SettingsPage: React.FC = () => {
   const { language } = useLanguage();
-  const t = translations[language] || translations.en;
+  const t = getTranslationPack(language);
   const { showToast } = useUI();
 
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -103,7 +103,7 @@ const SettingsPage: React.FC = () => {
     <div className="space-y-8">
       <PageHeader
         title={t.settings}
-        description="Customize your CareerCraft experience, manage preferences, and personalize your workspace."
+        description={t.settingsDesc}
       />
 
       <div className="space-y-6">
@@ -144,17 +144,12 @@ const SettingsPage: React.FC = () => {
                   onClick={() => handleCardClick(item.id)}
                   className="group flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4 text-left text-sm text-slate-700 transition hover:border-indigo-500 hover:bg-slate-100 hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-indigo-400/40 dark:hover:bg-white/10 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
                 >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-300 transition group-hover:bg-indigo-100 dark:group-hover:bg-indigo-500/20">
-                      <Icon size={16} />
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-600 transition group-hover:bg-indigo-500 group-hover:text-white dark:text-indigo-300">
+                      <Icon size={18} />
                     </div>
-
-                    <span className="font-semibold truncate">{title}</span>
+                    <span className="font-semibold">{title}</span>
                   </div>
-
-                  <span className="shrink-0 rounded-full bg-indigo-50 dark:bg-indigo-500/10 px-2.5 py-0.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20">
-                    Configure
-                  </span>
                 </button>
               );
             })}
@@ -162,23 +157,16 @@ const SettingsPage: React.FC = () => {
         </section>
 
         {activeModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-md">
-            <div className="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-slate-900 space-y-6">
-              <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-4">
-                <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-300">
-                  <SlidersHorizontal size={20} />
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                    {activeModal === 'notifications'
-                      ? t.notificationsPref
-                      : activeModal === 'cv-defaults'
-                      ? t.cvDefaults
-                      : t.exportOptions}
-                  </h3>
-                </div>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm">
+            <div className="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl transition-colors duration-200 dark:border-white/10 dark:bg-slate-900">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                  {t.moreSettingsTitle}
+                </h3>
                 <button
                   type="button"
                   onClick={() => setActiveModal(null)}
-                  className="rounded-xl p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/10 dark:hover:text-white"
+                  className="rounded-xl p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                 >
                   ✕
                 </button>
@@ -197,10 +185,10 @@ const SettingsPage: React.FC = () => {
                     </div>
                     <button
                       type="button"
-                      onClick={() => handleTogglePref('emailAlerts')}
-                      className={`h-6 w-11 rounded-full transition ${preferences.emailAlerts ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-700'}`}
+                      onClick={() => handleTogglePref('notificationAlerts')}
+                      className={`h-6 w-11 rounded-full transition ${preferences.notificationAlerts ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-700'}`}
                     >
-                      <span className={`block h-5 w-5 rounded-full bg-white transition ${preferences.emailAlerts ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                      <span className={`block h-5 w-5 rounded-full bg-white transition ${preferences.notificationAlerts ? 'translate-x-5' : 'translate-x-0.5'}`} />
                     </button>
                   </div>
 

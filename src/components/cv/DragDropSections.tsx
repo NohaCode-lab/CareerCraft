@@ -30,7 +30,7 @@ const sectionConfig = [
 
 const defaultSections = sectionConfig.map((section) => section.id);
 
-const getSafeSections = (value: any): string[] => {
+const getSafeSections = (value: unknown): string[] => {
   if (!Array.isArray(value)) {
     return defaultSections;
   }

@@ -7,6 +7,7 @@ import useJobs from '../../hooks/useJobs';
 import { ROUTES } from '../../config/routes';
 import useLanguage from '../../hooks/useLanguage';
 import { t } from '../../utils/i18n';
+import { Job } from '../../types';
 
 const DashboardSavedJobsPreview: React.FC = () => {
   const navigate = useNavigate();
@@ -18,11 +19,11 @@ const DashboardSavedJobsPreview: React.FC = () => {
   if (!previewJobs.length) {
     return (
       <Card
-        className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg"
+        className="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg dark:border-white/10 dark:bg-slate-900/80"
         aria-label={t('savedJobsPreviewTitle', language)}
       >
         <div className="mb-4">
-          <h2 className="text-xl font-semibold text-white">{t('savedJobsPreviewTitle', language)}</h2>
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-white">{t('savedJobsPreviewTitle', language)}</h2>
         </div>
 
         <EmptyState
@@ -40,13 +41,13 @@ const DashboardSavedJobsPreview: React.FC = () => {
 
   return (
     <Card
-      className="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-lg"
+      className="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg dark:border-white/10 dark:bg-slate-900/80"
       aria-label={t('savedJobsPreviewTitle', language)}
     >
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-semibold text-white">{t('savedJobsPreviewTitle', language)}</h2>
-          <p className="mt-1 text-sm text-slate-400">
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-white">{t('savedJobsPreviewTitle', language)}</h2>
+          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
             {t('savedJobsPreviewDesc', language)}
           </p>
         </div>
@@ -61,7 +62,7 @@ const DashboardSavedJobsPreview: React.FC = () => {
       </div>
 
       <div className="space-y-4">
-        {previewJobs.map((job: any, index: number) => {
+        {previewJobs.map((job: Job, index: number) => {
           const title = job.title || 'Job';
           const company = job.company || 'Company';
           const location = job.location || '';
@@ -69,11 +70,11 @@ const DashboardSavedJobsPreview: React.FC = () => {
           return (
             <div
               key={job.id || `${title}-${company}-${index}`}
-              className="rounded-2xl border border-white/10 bg-slate-800/60 p-4"
+              className="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-800/60"
             >
-              <h3 className="text-base font-semibold text-white">{title}</h3>
-              <p className="mt-1 text-sm text-slate-400">{company}</p>
-              {location && <p className="mt-2 text-xs text-slate-500">{location}</p>}
+              <h3 className="text-base font-semibold text-slate-900 dark:text-white">{title}</h3>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{company}</p>
+              {location && <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">{location}</p>}
             </div>
           );
         })}

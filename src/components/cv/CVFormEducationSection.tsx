@@ -12,8 +12,10 @@ export interface EducationItem {
   id?: string;
   degree?: string;
   school?: string;
+  institution?: string;
   year?: string;
-  [key: string]: any;
+  location?: string;
+  description?: string;
 }
 
 interface CVFormEducationSectionProps {

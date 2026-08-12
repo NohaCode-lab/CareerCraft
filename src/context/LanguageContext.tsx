@@ -1,23 +1,17 @@
-import React, { createContext, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import * as storageService from "../services/storageService";
+import { STORAGE_KEYS, LANGUAGES, DEFAULT_LANGUAGE } from "../utils/constants";
+import { LanguageContext, LanguageContextValue } from "./LanguageContext";
 
-const STORAGE_KEY = "app_language";
-const SUPPORTED_LANGUAGES = ["en", "de", "ar"];
+export type { LanguageContextValue };
+
+const STORAGE_KEY = STORAGE_KEYS.LANGUAGE;
+const SUPPORTED_LANGUAGES: string[] = Object.values(LANGUAGES);
 const RTL_LANGUAGES = ["ar"];
 
-export interface LanguageContextValue {
-  language: string;
-  setLanguage: (lang: string) => void;
-  toggleLanguage: () => void;
-  isRTL: boolean;
-  availableLanguages: string[];
-}
-
-export const LanguageContext = createContext<LanguageContextValue | undefined>(undefined);
-
 const getInitialLanguage = (): string => {
-  const saved = storageService.getItem<string>(STORAGE_KEY, "en");
-  return saved && SUPPORTED_LANGUAGES.includes(saved) ? saved : "en";
+  const saved = storageService.getItem<string>(STORAGE_KEY, DEFAULT_LANGUAGE);
+  return saved && SUPPORTED_LANGUAGES.includes(saved) ? saved : DEFAULT_LANGUAGE;
 };
 
 export interface LanguageProviderProps {

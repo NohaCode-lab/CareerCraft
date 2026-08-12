@@ -23,6 +23,7 @@ services:
       - NODE_ENV=production
       - LOG_LEVEL=info
       - CORS_ORIGIN=http://localhost:5173
+      - INTERNAL_SERVICE_TOKEN=careercraft_internal_secret_token_2026
       - AI_MOCK_MODE=false
     depends_on:
       - ai-service
