@@ -1,4 +1,6 @@
 import React from 'react';
+import useLanguage from '../../hooks/useLanguage';
+import { t } from '../../utils/i18n';
 import StatusBadge from './StatusBadge';
 import { Application } from '../../hooks/useApplications';
 
@@ -8,6 +10,7 @@ interface ApplicationCardProps {
 }
 
 const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, onClick }) => {
+  const { language } = useLanguage();
   if (!application) return null;
 
   const {
@@ -49,8 +52,10 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, onClick 
 
         {Boolean(displayDate) && (
           <p>
-            Applied:{' '}
-            {new Date(displayDate as string | number | Date).toLocaleDateString()}
+            {t('statusApplied', language)}:{' '}
+            {new Date(displayDate as string | number | Date).toLocaleDateString(
+              language === 'ar' ? 'ar-SA' : language === 'de' ? 'de-DE' : 'en-US'
+            )}
           </p>
         )}
       </div>

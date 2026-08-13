@@ -1,4 +1,6 @@
 import React from 'react';
+import useLanguage from '../../hooks/useLanguage';
+import { t } from '../../utils/i18n';
 
 const statusStyles: Record<string, string> = {
   applied: 'border-blue-200 bg-blue-100 text-blue-700',
@@ -31,9 +33,21 @@ const normalizeStatus = (status: string): string => {
   return statusMap[normalizedStatus] || 'default';
 };
 
-const formatStatusLabel = (status: string): string => {
+const formatStatusLabel = (status: string, language: string): string => {
   if (!status || status === 'default') {
-    return 'Unknown';
+    return t('notSpecified', language);
+  }
+
+  const keyMap: Record<string, string> = {
+    applied: 'statusApplied',
+    reviewing: 'statusReviewing',
+    interview: 'statusInterview',
+    offer: 'statusOffer',
+    rejected: 'statusRejected',
+  };
+
+  if (keyMap[status]) {
+    return t(keyMap[status], language);
   }
 
   return status
@@ -48,6 +62,7 @@ interface StatusBadgeProps {
 }
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status = 'default', className = '' }) => {
+  const { language } = useLanguage();
   const normalizedStatus = normalizeStatus(status);
   const badgeStyle = statusStyles[normalizedStatus] || statusStyles.default;
 
@@ -55,7 +70,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status = 'default', className
     <span
       className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${badgeStyle} ${className}`}
     >
-      {formatStatusLabel(normalizedStatus)}
+      {formatStatusLabel(normalizedStatus, language)}
     </span>
   );
 };

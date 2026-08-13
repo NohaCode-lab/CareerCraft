@@ -15,8 +15,11 @@ interface MockFeedbackItem {
 const InterviewPrepPage: React.FC = () => {
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<string>('questions');
-  const [resumeText, setResumeText] = useState<string>('Senior Frontend & Fullstack Developer with React 19, TypeScript, Fastify BFF, Node.js, and AI Gateway integration experience.');
-  const [jobDescription, setJobDescription] = useState<string>('We are hiring a Lead Frontend Engineer to architect scalable React web applications, Fastify Node.js BFF APIs, and stateful LangGraph AI microservices.');
+  const [customResumeText, setCustomResumeText] = useState<string | null>(null);
+  const [customJobDescription, setCustomJobDescription] = useState<string | null>(null);
+
+  const resumeText = customResumeText ?? t('defaultResumeSummary', language);
+  const jobDescription = customJobDescription ?? t('defaultJobDescription', language);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [loading, setLoading] = useState<boolean>(false);
   
@@ -131,7 +134,7 @@ const InterviewPrepPage: React.FC = () => {
             <label className="block text-xs font-medium text-theme-secondary mb-1">{t('resumeSummaryLabel', language)}</label>
             <textarea
               value={resumeText}
-              onChange={(e) => setResumeText(e.target.value)}
+              onChange={(e) => setCustomResumeText(e.target.value)}
               rows={3}
               className="w-full rounded-2xl border border-theme bg-surface p-3 text-xs text-theme-primary outline-none focus:border-indigo-500"
             />
@@ -140,7 +143,7 @@ const InterviewPrepPage: React.FC = () => {
             <label className="block text-xs font-medium text-theme-secondary mb-1">{t('targetJobDescLabel', language)}</label>
             <textarea
               value={jobDescription}
-              onChange={(e) => setJobDescription(e.target.value)}
+              onChange={(e) => setCustomJobDescription(e.target.value)}
               rows={3}
               className="w-full rounded-2xl border border-theme bg-surface p-3 text-xs text-theme-primary outline-none focus:border-indigo-500"
             />
@@ -196,7 +199,7 @@ const InterviewPrepPage: React.FC = () => {
                     <div>
                       <div className="flex gap-2 mb-2">
                         <span className="rounded-full bg-indigo-500/10 px-3 py-0.5 text-xs font-semibold uppercase text-indigo-600 dark:text-indigo-400">{t(q.category, language) || q.category}</span>
-                        <span className="rounded-full border border-theme bg-surface px-3 py-0.5 text-xs font-medium text-theme-secondary capitalize">{q.difficulty}</span>
+                        <span className="rounded-full border border-theme bg-surface px-3 py-0.5 text-xs font-medium text-theme-secondary capitalize">{t(q.difficulty, language) || q.difficulty}</span>
                       </div>
                       <h4 className="text-base font-semibold text-theme-primary">{q.question}</h4>
                       <p className="mt-1 text-xs text-theme-secondary">{q.reason}</p>
@@ -277,7 +280,7 @@ const InterviewPrepPage: React.FC = () => {
           <div className="rounded-3xl border border-theme bg-surface p-6 space-y-4">
             <div>
               <label className="block text-xs font-semibold uppercase text-indigo-600 dark:text-indigo-400">{t('targetQuestion', language)}</label>
-              <p className="mt-1 text-base font-semibold text-theme-primary">{selectedQuestion ? selectedQuestion.question : 'How do you ensure React component performance and prevent redundant re-renders?'}</p>
+              <p className="mt-1 text-base font-semibold text-theme-primary">{selectedQuestion ? selectedQuestion.question : t('defaultFallbackQuestion', language)}</p>
             </div>
 
             <div>
@@ -404,7 +407,7 @@ const InterviewPrepPage: React.FC = () => {
                   <div key={idx} className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs space-y-1 dark:border-white/5 dark:bg-slate-950">
                     <span className="font-semibold text-indigo-600 dark:text-indigo-300">{item.question}</span>
                     <p className="text-slate-600 dark:text-slate-400">{item.answer}</p>
-                    <span className="inline-block rounded bg-indigo-50 px-2 py-0.5 text-indigo-700 font-bold dark:bg-indigo-500/20 dark:text-indigo-300">Score: {item.evaluation.overallScore}/100</span>
+                    <span className="inline-block rounded bg-indigo-50 px-2 py-0.5 text-indigo-700 font-bold dark:bg-indigo-500/20 dark:text-indigo-300">{t('scoreLabel', language)}: {item.evaluation.overallScore}/100</span>
                   </div>
                 ))}
               </div>

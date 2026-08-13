@@ -1,6 +1,8 @@
-import React from "react";
-import StatusBadge from "./StatusBadge";
-import { Application } from "../../hooks/useApplications";
+import React from 'react';
+import StatusBadge from './StatusBadge';
+import { Application } from '../../hooks/useApplications';
+import useLanguage from '../../hooks/useLanguage';
+import { t } from '../../utils/i18n';
 
 interface ApplicationDetailsModalProps {
   isOpen: boolean;
@@ -9,6 +11,7 @@ interface ApplicationDetailsModalProps {
 }
 
 const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = ({ isOpen, application, onClose }) => {
+  const { language } = useLanguage();
   if (!isOpen || !application) {
     return null;
   }
@@ -29,9 +32,9 @@ const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = ({ isOpe
     salary,
   } = (application as unknown as Record<string, unknown>) || {};
 
-  const displayTitle = (title || jobTitle || role || "Untitled Role") as string;
+  const displayTitle = (title || jobTitle || role || 'Untitled Role') as string;
   const displayDate = (appliedDate || appliedAt || createdAt) as string | number | Date | undefined;
-  const displayJobType = (jobType || employmentType || "Not specified") as string;
+  const displayJobType = (jobType || employmentType || t('notSpecified', language)) as string;
 
   return (
     <div
@@ -48,7 +51,7 @@ const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = ({ isOpe
               {displayTitle}
             </h2>
             <p className="mt-1 text-sm text-slate-600">
-              {(company as string) || "Unknown Company"}
+              {(company as string) || 'Unknown Company'}
             </p>
           </div>
 
@@ -58,47 +61,47 @@ const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = ({ isOpe
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="rounded-xl bg-slate-50 p-4">
             <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Location
+              {t('locationLabel', language)}
             </p>
             <p className="mt-2 text-sm text-slate-800">
-              {(location as string) || "Not specified"}
+              {(location as string) || t('notSpecified', language)}
             </p>
           </div>
 
           <div className="rounded-xl bg-slate-50 p-4">
             <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Applied Date
+              {t('appliedDateLabel', language)}
             </p>
             <p className="mt-2 text-sm text-slate-800">
               {displayDate
-                ? new Date(displayDate).toLocaleDateString()
-                : "Not specified"}
+                ? new Date(displayDate).toLocaleDateString(language === 'ar' ? 'ar-SA' : language === 'de' ? 'de-DE' : 'en-US')
+                : t('notSpecified', language)}
             </p>
           </div>
 
           <div className="rounded-xl bg-slate-50 p-4">
             <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Job Type
+              {t('jobTypeLabel', language)}
             </p>
             <p className="mt-2 text-sm text-slate-800">{displayJobType}</p>
           </div>
 
           <div className="rounded-xl bg-slate-50 p-4">
             <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Salary
+              {t('salaryLabel', language)}
             </p>
             <p className="mt-2 text-sm text-slate-800">
-              {(salary as string) || "Not specified"}
+              {(salary as string) || t('notSpecified', language)}
             </p>
           </div>
         </div>
 
         <div className="mt-6 rounded-xl bg-slate-50 p-4">
           <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Notes
+            {t('notesLabel', language)}
           </p>
           <p className="mt-2 whitespace-pre-line text-sm leading-6 text-slate-700">
-            {(notes as string) || "No notes available for this application."}
+            {(notes as string) || t('noNotesAvailable', language)}
           </p>
         </div>
 
@@ -108,7 +111,7 @@ const ApplicationDetailsModal: React.FC<ApplicationDetailsModalProps> = ({ isOpe
             onClick={onClose}
             className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
           >
-            Close
+            {t('close', language)}
           </button>
         </div>
       </div>
