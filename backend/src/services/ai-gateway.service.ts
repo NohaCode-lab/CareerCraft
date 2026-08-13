@@ -1,20 +1,21 @@
 import { AppConfig } from '../app/config.js';
 import { AppError } from '../errors/app-error.js';
-import {
+import type {
   AIProvider,
   AIRequestContract,
   AIResponseContract,
   AIMessage,
-  AIProviderError,
 } from './providers/AIProvider.js';
+import { AIProviderError } from './providers/AIProvider.js';
 import { MockAIProvider } from './providers/MockAIProvider.js';
 import { OpenRouterProvider } from './providers/OpenRouterProvider.js';
 import { OllamaProvider } from './providers/OllamaProvider.js';
-import { AIRouter, AIRoutingDecision } from './routing/AIRouter.js';
+import { AIRouter } from './routing/AIRouter.js';
+import type { AIRoutingDecision } from './routing/AIRouter.js';
 import { ResiliencePolicy } from './resilience/ResiliencePolicy.js';
-import { CircuitState } from './resilience/resilience.types.js';
+import type { CircuitState } from './resilience/resilience.types.js';
 
-export { AIMessage, AIRequestContract, AIResponseContract, AIRoutingDecision, CircuitState };
+export type { AIMessage, AIRequestContract, AIResponseContract, AIRoutingDecision, CircuitState };
 
 export class AIGatewayService {
   private config: AppConfig;
