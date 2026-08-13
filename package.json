@@ -1,7 +1,7 @@
 {
   "name": "career-craft",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.3",
   "type": "module",
   "engines": {
     "node": ">=24.0.0 <25.0.0"
@@ -15,7 +15,8 @@
     "i18n:check": "node scripts/check-i18n.js",
     "ui:audit": "node scripts/audit-theme-compliance.js",
     "arch:audit": "node scripts/audit-architecture.js",
-    "validate": "npm run type-check && npm run lint && npm run i18n:check && npm run ui:audit && npm run arch:audit && npm test && npm run build",
+    "version:check": "node scripts/check-version-governance.js",
+    "validate": "npm run type-check && npm run lint && npm run i18n:check && npm run ui:audit && npm run arch:audit && npm run version:check && npm test && npm run build",
     "preview": "vite preview"
   },
   "dependencies": {

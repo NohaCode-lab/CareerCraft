@@ -95,6 +95,34 @@ graph TD
 
 ---
 
+### 6.1. Release Version Governance Architecture
+
+CareerCraft enforces a clear architectural boundary between the **Platform Application Version** and **Microservice Package Versions**:
+
+```text
+               ┌───────────────────────────────┐
+               │      root package.json        │
+               │ version = APPLICATION SOT     │
+               └───────────────┬───────────────┘
+                               │
+               ┌───────────────┴───────────────┐
+               │                               │
+               ▼                               ▼
+       README release badge            Git release tag
+       (Verified Equality)          (Verified when tagged)
+               │                               │
+               └───────────────┬───────────────┘
+                               ▼
+               npm run version:check (CI Quality Gate)
+```
+
+1. **Application Source of Truth**: Root [`package.json`](package.json) is the single authoritative source of truth for the platform application version (`1.0.3-rc`).
+2. **Backend Microservice Isolation**: [`backend/package.json`](backend/package.json) manages an independent service package version (`careercraft-backend`, `1.0.0`) representing the Fastify BFF REST API facade.
+3. **AI Microservice Isolation**: [`ai-service/app/main.py`](ai-service/app/main.py) manages an independent Python microservice version (`careercraft-ai-service`, `1.0.0`).
+4. **Git Tag Rules**: Git release tags (`vX.Y.Z` or `vX.Y.Z-rc*`) are required to match `v` + root `package.json` version ONLY when a release tag is being validated. Normal development branches do not require an active tag.
+
+---
+
 ## 7. Frontend Architecture
 
 - **Structure**: Located in `src/`. Composed of modular components (`components/ui/`, `components/cv/`, `components/jobs/`, `components/layout/`), page routes (`components/pages/`), state contexts (`context/`), custom hooks (`hooks/`), and utilities (`utils/`).

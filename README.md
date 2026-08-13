@@ -4,7 +4,7 @@
 
 [![Enterprise CI Pipeline](https://img.shields.io/github/actions/workflow/status/NohaCode-lab/CareerCraft/ci.yml?branch=main&label=Enterprise%20CI%20Pipeline&logo=github)](https://github.com/NohaCode-lab/CareerCraft/actions)
 [![License](https://img.shields.io/badge/License-MIT-007EC6.svg)](LICENSE)
-[![Release](https://img.shields.io/badge/Release-v1.0.3--rc-6f42c1.svg)](https://github.com/NohaCode-lab/CareerCraft/releases)
+[![Release](https://img.shields.io/badge/Release-v1.0.3-6f42c1.svg)](https://github.com/NohaCode-lab/CareerCraft/releases)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-007ACC.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.2-20B2AA.svg?logo=react&logoColor=white)](https://react.dev/)
 

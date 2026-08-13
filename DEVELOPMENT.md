@@ -301,7 +301,36 @@ When using AI coding assistants (Antigravity, Copilot, Claude):
 
 ---
 
-## 17. Documentation Navigation Hub
+## 17. Release Version Governance
+
+CareerCraft enforces a deterministic, automated versioning architecture to prevent release version drift:
+
+```text
+package.json (version) ──► Authoritative Platform Application SOT
+       │
+       ├── README.md (Release Badge) ──► Verified Equality
+       ├── Git Tag (vX.Y.Z) ──────────► Verified when tagged
+       └── CI Pipeline ────────────────► Automated Enforcement (`npm run version:check`)
+```
+
+### Versioning Principles & Boundaries
+1. **Application Version Source of Truth**: The `version` field in root [`package.json`](package.json) is the single authoritative source of truth for the CareerCraft platform release version (e.g. `1.0.3-rc`).
+2. **Backend Service Version Isolation**: [`backend/package.json`](backend/package.json) manages an independent microservice package version (`careercraft-backend`, e.g. `1.0.0`) and is intentionally decoupled from platform application releases.
+3. **AI Service Version Isolation**: [`ai-service/app/main.py`](ai-service/app/main.py) manages an independent microservice version (`careercraft-ai-service`, e.g. `1.0.0`).
+4. **Stable Release Naming**: Stable platform releases use Semantic Versioning (e.g. `1.0.2`), with Git tags prefixed by `v` (e.g. `v1.0.2`).
+5. **Release Candidate Naming**: Pre-release builds use standard prerelease semver suffixes (e.g. `1.0.3-rc`). Normal development branches do not require an active Git tag.
+6. **Automated CI Enforcement**: `npm run version:check` ([`scripts/check-version-governance.js`](scripts/check-version-governance.js)) validates version consistency on every CI run and inside `npm run validate`.
+
+### Standard Release Procedure
+To release a new version of CareerCraft:
+1. Update `version` in root [`package.json`](package.json) (e.g. `1.0.3`).
+2. Update the release badge in [`README.md`](README.md) to match (e.g. `Release-v1.0.3`).
+3. Run `npm run version:check` and `npm run validate` to confirm zero drift.
+4. Commit changes and create Git release tag `v1.0.3`.
+
+---
+
+## 18. Documentation Navigation Hub
 
 Use this directory to locate authoritative subsystem specifications:
 
