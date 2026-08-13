@@ -4,7 +4,7 @@
 
 [![Enterprise CI Pipeline](https://img.shields.io/github/actions/workflow/status/NohaCode-lab/CareerCraft/ci.yml?branch=main&label=Enterprise%20CI%20Pipeline&logo=github)](https://github.com/NohaCode-lab/CareerCraft/actions)
 [![License](https://img.shields.io/badge/License-MIT-007EC6.svg)](LICENSE)
-[![Release](https://img.shields.io/badge/Release-v1.0.0--rc-6f42c1.svg)](https://github.com/NohaCode-lab/CareerCraft/releases)
+[![Release](https://img.shields.io/badge/Release-v1.0.3--rc-6f42c1.svg)](https://github.com/NohaCode-lab/CareerCraft/releases)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-007ACC.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.2-20B2AA.svg?logo=react&logoColor=white)](https://react.dev/)
 
@@ -72,7 +72,7 @@ React 19 + TypeScript + Vite frontend     Node.js Fastify BFF                   
 ## 🛠️ Technology Stack & Microservice Roles
 
 ### 1. React 19 + TypeScript + Vite Frontend (`src/`)
-- **Role**: Modern, responsive presentation layer with full internationalization (English `en`, Arabic `ar` with `dir="rtl"`, and German `de` with `dir="ltr"`).
+- **Role**: Modern, responsive presentation layer with full internationalization (English `en`, Arabic `ar` with `dir="rtl"`, and German `de` with `dir="ltr"`). Includes verified language-leakage remediation across Interview Prep and Applications with 258-key parity.
 - **Features**: Interactive CV Builder, Job Application Pipeline, AI Assistant, and **AI Interview Preparation Module**.
 
 ### 2. Node.js Fastify BFF (`backend/`)
@@ -121,19 +121,20 @@ CareerCraft enforces defense-in-depth across API boundaries:
 
 ## 🧪 Quality Gate & Test Verification Results
 
-CareerCraft is backed by **92 automated tests** across 22 test files passing 100%:
+CareerCraft is backed by **95 automated tests** across 25 test files passing 100%, with verified post-remediation i18n parity and zero language leakage across Interview Prep and Applications:
 
-| Test Suite / Quality Gate | Target Layer / Scope | Test Count | Status |
+| Test Suite / Quality Gate | Target Layer / Scope | Test Count / Metric | Status |
 | :--- | :--- | :---: | :---: |
-| **Python Pytest Suite** | FastAPI AI Microservice & LangGraph | **13 Tests** | **PASS** |
-| **Vitest Integration & Unit Suite** | React Frontend & Fastify BFF Services | **79 Tests** | **PASS** |
-| **TOTAL AUTOMATED PLATFORM TESTS** | End-to-End System | **92 Tests** | **PASS (92/92)** |
+| **Python Pytest Suite** | FastAPI AI Microservice & LangGraph | **13 Tests** (4 Files) | **PASS** |
+| **Vitest Integration & Unit Suite** | React Frontend & Fastify BFF Services | **82 Tests** (21 Files) | **PASS** |
+| **TOTAL AUTOMATED PLATFORM TESTS** | End-to-End System | **95 Tests** | **PASS (95/95)** |
 | **TypeScript Compilation (`tsc`)** | Static Type Checking | 0 Errors | **PASS** |
 | **ESLint Static Analysis (`lint`)** | Code Syntax & Zero `any` Rules | 0 Errors | **PASS** |
-| **i18n Parity Audit (`i18n:check`)** | EN / DE / AR Key Set Equality | 245 Keys Parity | **PASS** |
+| **i18n Parity Audit (`i18n:check`)** | EN / DE / AR Key Set Equality | 258 Keys Parity (258/258/258) | **PASS** |
 | **UI Theme Compliance Audit (`ui:audit`)**| Tokens & Dark Class Enforcement | 0 Violations | **PASS** |
 | **Architecture Audit (`arch:audit`)** | 0 `.js` files in `src/` & Constants SOT | 0 Violations | **PASS** |
 | **Vite Production Build (`build`)** | Static Asset Compilation | 2,314 Modules | **PASS** |
+| **Full Release Gate (`validate`)** | Complete Automated Verification Pipeline | 9/9 Pipeline Steps | **PASS** |
 
 See [`TESTING.md`](TESTING.md) for full test taxonomy and quality gate policies.
 
@@ -142,7 +143,7 @@ See [`TESTING.md`](TESTING.md) for full test taxonomy and quality gate policies.
 ## 🏃 Local Development Quickstart
 
 ### Prerequisites
-- Node.js `v20.x` or `v24.x` LTS
+- Node.js `v24.x` LTS
 - Python `3.11.x`
 - Docker Desktop (Optional for container mesh)
 
