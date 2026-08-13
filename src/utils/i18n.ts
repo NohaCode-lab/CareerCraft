@@ -293,6 +293,21 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     technicalScore: 'Technical Score',
     behavioralScore: 'Behavioral Score',
     targetJobAlignment: 'Target Job Alignment',
+
+    // New keys for Interview Prep & Applications
+    defaultResumeSummary: 'Senior Frontend & Fullstack Developer with React 19, TypeScript, Fastify BFF, Node.js, and AI Gateway integration experience.',
+    defaultJobDescription: 'We are hiring a Lead Frontend Engineer to architect scalable React web applications, Fastify Node.js BFF APIs, and stateful LangGraph AI microservices.',
+    defaultFallbackQuestion: 'How do you ensure React component performance and prevent redundant re-renders?',
+    easy: 'Easy',
+    medium: 'Medium',
+    hard: 'Hard',
+    scoreLabel: 'Score',
+    notSpecified: 'Not specified',
+    noNotesAvailable: 'No notes available for this application.',
+    appliedDateLabel: 'Applied Date',
+    jobTypeLabel: 'Job Type',
+    salaryLabel: 'Salary',
+    notesLabel: 'Notes',
   },
 
   de: {
@@ -577,6 +592,21 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     technicalScore: 'Technischer Wert',
     behavioralScore: 'Verhaltens-Wert',
     targetJobAlignment: 'Stellenausrichtung',
+
+    // New keys for Interview Prep & Applications
+    defaultResumeSummary: 'Erfahrener Frontend- & Fullstack-Entwickler mit Erfahrung in React 19, TypeScript, Fastify BFF, Node.js und KI-Gateway-Integration.',
+    defaultJobDescription: 'Wir suchen einen Lead Frontend Engineer zur Entwicklung skalierbarer React-Webanwendungen, Fastify Node.js BFF APIs und zustandsbehafteten LangGraph KI-Mikrodiensten.',
+    defaultFallbackQuestion: 'Wie stellen Sie die Leistung von React-Komponenten sicher und vermeiden unnötige Re-Renders?',
+    easy: 'Einfach',
+    medium: 'Mittel',
+    hard: 'Schwer',
+    scoreLabel: 'Bewertung',
+    notSpecified: 'Nicht angegeben',
+    noNotesAvailable: 'Keine Notizen für diese Bewerbung vorhanden.',
+    appliedDateLabel: 'Bewerbungsdatum',
+    jobTypeLabel: 'Anstellungsart',
+    salaryLabel: 'Gehalt',
+    notesLabel: 'Notizen',
   },
 
   ar: {
@@ -861,6 +891,21 @@ export const translations: Record<LanguageCode, TranslationDictionary> = {
     technicalScore: 'النتيجة التقنية',
     behavioralScore: 'نتيجة السلوك',
     targetJobAlignment: 'التوافق الوظيفي المستهدف',
+
+    // New keys for Interview Prep & Applications
+    defaultResumeSummary: 'مطور واجهات أمامية ومطور شامل خبير مع خبرة في React 19 وTypeScript وFastify BFF وNode.js وتكامل بوابات الذكاء الاصطناعي.',
+    defaultJobDescription: 'نحن نوظف مهندس واجهات أمامية رئيسي لتصميم تطبيقات ويب React قابلة للتوسع، وواجهات برمجية Fastify Node.js BFF، وخدمات مصغرة لذكاء اصطناعي LangGraph.',
+    defaultFallbackQuestion: 'كيف تضمن أداء مكونات React وتتجنب إعادة العرض غير الضرورية؟',
+    easy: 'سهل',
+    medium: 'متوسط',
+    hard: 'صعب',
+    scoreLabel: 'النتيجة',
+    notSpecified: 'غير محدد',
+    noNotesAvailable: 'لا توجد ملاحظات متاحة لطلب التوظيف هذا.',
+    appliedDateLabel: 'تاريخ التقديم',
+    jobTypeLabel: 'نوع الوظيفة',
+    salaryLabel: 'الراتب',
+    notesLabel: 'الملاحظات',
   },
 };
 

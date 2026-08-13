@@ -35,4 +35,27 @@ describe('CareerCraft Internationalization & German Localization Suite', () => {
     const formattedDate = dateFormatter.format(new Date(2026, 7, 8));
     expect(formattedDate).toBe('8.8.2026');
   });
+
+  it('5. Translation Key Parity: EN keys === DE keys === AR keys', () => {
+    const enKeys = Object.keys(getTranslation(LANGUAGES.EN)).sort();
+    const deKeys = Object.keys(getTranslation(LANGUAGES.DE)).sort();
+    const arKeys = Object.keys(getTranslation(LANGUAGES.AR)).sort();
+
+    expect(deKeys).toEqual(enKeys);
+    expect(arKeys).toEqual(enKeys);
+  });
+
+  it('6. Regression check: Interview Prep and Applications pages have non-English AR and DE translations', () => {
+    const arPack = getTranslation(LANGUAGES.AR);
+    const dePack = getTranslation(LANGUAGES.DE);
+
+    expect(arPack.defaultResumeSummary).not.toContain('Senior Frontend & Fullstack');
+    expect(dePack.defaultResumeSummary).not.toContain('Senior Frontend & Fullstack');
+
+    expect(arPack.defaultJobDescription).not.toContain('We are hiring');
+    expect(dePack.defaultJobDescription).not.toContain('We are hiring');
+
+    expect(arPack.scoreLabel).toBe('النتيجة');
+    expect(dePack.scoreLabel).toBe('Bewertung');
+  });
 });
