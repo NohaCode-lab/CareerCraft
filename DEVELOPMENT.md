@@ -42,7 +42,7 @@ Verify local environment compatibility against the following runtime standards:
 
 | Tool / Runtime | Required Version | Usage / Layer | Verification Command |
 | :--- | :---: | :--- | :--- |
-| **Node.js** | `v20.x` or `v24.x` LTS | Frontend Build / Fastify BFF | `node -v` |
+| **Node.js** | `v24.x` LTS | Frontend Build / Fastify BFF | `node -v` |
 | **npm** | `v10.x` or higher | Package Management | `npm -v` |
 | **Python** | `3.11.x` | AI Microservice & LangGraph | `python --version` |
 | **pip** | `v23.x` or higher | Python Dependencies | `pip --version` |

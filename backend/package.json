@@ -5,6 +5,9 @@
   "description": "Node.js & TypeScript Backend-for-Frontend (BFF) for CareerCraft Platform",
   "main": "dist/server.js",
   "type": "module",
+  "engines": {
+    "node": ">=24.0.0 <25.0.0"
+  },
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",

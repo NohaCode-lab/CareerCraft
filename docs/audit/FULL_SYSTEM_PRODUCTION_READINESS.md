@@ -115,7 +115,7 @@ npm run build             → PASS (built in 5.31s, dist/ asset bundle generated
 
 ## 10. Deployment Readiness
 
-* **CI/CD Pipeline**: Verified via `.github/workflows/ci.yml` (Node.js 20, Python 3.11, ESLint, Vitest, Fastify build, Vite build).
+* **CI/CD Pipeline**: Verified via `.github/workflows/ci.yml` (Node.js 24, Python 3.11, ESLint, Vitest, Fastify build, Vite build).
 * **Docker Multi-Stage Setup**: Configured in `ai-service/Dockerfile` and root `docker-compose.yml`.
 
 ---

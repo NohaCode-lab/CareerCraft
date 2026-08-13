@@ -12,7 +12,7 @@
 
 | Tool / Package | Version | Resolution Status | Compatibility Range |
 | :--- | :--- | :--- | :--- |
-| **Node.js** | `v24.19.0` (Local) / `v20.x` (CI) | ✅ Aligned | `^18.0.0 \|\| ^20.0.0 \|\| >=22.0.0` |
+| **Node.js** | `v24.19.0` (Local) / `v24.x` (CI) | ✅ Aligned | `>=24.0.0 <25.0.0` |
 | **npm** | `10.4.0` | ✅ Aligned | Compatible |
 | **Vite** | `6.4.3` | ✅ Lockfile Matched | `^6.2.1` |
 | **@vitejs/plugin-react** | `5.2.0` | ✅ Lockfile Matched | `^5.1.0` |

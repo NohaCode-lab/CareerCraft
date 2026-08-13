@@ -8,11 +8,11 @@ import { aiWorkflowRoutes } from './ai-workflow.routes.js';
 import { interviewHistoryRoutes } from './interview-history.routes.js';
 
 export async function apiV1Routes(fastify: FastifyInstance, options?: { config?: AppConfig }) {
-  const childOpts = options?.config ? { config: options.config } : {};
+  const routeOpts: { config?: AppConfig } = { config: options?.config };
   await fastify.register(healthRoutes);
   await fastify.register(profileRoutes);
   await fastify.register(jobsRoutes);
-  await fastify.register(aiRoutes, childOpts);
-  await fastify.register(aiWorkflowRoutes, childOpts);
-  await fastify.register(interviewHistoryRoutes, childOpts);
+  await fastify.register(aiRoutes, routeOpts);
+  await fastify.register(aiWorkflowRoutes);
+  await fastify.register(interviewHistoryRoutes);
 }

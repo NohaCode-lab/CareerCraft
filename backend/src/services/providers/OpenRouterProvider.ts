@@ -39,7 +39,6 @@ export class OpenRouterProvider implements AIProvider {
     }
 
     const targetModel = request.modelAlias || this.defaultModel;
-    const startTime = Date.now();
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.timeoutMs);
 

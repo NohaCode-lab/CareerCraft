@@ -105,7 +105,7 @@ Continuous Integration is automated using GitHub Actions to enforce quality gate
 ```text
 GitHub Actions CI Pipeline Jobs (`ci.yml`)
  ├── 1. Checkout Repository (`actions/checkout@v4`)
- ├── 2. Setup Node.js 20 LTS (`actions/setup-node@v4`)
+ ├── 2. Setup Node.js 24 LTS (`actions/setup-node@v4`)
  ├── 3. Setup Python 3.11 (`actions/setup-python@v5`)
  ├── 4. Execute Python Pytest Suite (`pytest ai-service/`) -> 13 Tests PASS
  ├── 5. Execute Frontend/Backend Vitest Suite (`npm run test`) -> 79 Tests PASS

@@ -263,7 +263,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4 (Node 20)
+      - uses: actions/setup-node@v4 (Node 24)
       - uses: actions/setup-python@v5 (Python 3.11)
       - run: pip install -r ai-service/requirements.txt
       - run: pytest ai-service/                # 13 Python Tests PASS

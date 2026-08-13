@@ -15,11 +15,17 @@ jobs:
       - name: Checkout Codebase
         uses: actions/checkout@v4
 
-      - name: Setup Node.js v20 (LTS)
+      - name: Setup Node.js v24 (LTS)
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            backend/package-lock.json
+
+      - name: Run CI Runtime Preflight Gate
+        run: node scripts/ci-preflight.js
 
       - name: Setup Python 3.11
         uses: actions/setup-python@v5
@@ -28,33 +34,48 @@ jobs:
           cache: 'pip'
 
       - name: Install Python AI Microservice Dependencies
+        working-directory: ai-service
         run: |
-          cd ai-service
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run Python Pytest Suite (13 Tests)
-        run: |
-          cd ai-service
-          PYTHONPATH=. python -m pytest
+        working-directory: ai-service
+        run: PYTHONPATH=. python -m pytest
 
       - name: Install Root Dependencies
         run: npm ci
 
+      - name: Install Backend Dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Run TypeScript Type Check
+        run: npm run type-check
+
       - name: Security Vulnerability Dependency Audit Gate
-        run: npm audit --audit-level=high
+        run: |
+          npm audit --audit-level=high
+          (cd backend && npm audit --audit-level=high)
+
+      - name: Run Internationalization Governance Check
+        run: npm run i18n:check
+
+      - name: Run UI Architecture Audit
+        run: npm run ui:audit
+
+      - name: Run Architectural Audit Gate
+        run: npm run arch:audit
 
       - name: Run ESLint Static Analysis
         run: npm run lint
 
-      - name: Run Full Vitest Test Suite (45 Tests)
+      - name: Run Full Vitest Test Suite
         run: npm run test
 
       - name: Build Fastify Node.js BFF TypeScript Target
-        run: |
-          cd backend
-          npm ci
-          npm run build
+        working-directory: backend
+        run: npm run build
 
       - name: Build React Vite Production Asset Bundle
         run: npm run build
