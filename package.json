@@ -12,6 +12,7 @@
     "type-check": "tsc --noEmit && tsc --noEmit -p backend/tsconfig.json",
     "lint": "eslint .",
     "test": "vitest run",
+    "test:e2e": "playwright test",
     "i18n:check": "node scripts/check-i18n.js",
     "ui:audit": "node scripts/audit-theme-compliance.js",
     "arch:audit": "node scripts/audit-architecture.js",
