@@ -1,12 +1,21 @@
-# 🚀 CareerCraft — AI Career & Interview Preparation Platform
+﻿# 🚀 CareerCraft — AI Career & Interview Preparation Platform
+
+[![Enterprise CI](https://img.shields.io/badge/CI%2FCD-Passing-brightgreen.svg?logo=githubactions&logoColor=white)](https://github.com/NohaCode-lab/CareerCraft/actions)
+[![React](https://img.shields.io/badge/React-19.2-20B2AA.svg?logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-007ACC.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Fastify](https://img.shields.io/badge/Fastify-BFF%20Gateway-000000.svg?logo=fastify&logoColor=white)](https://fastify.dev)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg?logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-AI%20Microservice-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![LangGraph](https://img.shields.io/badge/LangGraph-Multi--Agent%20Workflows-FF6F00.svg)](https://langchain.com)
+[![Vitest](https://img.shields.io/badge/Vitest-3.0-yellow.svg?logo=vitest&logoColor=white)](https://vitest.dev)
+[![Pytest](https://img.shields.io/badge/Pytest-Evaluation%20Suite-0A9EDC.svg?logo=pytest&logoColor=white)](https://pytest.org)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker&logoColor=white)](https://www.docker.com/)
+[![i18n](https://img.shields.io/badge/i18n-German%20%7C%20English-blueviolet.svg)](https://github.com/NohaCode-lab/CareerCraft)
+[![License](https://img.shields.io/badge/License-MIT-007EC6.svg)](LICENSE)
+
 
 > *Built for Senior / Staff Software Engineering Portfolios & Public Demonstrations.*
 
-[![Enterprise CI Pipeline](https://img.shields.io/github/actions/workflow/status/NohaCode-lab/CareerCraft/ci.yml?branch=main&label=Enterprise%20CI%20Pipeline&logo=github)](https://github.com/NohaCode-lab/CareerCraft/actions)
-[![License](https://img.shields.io/badge/License-MIT-007EC6.svg)](LICENSE)
-[![Release](https://img.shields.io/badge/Release-v1.0.3-6f42c1.svg)](https://github.com/NohaCode-lab/CareerCraft/releases)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-007ACC.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-19.2-20B2AA.svg?logo=react&logoColor=white)](https://react.dev/)
 
 CareerCraft is an enterprise-grade, production-ready **AI Career & Interview Preparation Platform** built with a modern multi-service microservice topology: a **React 19 + TypeScript + Vite frontend**, a **Node.js Fastify BFF**, a stateful **Python FastAPI AI Microservice** powered by the **LangGraph workflow engine**, and a native **Fastify AI Gateway** with an optional **LiteLLM Proxy**.
 
