@@ -1,4 +1,4 @@
-﻿# CareerCraft — AI Career & Interview Preparation Platform
+# CareerCraft — AI Career & Interview Preparation Platform
 
 > **AI-Powered Career Intelligence & Automated Interview Preparation Platform**
 
@@ -16,6 +16,15 @@
 [![License](https://img.shields.io/badge/License-MIT-007EC6.svg)](LICENSE)
 
 CareerCraft is an enterprise-grade, production-ready **AI Career & Interview Preparation Platform** built with a modern multi-service topology: a **React 19 + TypeScript + Vite frontend**, a **Node.js Fastify BFF**, a stateful **Python FastAPI AI Microservice** powered by the **LangGraph workflow engine**, and a native **Fastify AI Gateway** with an optional **LiteLLM Proxy**.
+
+---
+
+## 🔗 Project Links
+
+* **Live Demo (Frontend):** `https://careercraft-platform.vercel.app` *(Placeholder — to be set upon live Vercel deployment)*
+* **API Gateway (Backend):** `https://careercraft-backend.onrender.com` *(Placeholder — to be set upon live Render deployment)*
+* **GitHub Repository:** `https://github.com/NohaCode-lab/CareerCraft`
+* **Deployment Architecture:** [Production Deployment Architecture](#-production-deployment)
 
 ---
 
@@ -158,6 +167,72 @@ cp ai-service/.env.example ai-service/.env
 # Run Frontend + Fastify BFF + Python AI Service via Docker Compose
 docker compose up --build
 ```
+
+---
+
+# 🚀 Production Deployment
+
+## Architecture Overview
+
+```text
+                               CAREERCRAFT PRODUCTION TOPOLOGY
+                                                │
+    ┌───────────────────────────────────────────┼───────────────────────────────────────────┐
+    ▼                                           ▼                                           ▼
+[ Vercel Edge Global CDN ]              [ Render / Railway Web Service ]           [ Supabase / Managed Cloud ]
+React 19 + Vite 6 Frontend              Node.js Fastify BFF (Port 4000)            PostgreSQL & Auth Storage
+(https://careercraft-platform.vercel.app) (https://careercraft-backend.onrender.com) (https://supabase.com)
+ ├── Vite SPA Bundle (dist/)             ├── Fastify API Gateway Facade             ├── Candidate Profiles & Auth
+ ├── vercel.json SPA Rewrites            ├── Input Validation (Zod)                 ├── Resumes & ATS Scoring Logs
+ ├── Multilingual i18n (en, de, ar)      ├── Server-Side Secret Protection          └── Saved Jobs & Sessions
+ └── Deterministic Client Fallback       └── Python AI Service / Gateway
+```
+
+## Live Application
+
+* **Frontend:** `https://careercraft-platform.vercel.app` *(Placeholder — to be updated upon live Vercel deploy)*
+* **Backend API:** `https://careercraft-backend.onrender.com` *(Placeholder — to be updated upon live Render deploy)*
+* **Database / BaaS:** [Supabase Managed PostgreSQL](https://supabase.com) *(Cloud-managed, credentials isolated)*
+
+---
+
+## 🛠️ Step-by-Step Deployment Instructions
+
+### 1. Database & Cloud Storage — Supabase
+1. Create a free project on [Supabase](https://supabase.com).
+2. Copy the **Project URL** (`VITE_SUPABASE_URL`) and **anon public key** (`VITE_SUPABASE_ANON_KEY`) from **Project Settings → API**.
+3. (Optional) Run SQL schema definitions for candidate profiles and interview sessions.
+
+### 2. Backend BFF API — Render
+1. In [Render](https://render.com), create a **New Web Service** and link this repository (or use the declarative [`render.yaml`](render.yaml) blueprint).
+2. Configure service settings:
+   - **Root Directory:** `backend`
+   - **Environment:** `Node`
+   - **Build Command:** `npm install && npm run build`
+   - **Start Command:** `npm start`
+   - **Health Check Path:** `/health`
+3. Add Environment Variables in the Render Dashboard:
+   ```text
+   NODE_ENV               = production
+   PORT                   = 4000
+   HOST                   = 0.0.0.0
+   LOG_LEVEL              = info
+   CORS_ORIGIN            = https://careercraft-platform.vercel.app
+   INTERNAL_SERVICE_TOKEN = your_cryptographic_random_token_min_32_chars
+   OPENROUTER_API_KEY     = your_openrouter_api_key_here
+   AI_MOCK_MODE           = false
+   ```
+
+### 3. Frontend SPA — Vercel
+1. In [Vercel](https://vercel.com), click **Add New Project** and import the `CareerCraft` repository.
+2. Vercel automatically detects the **Vite** framework and output directory `dist`.
+3. Add Environment Variables in Vercel Project Settings:
+   ```text
+   VITE_API_BASE_URL      = https://careercraft-backend.onrender.com/api/v1
+   VITE_SUPABASE_URL      = https://your-project.supabase.co
+   VITE_SUPABASE_ANON_KEY = your-supabase-anon-key
+   ```
+4. Click **Deploy**. The root [`vercel.json`](vercel.json) handles single-page client routing (`/(.*) → /index.html`) to prevent 404 errors on direct navigation and refresh.
 
 ---
 
